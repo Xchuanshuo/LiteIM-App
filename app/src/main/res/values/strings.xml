@@ -56,4 +56,5 @@
     <string name="course_is_empty">今天一天都没有课哦～</string>
     <string name="select_address">请选择详细的地址</string>
     <string name="title_activity_welcome">WelcomeActivity</string>
+    <string name="login">登录</string>
 </resources>

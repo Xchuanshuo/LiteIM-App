@@ -27,6 +27,7 @@ public class WelcomeActivity extends BaseActivity {
 
     @Override
     protected void initWindows() {
+        // 全屏
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
 
@@ -59,7 +60,7 @@ public class WelcomeActivity extends BaseActivity {
         SharedData data = SharedData.getInstance();
         String jwt = data.getJWT();
         if (TextUtils.isEmpty(jwt)) {
-
+            LoginActivity.come(this);
         } else {
             MainActivity.come(this);
         }
