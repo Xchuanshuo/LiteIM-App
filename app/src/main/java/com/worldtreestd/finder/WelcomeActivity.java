@@ -1,6 +1,6 @@
 package com.worldtreestd.finder;
 
-import android.content.Intent;
+import android.text.TextUtils;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -8,6 +8,7 @@ import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 
 import com.worldtreestd.finder.common.base.mvp.activity.BaseActivity;
+import com.worldtreestd.finder.data.SharedData;
 
 import butterknife.BindView;
 
@@ -44,8 +45,7 @@ public class WelcomeActivity extends BaseActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
-                finish();
+                deal();
             }
 
             @Override
@@ -53,6 +53,17 @@ public class WelcomeActivity extends BaseActivity {
 
             }
         });
+    }
+
+    private void deal() {
+        SharedData data = SharedData.getInstance();
+        String jwt = data.getJWT();
+        if (TextUtils.isEmpty(jwt)) {
+
+        } else {
+            MainActivity.come(this);
+        }
+        finish();
     }
 
 }

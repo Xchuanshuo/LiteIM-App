@@ -14,4 +14,11 @@ public class ExampleUnitTest {
     public void addition_isCorrect() {
         assertEquals(4, 2 + 2);
     }
+
+    @Test
+    public void test() {
+        String line = "asadefdf";
+        int index = line.indexOf("e");
+        System.out.println(line.substring(0, index));
+    }
 }

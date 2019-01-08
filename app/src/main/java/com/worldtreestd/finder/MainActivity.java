@@ -1,5 +1,6 @@
 package com.worldtreestd.finder;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
@@ -50,6 +51,11 @@ public class MainActivity extends BaseActivity {
     HomeFragment mHomeFragment;
     MoreInfoFragment mMoreInfoFragment;
     DynamicFragment mDynamicFragment;
+
+    public static void come(Context context) {
+        Intent intent = new Intent(context, MainActivity.class);
+        context.startActivity(intent);
+    }
 
     private BottomNavigationView.OnNavigationItemSelectedListener onNavigationItemSelectedListener =
             item -> {

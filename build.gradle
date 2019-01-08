@@ -1,7 +1,8 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    
+
+
     repositories {
         google()
         jcenter()
@@ -9,7 +10,6 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.2.1'
-        
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -45,12 +45,10 @@ ext {
     rxandroidVersion = '2.0.1'
     rxpermissionsVersion = '0.10.2'
     fragmentationbVersion='1.3.4'
-    dbflowVersion = "4.0.0-beta7"
     flexboxVersion = "0.3.2"
     imageWatcherVersion = '1.0.3'
     videoplayerVersion = '6.2.12'
     phoenixVersion= '1.0.15'
     verticalTabLayoutVersion = '1.2.5'
-    citypickerviewVersion = '3.1.10'
     junitVersion='4.12'
 }

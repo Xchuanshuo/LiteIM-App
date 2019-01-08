@@ -9,11 +9,11 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
-import com.guoxiaoxing.phoenix.core.model.MediaEntity;
 import com.worldtreestd.finder.R;
 import com.worldtreestd.finder.common.utils.GlideUtil;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,16 +23,17 @@ import java.util.List;
  */
 public class GridViewAdapter extends BaseAdapter {
 
+    //
     private Context mContext;
     private LayoutInflater inflater;
-    private List<MediaEntity> dataList;
+    private List<String> dataList = new ArrayList<>();
     private int maxCount = 12;
     private AddClickListener addClickListener;
     private ItemClickListener itemClickListener;
-
-    public GridViewAdapter(Context context, List<MediaEntity> list) {
+//
+    public GridViewAdapter(Context context) {
         this.mContext = context;
-        this.dataList = list;
+//        this.dataList = list;
         inflater = LayoutInflater.from(context);
     }
 
@@ -47,16 +48,16 @@ public class GridViewAdapter extends BaseAdapter {
     public void setAddClickListener(AddClickListener addClickListener) {
         this.addClickListener = addClickListener;
     }
-
-    public List<MediaEntity> getData() {
-        return dataList;
-    }
-
-    public void setData(List<MediaEntity> mediaEntityList) {
+//
+//    public List<MediaEntity> getData() {
+//        return dataList;
+//    }
+//
+    public void setData(List<String> mediaEntityList) {
         this.dataList = mediaEntityList;
         notifyDataSetChanged();
     }
-
+//
     @Override
     public int getCount() {
         int count = dataList.size()==0? 1: dataList.size()+1;
@@ -84,7 +85,7 @@ public class GridViewAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         if (position<dataList.size()) {
-            final File file = new File(dataList.get(position).getFinalPath());
+            final File file = new File(dataList.get(position));
             GlideUtil.loadImage(mContext, file, viewHolder.mImageView);
             viewHolder.mDeleteButton.setVisibility(View.VISIBLE);
             viewHolder.mImageView.setOnClickListener(v -> itemClickListener.onItemClickListener(position, v));
@@ -105,7 +106,7 @@ public class GridViewAdapter extends BaseAdapter {
 
         return convertView;
     }
-
+//
     public interface AddClickListener {
         void onAddClickListener(View view);
     }

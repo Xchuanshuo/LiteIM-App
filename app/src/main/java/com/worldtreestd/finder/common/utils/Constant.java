@@ -27,4 +27,15 @@ public class Constant {
     public static final int HOME_ITEM_CENTER = 2;
     public static final int DYNAMIC_ITEM_WORD_PICTURE = 3;
     public static final int DYNAMIC_ITEM_WORD_VIDEO = 4;
+
+    public static final String ACCESS_TOKEN = "access_token";
+    public static final String OPEN_ID = "open_id";
+    /**
+     * 第三方登录接口的key
+     */
+    public static final String APP_ID = "app_id";
+
+
+    public static final String JWT = "jwt";
+
 }

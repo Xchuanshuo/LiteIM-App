@@ -19,10 +19,11 @@ public class SharedPreferenceUtils {
     public static final String COOKIE = "cookie";
     public static final String OPENID = "open_id";
     public static final String ACCESSTOKEN = "access_token";
-    public static final String ACCOUNTJWT = "account_jwt";
+    public static final String JWT = "account_jwt";
     public static final String EXPIRES = "expires";
-    // jwt有效期限为7天
+    // jwt默认有效期限为7天
     public static final String JWT_EXPIRES = "jwt_expires";
+
     private SharedPreferences sharedPreferences;
     private static final String[] week = {"一", "二", "三", "四", "五", "六", "日"};
     public static final ArrayMap<String, Integer> weekMap = new ArrayMap<>();

@@ -32,18 +32,19 @@
             android:theme="@style/SwipeBackTheme" />
         <activity
             android:name=".ui.search.SearchActivity"
-            android:theme="@style/SearchCenterTheme"></activity>
+            android:theme="@style/SearchCenterTheme" />
         <activity
             android:name=".ui.dynamic.DynamicDetailActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="behind"
-            android:theme="@style/SearchCenterTheme"></activity>
-        <activity android:name=".ui.userinfo.UserInfoActivity"></activity>
-        <activity android:name=".ui.release.ReleaseActivity"></activity>
+            android:theme="@style/SearchCenterTheme" />
+        <activity android:name=".ui.userinfo.UserInfoActivity" />
+        <activity android:name=".ui.release.ReleaseActivity" />
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_welcome"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
+        <activity android:name=".LoginActivity"></activity>
     </application>
 
 </manifest>
