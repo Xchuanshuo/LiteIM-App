@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.AppCompatTextView android:id="@+id/keyword_tv"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:background="@drawable/item_selector_hot"
+    android:gravity="center"
+    android:padding="@dimen/dp_10"
+    android:textColor="@android:color/primary_text_light"
+    android:textSize="@dimen/sp_12"
+    tools:text="keywords">
+
+</android.support.v7.widget.AppCompatTextView>
+

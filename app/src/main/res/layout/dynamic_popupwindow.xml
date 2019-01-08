@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/ic_popup_bg"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.AppCompatTextView
+        android:layout_margin="@dimen/dp_4"
+        android:id="@+id/tv_release_picture"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:drawableLeft="@mipmap/micro_pic"
+        android:drawablePadding="@dimen/dp_4"
+        android:padding="@dimen/dp_15"
+        android:text="发布图文"
+        android:textSize="18sp"
+        android:layout_height="wrap_content" />
+
+    <View
+        android:background="@color/deep_grey"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/tv_release_video"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:gravity="center"
+        android:drawableLeft="@mipmap/micro_video"
+        android:drawablePadding="@dimen/dp_4"
+        android:padding="@dimen/dp_15"
+        android:text="发布视频"
+        android:textSize="18sp"
+        android:layout_height="wrap_content" />
+
+    <View
+        android:background="@color/deep_grey"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
+</LinearLayout>

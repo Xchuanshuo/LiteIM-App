@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#03A9F4</color>
+    <color name="colorPrimaryDark">#0288D1</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="unselected">#ffffff</color>
+
+    <color name="blue_1">#eae9fe</color>
+    <color name="while_most_color">#e4e4e4</color>
+
+    <!--背景色-->
+    <color name="windowsBackground">#f7f7f7</color>
+    <color name="windowsBackgroundLight">#f8f8f8</color>
+
+    <!--字体颜色-->
+    <color name="textPrimary">#4e5864</color>
+    <color name="textSecond">#8d9ca9</color>
+    <color name="textAccent">@color/colorAccent</color>
+    <color name="textLight">#ffffff</color>
+    <color name="textDark">#202020</color>
+
+    <color name="transparency">#8000</color>
+    <color name="black">#000000</color>
+    <color name="red">#ff0000</color>
+    <color name="green">#00ff00</color>
+    <color name="light_blue">#13BFFF</color>
+    <color name="grey_200">#eeeeee</color>
+
+    <color name="gray">#6E6E6F</color>
+    <color name="black_background">#2C2D2E</color>
+    <color name="rocket_fire">#EFC75E</color>
+    <color name="alpha_10_black">#1A000000</color>
+    <color name="colorBg">#f5f5f5</color>
+    <color name="colorBlack33">#333333</color>
+    <color name="color_406599">#406599</color>
+    <color name="color_cacaca">#cacaca</color>
+    <color name="color_505050">#505050</color>
+    <color name="color_d8d8d8">#d8d8d8</color>
+    <color name="color_F2F4F3">#F2F4F3</color>
+    <color name="color_222222">#222222</color>
+    <color name="comment_line">#dddddd</color>
+    <color name="comment_text">#dfd8d8</color>
+    <color name="colorBackground">#EEEEEE</color>
+    <color name="deep_grey">#e6e6e6</color>
+</resources>

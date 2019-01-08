@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBg"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:clipToPadding="false"
+    android:clipChildren="false">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorBg"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:elevation="0dp"
+        app:layout_behavior="@string/user_info_appbar_behavior">
+
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
+
+
+            <include
+                layout="@layout/activity_user_info_head" />
+
+            <include layout="@layout/activity_user_info_middle" />
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:alpha="0"
+                android:background="@android:color/white"
+                android:tag="toolbar"
+                app:layout_collapseMode="pin"
+                app:popupTheme="@style/Widget.AppCompat.Toolbar" />
+
+            <include layout="@layout/activity_user_info_title" />
+
+        </android.support.design.widget.CollapsingToolbarLayout>
+    </android.support.design.widget.AppBarLayout>
+
+    <include layout="@layout/activity_user_info_content" />
+
+
+    <com.worldtreestd.finder.common.widget.CircleImageView
+        android:id="@+id/uc_avater"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginLeft="15dp"
+        android:src="@drawable/g"
+        app:civ_border_color="@android:color/white"
+        app:civ_border_width="2dp"
+        app:layout_anchor="@+id/middle_layout"
+        app:layout_anchorGravity="top"
+        app:layout_behavior="@string/user_portrait_behavior" />
+
+</android.support.design.widget.CoordinatorLayout>

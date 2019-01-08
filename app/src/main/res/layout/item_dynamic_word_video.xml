@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="14dip">
+
+    <com.worldtreestd.finder.common.widget.CircleImageView
+        android:id="@+id/publisher_portrait"
+        android:src="@drawable/g"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginRight="10dp"
+        android:transitionName="@string/portrait"/>
+
+    <TextView
+        android:id="@+id/publisher_nickname"
+        android:text="、legend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/publisher_portrait"
+        android:textColor="#000"
+        android:textSize="15sp"
+        android:transitionName="@string/publisher_name"/>
+
+    <TextView
+        android:id="@+id/publish_time"
+        android:text="2018年6:59"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/publisher_nickname"
+        android:layout_marginTop="0.5dip"
+        android:layout_toRightOf="@+id/publisher_portrait"
+        android:textColor="#777"
+        android:textSize="13sp"
+        android:transitionName="@string/publish_time"/>
+
+    <TextView
+        android:id="@+id/dynamic_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/publisher_portrait"
+        android:layout_marginTop="10dip"
+        android:textColor="#000"
+        android:text="content"
+        android:maxLines="3"
+        android:ellipsize="end"
+        android:textSize="15sp"
+        android:transitionName="@string/dynamic_content"/>
+
+    <cn.jzvd.JZVideoPlayerStandard
+        android:id="@+id/video_player"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_below="@+id/dynamic_content"
+        android:layout_marginTop="10dp"
+        android:transitionName="@string/dynamic_video_url"/>
+
+    <TextView
+        android:layout_marginTop="@dimen/dp_10"
+        android:id="@+id/watch_count"
+        android:layout_below="@+id/video_player"
+        android:text="666次围观"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_marginTop="@dimen/dp_10"
+        android:id="@+id/comment_count"
+        android:layout_below="@+id/video_player"
+        android:layout_marginLeft="@dimen/dp_16"
+        android:layout_toRightOf="@+id/watch_count"
+        android:text="666条评论"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_marginTop="@dimen/dp_10"
+        android:id="@+id/praise"
+        android:text="666"
+        android:layout_below="@+id/video_player"
+        android:layout_alignParentRight="true"
+        android:drawableStart="@drawable/heart_drawable_blue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_below="@+id/praise"
+        android:layout_marginLeft="3dip"
+        android:layout_marginRight="3dip"
+        android:layout_marginTop="10dip"
+        android:background="#E1E1E1"/>
+
+</RelativeLayout>

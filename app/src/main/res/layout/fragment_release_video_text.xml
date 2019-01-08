@@ -1,0 +1,38 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/dp_4"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.v7.widget.AppCompatEditText
+        android:id="@+id/edt_release_text"
+        android:hint="@string/record_feel_text"
+        android:padding="@dimen/dp_10"
+        android:gravity="start"
+        android:textSize="@dimen/sp_16"
+        android:background="@null"
+        android:maxLines="5"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_72" />
+
+    <cn.jzvd.JZVideoPlayerStandard
+        android:id="@+id/video_player"
+        android:padding="@dimen/dp_10"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_below="@+id/dynamic_content"
+        android:layout_marginTop="10dp"
+        android:transitionName="@string/dynamic_video_url"/>
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/tv_select_address"
+        android:gravity="center"
+        android:textSize="@dimen/sp_16"
+        android:text="@string/select_address"
+        android:layout_margin="@dimen/dp_10"
+        app:layout_constraintTop_toBottomOf="@+id/grid_view"
+        android:background="@drawable/select_user_chat_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>

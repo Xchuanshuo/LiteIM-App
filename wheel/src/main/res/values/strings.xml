@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">wheel</string>
+    <string name="detail_place">请输入详细地址</string>
+</resources>

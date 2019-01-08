@@ -1,0 +1,89 @@
+<LinearLayout android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginBottom="50dp"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/dynamic_item"
+        android:layout_marginTop="@dimen/dp_72"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_16"
+        android:layout_marginBottom="@dimen/dp_16"
+        android:layout_marginRight="@dimen/dp_16">
+
+        <com.worldtreestd.finder.common.widget.CircleImageView
+            android:id="@+id/publisher_portrait"
+            android:src="@drawable/g"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginRight="10dp"
+            android:transitionName="@string/portrait"/>
+
+        <TextView
+            android:id="@+id/publisher_nickname"
+            android:text="、legend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/publisher_portrait"
+            android:textColor="#000"
+            android:textSize="15sp"
+            android:transitionName="@string/publisher_name"/>
+
+        <TextView
+            android:id="@+id/publish_time"
+            android:text="2018年9月"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/publisher_nickname"
+            android:layout_marginTop="0.5dip"
+            android:layout_toRightOf="@+id/publisher_portrait"
+            android:textColor="#777"
+            android:textSize="13sp"
+            android:transitionName="@string/publish_time"/>
+
+        <TextView
+            android:id="@+id/dynamic_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/publisher_portrait"
+            android:layout_marginTop="10dip"
+            android:textColor="#000"
+            android:text="content"
+            android:ellipsize="end"
+            android:textSize="15sp"
+            android:transitionName="@string/dynamic_content"/>
+
+        <com.worldtreestd.finder.common.widget.multipicture.MultiPictureLayout
+            android:id="@+id/pictures"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/dynamic_content"
+            android:layout_marginTop="10dip"
+            app:img_show_all="true"
+            app:img_line_count="2"
+            android:transitionName="@string/dynamic_picture_urlList"/>
+
+
+        <cn.jzvd.JZVideoPlayerStandard
+            android:id="@+id/video_player"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:visibility="invisible"
+            android:layout_below="@+id/dynamic_content"
+            android:layout_marginTop="10dp"
+            android:transitionName="@string/dynamic_video_url"/>
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dip"
+        android:layout_gravity="bottom"
+        android:layout_marginLeft="3dip"
+        android:layout_marginRight="3dip"
+        android:layout_marginTop="10dip"
+        android:background="#E1E1E1"/>
+</LinearLayout>

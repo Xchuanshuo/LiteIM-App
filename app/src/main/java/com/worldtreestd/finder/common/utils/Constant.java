@@ -1,0 +1,30 @@
+package com.worldtreestd.finder.common.utils;
+
+/**
+ * @author Legend
+ * @data by on 18-7-15.
+ * @description
+ */
+public class Constant {
+
+    public static final String COURSE_TABLE = "http://api.cspojie.cn/courses/?search=";
+    public static final String MENU_LIST = "MENU_LIST";
+    public static final String MENU_ITEM = "MENU_ITEM";
+    public static final String CLASS_GRADE = "class_grade";
+    public static final String LIST = "list";
+    public static final String LIST_MD5 = "list_md5";
+    public static final String SAVE_TIME = "save_time";
+    public static final String COURSE_QUERY = "course-query";
+    public static final String SELECTED_NUMBER = "select_number";
+    public static final String POSITION = "position";
+    public static final String SELECTED = "selected";
+    public static final String ITEM_TYPE = "ITEM_TYPE";
+    public static final String PARAM1= "PARAM1";
+    public static final String PARAM2= "PARAM2";
+    public static final String KEY_WORD= "KEY_WORD";
+    public static final int HOME_ITEM_HEAD = 0;
+    public static final int HOME_ITEM_TAIL = 1;
+    public static final int HOME_ITEM_CENTER = 2;
+    public static final int DYNAMIC_ITEM_WORD_PICTURE = 3;
+    public static final int DYNAMIC_ITEM_WORD_VIDEO = 4;
+}
