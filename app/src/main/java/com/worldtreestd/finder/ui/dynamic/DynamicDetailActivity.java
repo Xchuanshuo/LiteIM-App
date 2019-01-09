@@ -18,7 +18,7 @@ import com.worldtreestd.finder.ui.dynamic.fragment.DynamicDetailFragment;
  * @data by on 18-7-19.
  * @description
  */
-public class DynamicDetailActivity extends BaseActivity{
+public class DynamicDetailActivity extends BaseActivity {
 
     private final DynamicDetailFragment mDynamicDetailFragment = new DynamicDetailFragment();
     @Override

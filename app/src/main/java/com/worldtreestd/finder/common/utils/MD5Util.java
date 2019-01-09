@@ -7,6 +7,16 @@ import java.security.MessageDigest;
  */
 public class MD5Util {
 
+    private static final String salt = "1a2b3cqsacs.*4d";
+
+    public final static String encryptAddSalt(String s) {
+        StringBuilder builder = new StringBuilder();
+        for (int i=0;i<s.length();i++) {
+            builder.append(s.charAt(i)+salt.charAt(i/salt.length()));
+        }
+        return encrypt(builder.toString());
+    }
+
     public static void main(String[] args) {
         String string = encrypt("123456");
         System.out.println(string);

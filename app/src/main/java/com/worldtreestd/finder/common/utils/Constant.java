@@ -30,10 +30,11 @@ public class Constant {
 
     public static final String ACCESS_TOKEN = "access_token";
     public static final String OPEN_ID = "open_id";
+    public static final String TOKEN_EXPIRE = "token_expire";
     /**
      * 第三方登录接口的key
      */
-    public static final String APP_ID = "app_id";
+    public static final String APP_ID = "1106570475";
 
 
     public static final String JWT = "jwt";
