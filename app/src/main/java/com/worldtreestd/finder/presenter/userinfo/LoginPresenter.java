@@ -42,7 +42,9 @@ public class LoginPresenter extends BasePresenter<LoginContract.View>
                         // 登录成功后保存jwt信息
                         if (data.getCode().equals(Code.SUCCESS)) {
                             sharedData.saveJWT(data.getData());
-                            mView.loginAfter();
+                            if (mView != null) {
+                                mView.loginAfter();
+                            }
                         } else if (data.getCode().equals(Code.USER_NOT_EXIST)) {
                             // 用户不存在则去进行注册
                             register(o, user.getOpenId());
@@ -75,7 +77,7 @@ public class LoginPresenter extends BasePresenter<LoginContract.View>
         User user = new User();
         user.setOpenId(openId);
         LogUtils.logD(this, openId);
-        user.setPassword(MD5Util.encrypt(openId));
+        user.setPassword(MD5Util.encryptAddSalt(openId));
         try {
             if ("男".equals(o.getString("gender"))) {
                 user.setSex(1);
@@ -84,7 +86,7 @@ public class LoginPresenter extends BasePresenter<LoginContract.View>
             }
             user.setUsername(o.getString("nickname"));
             user.setPortrait(o.getString("figureurl_1"));
-
+            user.setBackground(user.getPortrait());
         } catch (JSONException e) {
             e.printStackTrace();
         }

@@ -13,6 +13,7 @@ import com.tencent.tauth.UiError;
 import com.worldtreestd.finder.bean.User;
 import com.worldtreestd.finder.common.base.mvp.MyApplication;
 import com.worldtreestd.finder.common.base.mvp.activity.BaseActivity;
+import com.worldtreestd.finder.common.utils.DialogUtils;
 import com.worldtreestd.finder.common.utils.LogUtils;
 import com.worldtreestd.finder.common.utils.MD5Util;
 import com.worldtreestd.finder.contract.userinfo.LoginContract;
@@ -91,6 +92,7 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter>
         @Override
         public void onComplete(Object o) {
             if (!isLogin.get()) {
+                DialogUtils.showToast(LoginActivity.this, o.toString());
                 tokenDeal((JSONObject) o);
             } else {
                 mPresenter.login((JSONObject) o,

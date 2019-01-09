@@ -39,4 +39,8 @@ public class Constant {
 
     public static final String JWT = "jwt";
 
+    public static final String JWT_EXPIRE = "EXPIRE";
+
+    public static final String LAST_LOGIN_TIME = "last_login_time";
+
 }
