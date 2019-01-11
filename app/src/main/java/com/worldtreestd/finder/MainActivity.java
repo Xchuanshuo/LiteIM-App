@@ -3,7 +3,7 @@ package com.worldtreestd.finder;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,6 +11,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatTextView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import android.widget.FrameLayout;
 import android.widget.PopupWindow;
 
 import com.worldtreestd.finder.common.base.mvp.activity.BaseActivity;
+import com.worldtreestd.finder.common.utils.ScreenUtils;
 import com.worldtreestd.finder.ui.dynamic.fragment.DynamicFragment;
 import com.worldtreestd.finder.ui.mainpage.fragment.HomeFragment;
 import com.worldtreestd.finder.ui.moreinfo.fragment.MoreInfoFragment;
@@ -107,33 +109,37 @@ public class MainActivity extends BaseActivity {
         mFragments.add(mHomeFragment);
         mFragments.add(mMoreInfoFragment);
         mFragments.add(mDynamicFragment);
-//        new PlaceSelectorDialog(this).show();
         mPortrait.setOnClickListener(v -> startActivity(new Intent(this, UserInfoActivity.class)));
         mFloatButton.setOnClickListener(view->jumpTop(bottomNavigationView.getSelectedItemId()));
     }
+
+    View mView;
 
     @Override
     protected void initEventAndData() {
         super.initEventAndData();
         initPopupWindow();
         mWriteButton.setOnClickListener(v -> {
-            mPopupWindow.showAsDropDown(v, -290, 30);
+            int[] windowPos = ScreenUtils.calculatePopWindowPos(v, mView);
+            mPopupWindow.showAtLocation(v, Gravity.TOP|Gravity.START
+                    , windowPos[0], windowPos[1]+20);
         } );
     }
 
     private void initPopupWindow() {
-        View mView = LayoutInflater.from(this).inflate(R.layout.dynamic_popupwindow, null);
+        mView = LayoutInflater.from(this).inflate(R.layout.dynamic_popupwindow, null);
         mPopupWindow= new PopupWindow(mView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         mPopupWindow.setOutsideTouchable(true);
         mPopupWindow.setFocusable(true);
         //点击 back 键的时候，窗口会自动消失
-        mPopupWindow.setBackgroundDrawable(new BitmapDrawable());
+        mPopupWindow.setBackgroundDrawable(new ColorDrawable());
         mReleasePicture = mView.findViewById(R.id.tv_release_picture);
         mReleasePicture.setOnClickListener(v-> startActivity(new Intent().setClass(this, ReleaseActivity.class).putExtra("TYPE", "3")));
         mReleaseVideo = mView.findViewById(R.id.tv_release_video);
         mReleaseVideo.setOnClickListener(v-> startActivity(new Intent().setClass(this, ReleaseActivity.class).putExtra("TYPE", "4")));
     }
-    
+
+
     @Override
     public boolean showHomeAsUp() {
         return false;
@@ -159,8 +165,6 @@ public class MainActivity extends BaseActivity {
                 break;
         }
     }
-
-
 
     @Override
     protected void onPause() {

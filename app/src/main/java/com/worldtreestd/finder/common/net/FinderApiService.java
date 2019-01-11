@@ -34,7 +34,6 @@ public interface FinderApiService {
     @POST("/user/login")
     Observable<ResultVo<String>> login(@Query("openId") String username,
                                        @Query("password") String password);
-
     /**
      * 用户注册
      * @param requestBody
@@ -52,6 +51,7 @@ public interface FinderApiService {
     @GET("circles/{id}")
     Observable<HomeCircleBean> getCircleDetail(@Path("id") String id);
 
+    
     @GET("courses/")
     Observable<List<CourseBean>> getCourseData(@Query("search") String grade);
 

@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import com.google.android.flexbox.FlexboxLayout;
 import com.worldtreestd.finder.R;
 import com.worldtreestd.finder.common.bean.IFlowDataBean;
-import com.worldtreestd.finder.common.utils.ScreenSizeUtils;
+import com.worldtreestd.finder.common.utils.ScreenUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +42,7 @@ public class FlowLayoutData<T extends IFlowDataBean> {
             FlexboxLayout.LayoutParams layoutParams = new FlexboxLayout.LayoutParams(
                     ViewGroup.LayoutParams.WRAP_CONTENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT);
-            layoutParams.setMargins(ScreenSizeUtils.dip2px(mContext,10), ScreenSizeUtils.dip2px(mContext,10), 6, 0);
+            layoutParams.setMargins(ScreenUtils.dip2px(mContext,10), ScreenUtils.dip2px(mContext,10), 6, 0);
             Random random = new Random();
             Integer[] colors = new Integer[]{R.color.colorAccent,R.color.red,
                     R.color.colorPrimary,R.color.green};

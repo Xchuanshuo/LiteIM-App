@@ -86,7 +86,7 @@ public class LoginPresenter extends BasePresenter<LoginContract.View>
             }
             user.setUsername(o.getString("nickname"));
             user.setPortrait(o.getString("figureurl_1"));
-            user.setBackground(user.getPortrait());
+            user.setBackground(o.getString("figureurl_2"));
         } catch (JSONException e) {
             e.printStackTrace();
         }

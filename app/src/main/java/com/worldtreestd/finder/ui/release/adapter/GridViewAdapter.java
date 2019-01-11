@@ -23,14 +23,13 @@ import java.util.List;
  */
 public class GridViewAdapter extends BaseAdapter {
 
-    //
     private Context mContext;
     private LayoutInflater inflater;
     private List<String> dataList = new ArrayList<>();
-    private int maxCount = 12;
+    private int maxCount = 9;
     private AddClickListener addClickListener;
     private ItemClickListener itemClickListener;
-//
+
     public GridViewAdapter(Context context) {
         this.mContext = context;
 //        this.dataList = list;
@@ -48,16 +47,21 @@ public class GridViewAdapter extends BaseAdapter {
     public void setAddClickListener(AddClickListener addClickListener) {
         this.addClickListener = addClickListener;
     }
-//
-//    public List<MediaEntity> getData() {
-//        return dataList;
-//    }
-//
-    public void setData(List<String> mediaEntityList) {
-        this.dataList = mediaEntityList;
+
+    public List<String> getData() {
+        return dataList;
+    }
+
+    public void setData(List<String> list) {
+        this.dataList = list;
         notifyDataSetChanged();
     }
-//
+
+    public void addData(List<String> list) {
+        dataList.addAll(list);
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getCount() {
         int count = dataList.size()==0? 1: dataList.size()+1;
@@ -106,7 +110,7 @@ public class GridViewAdapter extends BaseAdapter {
 
         return convertView;
     }
-//
+
     public interface AddClickListener {
         void onAddClickListener(View view);
     }
