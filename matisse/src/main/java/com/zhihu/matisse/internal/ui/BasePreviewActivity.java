@@ -18,6 +18,7 @@ package com.zhihu.matisse.internal.ui;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
@@ -29,6 +30,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.yalantis.ucrop.UCrop;
 import com.zhihu.matisse.R;
 import com.zhihu.matisse.internal.entity.IncapableCause;
 import com.zhihu.matisse.internal.entity.Item;
@@ -38,9 +40,14 @@ import com.zhihu.matisse.internal.ui.adapter.PreviewPagerAdapter;
 import com.zhihu.matisse.internal.ui.widget.CheckRadioView;
 import com.zhihu.matisse.internal.ui.widget.CheckView;
 import com.zhihu.matisse.internal.ui.widget.IncapableDialog;
+import com.zhihu.matisse.internal.utils.PathUtils;
 import com.zhihu.matisse.internal.utils.PhotoMetadataUtils;
 import com.zhihu.matisse.internal.utils.Platform;
 import com.zhihu.matisse.listener.OnFragmentInteractionListener;
+
+import java.io.File;
+
+import static com.yalantis.ucrop.UCrop.REQUEST_CROP;
 
 public abstract class BasePreviewActivity extends AppCompatActivity implements View.OnClickListener,
         ViewPager.OnPageChangeListener, OnFragmentInteractionListener {
@@ -51,6 +58,9 @@ public abstract class BasePreviewActivity extends AppCompatActivity implements V
     public static final String EXTRA_RESULT_APPLY = "extra_result_apply";
     public static final String EXTRA_RESULT_ORIGINAL_ENABLE = "extra_result_original_enable";
     public static final String CHECK_STATE = "checkState";
+    // 当前被选中剪裁的position
+    public static final String CURRENT_SELECTED = "current_selected";
+    public static final Integer CROP_SUCCESS = 201;
 
     protected final SelectedItemCollection mSelectedCollection = new SelectedItemCollection(this);
     protected SelectionSpec mSpec;
@@ -61,6 +71,8 @@ public abstract class BasePreviewActivity extends AppCompatActivity implements V
     protected CheckView mCheckView;
     protected TextView mButtonBack;
     protected TextView mButtonApply;
+    // 剪裁
+    protected TextView mTextViewCrop;
     protected TextView mSize;
 
     protected int mPreviousPos = -1;
@@ -101,9 +113,11 @@ public abstract class BasePreviewActivity extends AppCompatActivity implements V
         }
         mButtonBack = (TextView) findViewById(R.id.button_back);
         mButtonApply = (TextView) findViewById(R.id.button_apply);
+        mTextViewCrop = (TextView) findViewById(R.id.tv_crop);
         mSize = (TextView) findViewById(R.id.size);
         mButtonBack.setOnClickListener(this);
         mButtonApply.setOnClickListener(this);
+        mTextViewCrop.setOnClickListener(this);
 
         mPager = (ViewPager) findViewById(R.id.pager);
         mPager.addOnPageChangeListener(this);
@@ -197,7 +211,37 @@ public abstract class BasePreviewActivity extends AppCompatActivity implements V
         } else if (v.getId() == R.id.button_apply) {
             sendBackResult(true);
             finish();
+        } else if (v.getId() == R.id.tv_crop) {
+            Item item = mAdapter.getMediaItem(mPager.getCurrentItem());
+            item.setPath(PathUtils.getPath(this, item.uri));
+            File file = new File(item.getPath());
+            startCrop(file);
         }
+    }
+
+    private void startCrop(File file) {
+        UCrop.Options options = new UCrop.Options();
+        options.setToolbarColor(getResources().getColor(R.color.zhihu_primary));
+        options.setStatusBarColor(getResources().getColor(R.color.zhihu_primary));
+        UCrop.of(Uri.fromFile(file), Uri.fromFile(new File(getCacheDir(),System.currentTimeMillis() + ".jpg")))
+                // 长宽比
+                .withAspectRatio(1, 1)
+                // 图片大小
+                .withMaxResultSize(200, 200)
+                .withOptions(options)
+                // 配置参数
+                .start(this);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CROP && resultCode == RESULT_OK) {
+            data.putExtra(CURRENT_SELECTED, mPager.getCurrentItem());
+            setResult(CROP_SUCCESS, data);
+            finish();
+        }
+
     }
 
     @Override
@@ -332,8 +376,10 @@ public abstract class BasePreviewActivity extends AppCompatActivity implements V
         if (item.isGif()) {
             mSize.setVisibility(View.VISIBLE);
             mSize.setText(PhotoMetadataUtils.getSizeInMB(item.size) + "M");
+            mTextViewCrop.setVisibility(View.GONE);
         } else {
             mSize.setVisibility(View.GONE);
+            mTextViewCrop.setVisibility(View.VISIBLE);
         }
 
         if (item.isVideo()) {

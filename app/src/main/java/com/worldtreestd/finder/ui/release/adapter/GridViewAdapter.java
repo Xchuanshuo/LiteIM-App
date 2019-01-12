@@ -65,6 +65,13 @@ public class GridViewAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
+    public void updateData(int position, Item item) {
+        if (dataList.size()>position) {
+            dataList.set(position, item);
+            notifyDataSetChanged();
+        }
+    }
+
     @Override
     public int getCount() {
         int count = dataList.size()==0? 1: dataList.size()+1;
@@ -72,7 +79,7 @@ public class GridViewAdapter extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int position) {
+    public Item getItem(int position) {
         return dataList.get(position);
     }
 
@@ -96,7 +103,7 @@ public class GridViewAdapter extends BaseAdapter {
             GlideUtil.loadImage(mContext, file, viewHolder.mImageView);
             viewHolder.mDeleteButton.setVisibility(View.VISIBLE);
             ViewHolder finalViewHolder = viewHolder;
-            viewHolder.mImageView.setOnClickListener(v -> itemClickListener.onItemClickListener(position, finalViewHolder.mImageView));
+            viewHolder.mImageView.setOnClickListener(v -> itemClickListener.onItemClickListener(position, file));
             viewHolder.mDeleteButton.setOnClickListener(v -> {
                 dataList.remove(position);
                 if (file.exists()) {
@@ -120,7 +127,7 @@ public class GridViewAdapter extends BaseAdapter {
     }
 
     public interface ItemClickListener {
-        void onItemClickListener(int position, ImageView view);
+        void onItemClickListener(int position, File file);
     }
 
 //    public List<ImageView> imageViewList() {

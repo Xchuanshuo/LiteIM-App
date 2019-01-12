@@ -61,6 +61,7 @@ import static android.content.pm.ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED;
 import static android.content.pm.ActivityInfo.SCREEN_ORIENTATION_USER;
 import static android.content.pm.ActivityInfo.SCREEN_ORIENTATION_USER_LANDSCAPE;
 import static android.content.pm.ActivityInfo.SCREEN_ORIENTATION_USER_PORTRAIT;
+import static com.yalantis.ucrop.UCrop.REQUEST_CROP;
 import static com.zhihu.matisse.internal.model.SelectedItemCollection.STATE_SELECTION;
 
 /**
@@ -372,7 +373,13 @@ public final class SelectionCreator {
         bundle.putString(BasePreviewActivity.EXTRA_CURRENT_SELECTED, position+"");
         Intent intent = new Intent(activity, SelectedPreviewActivity.class);
         intent.putExtra(BasePreviewActivity.EXTRA_DEFAULT_BUNDLE, bundle);
-        activity.startActivity(intent);
+        Fragment fragment = mMatisse.getFragment();
+        if (fragment != null) {
+            fragment.startActivityForResult(intent, REQUEST_CROP);
+        } else {
+            activity.startActivityForResult(intent, REQUEST_CROP);
+        }
+
 //        intent.putExtra(BasePreviewActivity.EXTRA_RESULT_ORIGINAL_ENABLE, mOriginalEnable);
 //        activity.startActivityForResult(intent, 23);
     }

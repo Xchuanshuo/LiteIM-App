@@ -96,9 +96,18 @@
                 android:textColor="@color/preview_bottom_size"
                 android:textSize="16sp"
                 android:visibility="gone"/>
+
+            <TextView
+                android:id="@+id/tv_crop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                android:text="剪裁"
+                />
+
         </LinearLayout>
-
-
 
         <TextView
             android:id="@+id/button_apply"

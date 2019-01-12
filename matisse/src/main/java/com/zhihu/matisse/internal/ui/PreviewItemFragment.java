@@ -40,6 +40,7 @@ public class PreviewItemFragment extends Fragment {
 
     private static final String ARGS_ITEM = "args_item";
     private OnFragmentInteractionListener mListener;
+    private View mView;
 
     public static PreviewItemFragment newInstance(Item item) {
         PreviewItemFragment fragment = new PreviewItemFragment();
@@ -108,7 +109,6 @@ public class PreviewItemFragment extends Fragment {
             ((ImageViewTouch) getView().findViewById(R.id.image_view)).resetMatrix();
         }
     }
-
 
     @Override
     public void onAttach(Context context) {

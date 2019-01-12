@@ -19,7 +19,6 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.zhihu.matisse.R;
 import com.zhihu.matisse.internal.entity.IncapableCause;
@@ -70,10 +69,7 @@ public class SelectedItemCollection {
             mItems = new LinkedHashSet<>();
         } else {
             List<Item> saved = bundle.getParcelableArrayList(STATE_SELECTION);
-            if (saved != null) {
-                mItems = new LinkedHashSet<>(saved);
-            }
-            Log.d("Selected--------c", alreadySelected+"");
+            mItems = new LinkedHashSet<>(saved);
             mCollectionType = bundle.getInt(STATE_COLLECTION_TYPE, COLLECTION_UNDEFINED);
         }
     }

@@ -23,6 +23,7 @@ import android.support.v4.app.Fragment;
 import android.util.Log;
 
 import com.zhihu.matisse.internal.entity.Item;
+import com.zhihu.matisse.internal.ui.BasePreviewActivity;
 import com.zhihu.matisse.ui.MatisseActivity;
 
 import java.lang.ref.WeakReference;
@@ -106,6 +107,16 @@ public final class Matisse {
     public static List<Item> obtainItemResult(Intent data) {
         Log.d("ItemsItemsItems", data+"");
         return data.getParcelableArrayListExtra(MatisseActivity.EXTRA_RESULT_SELECTION_ITEM);
+    }
+
+    /**
+     * 获取当前被选中的position
+     * @param data
+     * @return
+     */
+    public static Integer obtainCurPosition(Intent data) {
+        Log.d("selected-crop-position", data+"");
+        return data.getIntExtra(BasePreviewActivity.CURRENT_SELECTED, 0);
     }
 
     /**

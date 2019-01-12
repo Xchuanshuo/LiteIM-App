@@ -61,6 +61,8 @@ dependencies {
     // media
     implementation "com.byc:ImageWatcher:$rootProject.imageWatcherVersion"
     implementation "cn.jzvd:jiaozivideoplayer:$rootProject.videoplayerVersion"
+    implementation 'com.github.yalantis:ucrop:2.2.2'
+//    implementation 'com.theartofdev.edmodo:android-image-cropper:2.8.0'
 
     //    implementation "com.zhihu.android:matisse:$matisseVersion"
 

@@ -2,6 +2,7 @@ package com.worldtreestd.finder.ui.release.fragment;
 
 import android.Manifest;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
@@ -13,15 +14,24 @@ import com.worldtreestd.finder.R;
 import com.worldtreestd.finder.common.base.mvp.fragment.BaseFragment;
 import com.worldtreestd.finder.common.utils.DialogUtils;
 import com.worldtreestd.finder.common.utils.ImageDisposeUtils;
+import com.worldtreestd.finder.common.utils.LogUtils;
 import com.worldtreestd.finder.common.widget.Glide4Engine;
 import com.worldtreestd.finder.contract.release.PictureTextContract;
 import com.worldtreestd.finder.presenter.release.PictureTextPresenter;
 import com.worldtreestd.finder.ui.release.adapter.GridViewAdapter;
+import com.yalantis.ucrop.UCrop;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
+import com.zhihu.matisse.internal.entity.Item;
+import com.zhihu.matisse.internal.utils.PathUtils;
+
+import java.io.File;
 
 import butterknife.BindView;
 import byc.imagewatcher.ImageWatcher;
+
+import static com.yalantis.ucrop.UCrop.REQUEST_CROP;
+import static com.zhihu.matisse.internal.ui.BasePreviewActivity.CROP_SUCCESS;
 
 /**
  * @author Legend
@@ -37,6 +47,7 @@ public class PictureTextFragment extends BaseFragment<PictureTextContract.Presen
     AppCompatEditText mEditText;
     @BindView(R.id.grid_view)
     GridView mGridView;
+    private int curPosition = 0;
     GridViewAdapter mAdapter;
     ImageWatcher mImageWatcher;
     RxPermissions rxPermissions;
@@ -61,14 +72,31 @@ public class PictureTextFragment extends BaseFragment<PictureTextContract.Presen
         rxPermissions = new RxPermissions(this);
         mAdapter = new GridViewAdapter(getContext());
         mGridView.setAdapter(mAdapter);
-        mAdapter.setOnItemClickListener((position, view) -> {
+        mAdapter.setOnItemClickListener((position, file) -> {
             if (mAdapter.getData().size()>0) {
-                Matisse.from(_mActivity).choose(MimeType.ofImage())
+                // 设置源uri及目标uri
+                curPosition = position;
+//                startCrop(file);
+                Matisse.from(this).choose(MimeType.ofImage())
                         .imageEngine(new Glide4Engine())
                         .forPreView(mAdapter.getData(), position);
             }
         });
         mAdapter.setAddClickListener(this);
+    }
+
+    private void startCrop(File file) {
+        UCrop.Options options = new UCrop.Options();
+        options.setToolbarColor(getResources().getColor(R.color.colorPrimary));
+        options.setStatusBarColor(getResources().getColor(R.color.colorPrimary));
+        UCrop.of(Uri.fromFile(file), Uri.fromFile(new File(_mActivity.getCacheDir(),System.currentTimeMillis() + ".jpg")))
+                // 长宽比
+                .withAspectRatio(1, 1)
+                // 图片大小
+                .withMaxResultSize(200, 200)
+                .withOptions(options)
+                // 配置参数
+                .start(getContext(), this);
     }
 
     private void operationMedia(int count) {
@@ -85,6 +113,14 @@ public class PictureTextFragment extends BaseFragment<PictureTextContract.Presen
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_CHOOSE && resultCode == RESULT_OK) {
             mAdapter.addData(Matisse.obtainItemResult(data));
+        } else if (requestCode == REQUEST_CROP && resultCode == CROP_SUCCESS) {
+            this.curPosition = Matisse.obtainCurPosition(data);
+            final Uri originUri = UCrop.getOutput(data);
+            LogUtils.logD(this, "Result----Uri---"+originUri.toString());
+            Item item = mAdapter.getItem(curPosition);
+            item.uri = originUri;
+            item.setPath(PathUtils.getPath(_mActivity, originUri));
+            mAdapter.notifyDataSetChanged();
         }
     }
 
