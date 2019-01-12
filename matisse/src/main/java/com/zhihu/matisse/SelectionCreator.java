@@ -30,8 +30,11 @@ import android.support.v4.app.Fragment;
 import com.zhihu.matisse.engine.ImageEngine;
 import com.zhihu.matisse.filter.Filter;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
+import com.zhihu.matisse.internal.entity.Item;
 import com.zhihu.matisse.internal.entity.SelectionSpec;
 import com.zhihu.matisse.internal.model.SelectedItemCollection;
+import com.zhihu.matisse.internal.ui.BasePreviewActivity;
+import com.zhihu.matisse.internal.ui.SelectedPreviewActivity;
 import com.zhihu.matisse.listener.OnCheckedListener;
 import com.zhihu.matisse.listener.OnSelectedListener;
 import com.zhihu.matisse.ui.MatisseActivity;
@@ -39,6 +42,7 @@ import com.zhihu.matisse.ui.MatisseActivity;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import static android.content.pm.ActivityInfo.SCREEN_ORIENTATION_BEHIND;
@@ -57,6 +61,7 @@ import static android.content.pm.ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED;
 import static android.content.pm.ActivityInfo.SCREEN_ORIENTATION_USER;
 import static android.content.pm.ActivityInfo.SCREEN_ORIENTATION_USER_LANDSCAPE;
 import static android.content.pm.ActivityInfo.SCREEN_ORIENTATION_USER_PORTRAIT;
+import static com.zhihu.matisse.internal.model.SelectedItemCollection.STATE_SELECTION;
 
 /**
  * Fluent API for building media select specification.
@@ -355,6 +360,21 @@ public final class SelectionCreator {
     public SelectionCreator selectedCount(int count) {
         this.alreadyCount = count;
         return this;
+    }
+
+    public void forPreView(List<Item> items, int position) {
+        Activity activity = mMatisse.getActivity();
+        if (activity == null) {
+            return;
+        }
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList(STATE_SELECTION, new ArrayList<>(items));
+        bundle.putString(BasePreviewActivity.EXTRA_CURRENT_SELECTED, position+"");
+        Intent intent = new Intent(activity, SelectedPreviewActivity.class);
+        intent.putExtra(BasePreviewActivity.EXTRA_DEFAULT_BUNDLE, bundle);
+        activity.startActivity(intent);
+//        intent.putExtra(BasePreviewActivity.EXTRA_RESULT_ORIGINAL_ENABLE, mOriginalEnable);
+//        activity.startActivityForResult(intent, 23);
     }
 
 

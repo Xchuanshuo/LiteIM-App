@@ -20,7 +20,9 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 
+import com.zhihu.matisse.internal.entity.Item;
 import com.zhihu.matisse.ui.MatisseActivity;
 
 import java.lang.ref.WeakReference;
@@ -94,6 +96,16 @@ public final class Matisse {
      */
     public static List<String> obtainPathResult(Intent data) {
         return data.getStringArrayListExtra(MatisseActivity.EXTRA_RESULT_SELECTION_PATH);
+    }
+
+    /**
+     * 获取包裹媒体资源的item列表
+     * @param data
+     * @return
+     */
+    public static List<Item> obtainItemResult(Intent data) {
+        Log.d("ItemsItemsItems", data+"");
+        return data.getParcelableArrayListExtra(MatisseActivity.EXTRA_RESULT_SELECTION_ITEM);
     }
 
     /**

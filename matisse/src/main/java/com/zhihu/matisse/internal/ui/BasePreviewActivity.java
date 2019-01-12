@@ -45,6 +45,7 @@ import com.zhihu.matisse.listener.OnFragmentInteractionListener;
 public abstract class BasePreviewActivity extends AppCompatActivity implements View.OnClickListener,
         ViewPager.OnPageChangeListener, OnFragmentInteractionListener {
 
+    public static final String EXTRA_CURRENT_SELECTED = "extra_current_selected";
     public static final String EXTRA_DEFAULT_BUNDLE = "extra_default_bundle";
     public static final String EXTRA_RESULT_BUNDLE = "extra_result_bundle";
     public static final String EXTRA_RESULT_APPLY = "extra_result_apply";

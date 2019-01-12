@@ -2,7 +2,6 @@ package com.worldtreestd.finder.ui.release.fragment;
 
 import android.Manifest;
 import android.content.Intent;
-import android.net.Uri;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
@@ -13,6 +12,7 @@ import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.worldtreestd.finder.R;
 import com.worldtreestd.finder.common.base.mvp.fragment.BaseFragment;
 import com.worldtreestd.finder.common.utils.DialogUtils;
+import com.worldtreestd.finder.common.utils.ImageDisposeUtils;
 import com.worldtreestd.finder.common.widget.Glide4Engine;
 import com.worldtreestd.finder.contract.release.PictureTextContract;
 import com.worldtreestd.finder.presenter.release.PictureTextPresenter;
@@ -20,10 +20,8 @@ import com.worldtreestd.finder.ui.release.adapter.GridViewAdapter;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import butterknife.BindView;
+import byc.imagewatcher.ImageWatcher;
 
 /**
  * @author Legend
@@ -40,7 +38,7 @@ public class PictureTextFragment extends BaseFragment<PictureTextContract.Presen
     @BindView(R.id.grid_view)
     GridView mGridView;
     GridViewAdapter mAdapter;
-    private List<Uri> mSelectedImages = new ArrayList<>();
+    ImageWatcher mImageWatcher;
     RxPermissions rxPermissions;
     private static final int REQUEST_CODE_CHOOSE = 100;
 
@@ -57,6 +55,7 @@ public class PictureTextFragment extends BaseFragment<PictureTextContract.Presen
     @Override
     protected void initEventAndData() {
         super.initEventAndData();
+        mImageWatcher = ImageDisposeUtils.getWatcher(_mActivity);
         PlaceSelectorDialog selectorDialog = new PlaceSelectorDialog(getContext(), mSelectAddress);
         mSelectAddress.setOnClickListener(v -> selectorDialog.show());
         rxPermissions = new RxPermissions(this);
@@ -64,6 +63,9 @@ public class PictureTextFragment extends BaseFragment<PictureTextContract.Presen
         mGridView.setAdapter(mAdapter);
         mAdapter.setOnItemClickListener((position, view) -> {
             if (mAdapter.getData().size()>0) {
+                Matisse.from(_mActivity).choose(MimeType.ofImage())
+                        .imageEngine(new Glide4Engine())
+                        .forPreView(mAdapter.getData(), position);
             }
         });
         mAdapter.setAddClickListener(this);
@@ -74,7 +76,6 @@ public class PictureTextFragment extends BaseFragment<PictureTextContract.Presen
                 .countable(true).maxSelectable(9)
                 .thumbnailScale(0.85f)
                 .imageEngine(new Glide4Engine())
-                .maxOriginalSize(5)
                 .selectedCount(count)
                 .forResult(REQUEST_CODE_CHOOSE);
     }
@@ -83,7 +84,7 @@ public class PictureTextFragment extends BaseFragment<PictureTextContract.Presen
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_CHOOSE && resultCode == RESULT_OK) {
-            mAdapter.addData(Matisse.obtainPathResult(data));
+            mAdapter.addData(Matisse.obtainItemResult(data));
         }
     }
 
@@ -101,6 +102,9 @@ public class PictureTextFragment extends BaseFragment<PictureTextContract.Presen
 
     @Override
     public boolean onBackPressedSupport() {
+        if (mImageWatcher.handleBackPressed()) {
+            return true;
+        }
         return false;
     }
 

@@ -3,6 +3,7 @@ package com.worldtreestd.finder.ui.release.adapter;
 import android.content.Context;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatImageView;
+import android.util.ArrayMap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 
 import com.worldtreestd.finder.R;
 import com.worldtreestd.finder.common.utils.GlideUtil;
+import com.zhihu.matisse.internal.entity.Item;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -23,9 +25,10 @@ import java.util.List;
  */
 public class GridViewAdapter extends BaseAdapter {
 
+    private ArrayMap<View, ViewHolder> viewArrayMap = new ArrayMap<>();
     private Context mContext;
     private LayoutInflater inflater;
-    private List<String> dataList = new ArrayList<>();
+    private List<Item> dataList = new ArrayList<>();
     private int maxCount = 9;
     private AddClickListener addClickListener;
     private ItemClickListener itemClickListener;
@@ -48,16 +51,16 @@ public class GridViewAdapter extends BaseAdapter {
         this.addClickListener = addClickListener;
     }
 
-    public List<String> getData() {
+    public List<Item> getData() {
         return dataList;
     }
 
-    public void setData(List<String> list) {
+    public void setData(List<Item> list) {
         this.dataList = list;
         notifyDataSetChanged();
     }
 
-    public void addData(List<String> list) {
+    public void addData(List<Item> list) {
         dataList.addAll(list);
         notifyDataSetChanged();
     }
@@ -89,25 +92,26 @@ public class GridViewAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         if (position<dataList.size()) {
-            final File file = new File(dataList.get(position));
+            final File file = new File(dataList.get(position).getPath());
             GlideUtil.loadImage(mContext, file, viewHolder.mImageView);
             viewHolder.mDeleteButton.setVisibility(View.VISIBLE);
-            viewHolder.mImageView.setOnClickListener(v -> itemClickListener.onItemClickListener(position, v));
+            ViewHolder finalViewHolder = viewHolder;
+            viewHolder.mImageView.setOnClickListener(v -> itemClickListener.onItemClickListener(position, finalViewHolder.mImageView));
             viewHolder.mDeleteButton.setOnClickListener(v -> {
+                dataList.remove(position);
                 if (file.exists()) {
                     file.delete();
                 }
-                dataList.remove(position);
-                notifyDataSetChanged();
+                notifyDataSetInvalidated();
             });
-
         } else {
-            GlideUtil.loadImage(mContext, R.mipmap.ic_add, viewHolder.mImageView);
-            viewHolder.mImageView.setScaleType(ImageView.ScaleType.FIT_XY);
-            viewHolder.mDeleteButton.setVisibility(View.GONE);
-            viewHolder.mImageView.setOnClickListener(v -> addClickListener.onAddClickListener(v));
+            if (viewHolder != null) {
+                GlideUtil.loadImage(mContext, R.mipmap.ic_add, viewHolder.mImageView);
+                viewHolder.mImageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                viewHolder.mDeleteButton.setVisibility(View.GONE);
+                viewHolder.mImageView.setOnClickListener(v -> addClickListener.onAddClickListener(v));
+            }
         }
-
         return convertView;
     }
 
@@ -116,8 +120,19 @@ public class GridViewAdapter extends BaseAdapter {
     }
 
     public interface ItemClickListener {
-        void onItemClickListener(int position, View view);
+        void onItemClickListener(int position, ImageView view);
     }
+
+//    public List<ImageView> imageViewList() {
+//        LogUtils.logD(this, viewArrayMap.toString()+"");
+//        List<ImageView> list = new ArrayList<>();
+//        for (ViewHolder holder: viewArrayMap.values()) {
+//            list.add(holder.mImageView);
+//        }
+//        list.remove(list.size()-1);
+//        list.remove(list.size()-1);
+//        return list;
+//    }
 
     static class ViewHolder {
         AppCompatImageView mImageView;

@@ -168,6 +168,15 @@ public class SelectedItemCollection {
         return paths;
     }
 
+    public ArrayList<Item> asListSelf() {
+        ArrayList<Item> items = new ArrayList<>();
+        for (Item item: mItems) {
+            item.setPath(PathUtils.getPath(mContext, item.getContentUri()));
+            items.add(item);
+        }
+        return items;
+    }
+
     public boolean isEmpty() {
         return mItems == null || mItems.isEmpty();
     }

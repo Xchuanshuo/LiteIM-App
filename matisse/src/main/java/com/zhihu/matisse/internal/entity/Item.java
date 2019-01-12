@@ -46,6 +46,7 @@ public class Item implements Parcelable {
     public final Uri uri;
     public final long size;
     public final long duration; // only for video, in ms
+    private String path = "";
 
     private Item(long id, String mimeType, long size, long duration) {
         this.id = id;
@@ -70,6 +71,7 @@ public class Item implements Parcelable {
         uri = source.readParcelable(Uri.class.getClassLoader());
         size = source.readLong();
         duration = source.readLong();
+        path = source.readString();
     }
 
     public static Item valueOf(Cursor cursor) {
@@ -91,10 +93,19 @@ public class Item implements Parcelable {
         dest.writeParcelable(uri, 0);
         dest.writeLong(size);
         dest.writeLong(duration);
+        dest.writeString(path);
     }
 
     public Uri getContentUri() {
         return uri;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public String getPath() {
+        return path;
     }
 
     public boolean isCapture() {

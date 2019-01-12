@@ -71,6 +71,7 @@ public class MatisseActivity extends AppCompatActivity implements
 
     public static final String EXTRA_RESULT_SELECTION = "extra_result_selection";
     public static final String EXTRA_RESULT_SELECTION_PATH = "extra_result_selection_path";
+    public static final String EXTRA_RESULT_SELECTION_ITEM= "extra_result_items";
     public static final String EXTRA_RESULT_ORIGINAL_ENABLE = "extra_result_original_enable";
     private static final int REQUEST_CODE_PREVIEW = 23;
     private static final int REQUEST_CODE_CAPTURE = 24;
@@ -205,12 +206,16 @@ public class MatisseActivity extends AppCompatActivity implements
                 ArrayList<String> selectedPaths = new ArrayList<>();
                 if (selected != null) {
                     for (Item item : selected) {
+                        item.setPath(PathUtils.getPath(this, item.getContentUri()));
                         selectedUris.add(item.getContentUri());
-                        selectedPaths.add(PathUtils.getPath(this, item.getContentUri()));
+                        selectedPaths.add(item.getPath());
                     }
                 }
                 result.putParcelableArrayListExtra(EXTRA_RESULT_SELECTION, selectedUris);
                 result.putStringArrayListExtra(EXTRA_RESULT_SELECTION_PATH, selectedPaths);
+                // item列表传过去
+                result.putParcelableArrayListExtra(EXTRA_RESULT_SELECTION_ITEM, selected);
+                Log.d("Result----------asa", selected.toString());
                 result.putExtra(EXTRA_RESULT_ORIGINAL_ENABLE, mOriginalEnable);
                 setResult(RESULT_OK, result);
                 finish();
@@ -315,6 +320,9 @@ public class MatisseActivity extends AppCompatActivity implements
             Intent result = new Intent();
             ArrayList<Uri> selectedUris = (ArrayList<Uri>) mSelectedCollection.asListOfUri();
             result.putParcelableArrayListExtra(EXTRA_RESULT_SELECTION, selectedUris);
+            // items
+            ArrayList<Item> selectedItems = mSelectedCollection.asListSelf();
+            result.putParcelableArrayListExtra(EXTRA_RESULT_SELECTION_ITEM, selectedItems);
             ArrayList<String> selectedPaths = (ArrayList<String>) mSelectedCollection.asListOfString();
             result.putStringArrayListExtra(EXTRA_RESULT_SELECTION_PATH, selectedPaths);
             result.putExtra(EXTRA_RESULT_ORIGINAL_ENABLE, mOriginalEnable);

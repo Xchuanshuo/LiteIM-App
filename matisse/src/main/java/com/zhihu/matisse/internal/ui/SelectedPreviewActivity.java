@@ -17,6 +17,7 @@ package com.zhihu.matisse.internal.ui;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 
 import com.zhihu.matisse.internal.entity.Item;
 import com.zhihu.matisse.internal.entity.SelectionSpec;
@@ -45,7 +46,11 @@ public class SelectedPreviewActivity extends BasePreviewActivity {
             mCheckView.setChecked(true);
         }
         mPreviousPos = 0;
+        String position = bundle.getString(BasePreviewActivity.EXTRA_CURRENT_SELECTED);
         updateSize(selected.get(0));
+        if (!TextUtils.isEmpty(position)) {
+            mPager.setCurrentItem(Integer.parseInt(position));
+        }
     }
 
 }

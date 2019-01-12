@@ -35,9 +35,8 @@ import static com.worldtreestd.finder.common.base.mvp.StatusType.REFRESH_SUCCESS
  * @description
  */
 public class DynamicFragment extends BaseFragment<DynamicContract.Presenter>
-    implements DynamicContract.View, ImageWatcher.OnPictureLongPressListener, MultiPictureLayout.Callback {
+    implements DynamicContract.View, MultiPictureLayout.Callback {
 
-//    @BindView(R.id.image_watcher)
     ImageWatcher mImageWatcher;
     private List<CommonMultiBean<DynamicBean>> dynamicBeanList = new ArrayList<>();
 
@@ -105,11 +104,6 @@ public class DynamicFragment extends BaseFragment<DynamicContract.Presenter>
             dynamicBeanList = TestDataUtils.getDynamicData();
             setLoadDataResult(dynamicBeanList, REFRESH_SUCCESS);
         }
-    }
-
-    @Override
-    public void onPictureLongPress(ImageView v, String url, int pos) {
-
     }
 
     @Override
