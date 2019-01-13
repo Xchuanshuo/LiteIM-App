@@ -19,6 +19,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.database.Cursor;
+import android.database.MatrixCursor;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -26,6 +27,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
@@ -38,6 +40,7 @@ import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.R;
 import com.zhihu.matisse.internal.entity.Album;
 import com.zhihu.matisse.internal.entity.Item;
@@ -58,6 +61,8 @@ import com.zhihu.matisse.internal.utils.PathUtils;
 import com.zhihu.matisse.internal.utils.PhotoMetadataUtils;
 
 import java.util.ArrayList;
+
+import static com.zhihu.matisse.internal.ui.BasePreviewActivity.CAPTURE_ID;
 
 /**
  * Main Activity to display albums and media content (images/videos) in each album
@@ -91,6 +96,14 @@ public class MatisseActivity extends AppCompatActivity implements
     private LinearLayout mOriginalLayout;
     private CheckRadioView mOriginal;
     private boolean mOriginalEnable;
+
+    private final String[] IMAGE_PROJECTION = new String[] {
+            MediaStore.Images.Media._ID, // Id
+            MediaStore.Images.Media.MIME_TYPE,
+            MediaStore.Images.Media.SIZE,
+            "duration", // 图片的创建时间
+            MediaStore.Images.Media.DATA
+    };
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -236,15 +249,34 @@ public class MatisseActivity extends AppCompatActivity implements
             selected.add(contentUri);
             ArrayList<String> selectedPath = new ArrayList<>();
             selectedPath.add(path);
+            ArrayList<Item> selectedItem = new ArrayList<>();
+            Item item = Item.valueOf(buildCursor(path));
+            item.uri = contentUri;
+            item.setPath(path);
+            selectedItem.add(item);
             Intent result = new Intent();
             result.putParcelableArrayListExtra(EXTRA_RESULT_SELECTION, selected);
             result.putStringArrayListExtra(EXTRA_RESULT_SELECTION_PATH, selectedPath);
+            result.putParcelableArrayListExtra(EXTRA_RESULT_SELECTION_ITEM, selectedItem);
             setResult(RESULT_OK, result);
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
                 MatisseActivity.this.revokeUriPermission(contentUri,
                         Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
             finish();
         }
+    }
+
+    private Cursor buildCursor(String path) {
+        MatrixCursor cursor = new MatrixCursor(IMAGE_PROJECTION);
+        cursor.moveToFirst();
+        Object[] values = new Object[5];
+        values[0] = CAPTURE_ID;
+        values[1] = MimeType.JPEG.toString();
+        values[2] = 1024;
+        values[3] = System.currentTimeMillis();
+        values[4] = path;
+        cursor.addRow(values);
+        return cursor;
     }
 
     private void updateBottomToolbar() {

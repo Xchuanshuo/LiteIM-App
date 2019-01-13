@@ -81,6 +81,13 @@ public class Item implements Parcelable {
                 cursor.getLong(cursor.getColumnIndex("duration")));
     }
 
+    public static Item newInstance(Uri uri, String path) {
+        Item item = new Item(0, MimeType.JPEG.toString(), 1024, System.currentTimeMillis());
+        item.uri = uri;
+        item.path = path;
+        return item;
+    }
+
     @Override
     public int describeContents() {
         return 0;

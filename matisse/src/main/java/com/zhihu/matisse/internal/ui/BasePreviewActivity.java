@@ -62,6 +62,8 @@ public abstract class BasePreviewActivity extends AppCompatActivity implements V
     public static final String CURRENT_SELECTED = "current_selected";
     public static final Integer CROP_SUCCESS = 201;
 
+    public static final Integer CAPTURE_ID = -10;
+
     protected final SelectedItemCollection mSelectedCollection = new SelectedItemCollection(this);
     protected SelectionSpec mSpec;
     protected ViewPager mPager;
@@ -213,7 +215,9 @@ public abstract class BasePreviewActivity extends AppCompatActivity implements V
             finish();
         } else if (v.getId() == R.id.tv_crop) {
             Item item = mAdapter.getMediaItem(mPager.getCurrentItem());
-            item.setPath(PathUtils.getPath(this, item.uri));
+            if (item.id != CAPTURE_ID) {
+                item.setPath(PathUtils.getPath(this, item.uri));
+            }
             File file = new File(item.getPath());
             startCrop(file);
         }
@@ -237,6 +241,10 @@ public abstract class BasePreviewActivity extends AppCompatActivity implements V
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CROP && resultCode == RESULT_OK) {
+//            Item item = mAdapter.getMediaItem(mPager.getCurrentItem());
+//            item.uri = UCrop.getOutput(data);
+//            item.setPath(PathUtils.getPath(this, item.uri));
+//            mAdapter.notifyDataSetChanged();
             data.putExtra(CURRENT_SELECTED, mPager.getCurrentItem());
             setResult(CROP_SUCCESS, data);
             finish();

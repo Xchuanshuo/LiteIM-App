@@ -36,6 +36,8 @@ import com.zhihu.matisse.listener.OnFragmentInteractionListener;
 import it.sephiroth.android.library.imagezoom.ImageViewTouch;
 import it.sephiroth.android.library.imagezoom.ImageViewTouchBase;
 
+import static com.zhihu.matisse.internal.ui.BasePreviewActivity.CAPTURE_ID;
+
 public class PreviewItemFragment extends Fragment {
 
     private static final String ARGS_ITEM = "args_item";
@@ -93,8 +95,12 @@ public class PreviewItemFragment extends Fragment {
                 }
             }
         });
-
-        Point size = PhotoMetadataUtils.getBitmapSize(item.getContentUri(), getActivity());
+        Point size;
+        if (item.id == CAPTURE_ID) {
+            size = PhotoMetadataUtils.getBitmapSize(item.getPath(), getActivity());
+        } else {
+            size = PhotoMetadataUtils.getBitmapSize(item.getContentUri(), getActivity());
+        }
         if (item.isGif()) {
             SelectionSpec.getInstance().imageEngine.loadGifImage(getContext(), size.x, size.y, image,
                     item.getContentUri());

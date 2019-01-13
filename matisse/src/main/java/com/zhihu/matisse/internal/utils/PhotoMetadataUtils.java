@@ -25,16 +25,18 @@ import android.graphics.Point;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.R;
 import com.zhihu.matisse.filter.Filter;
+import com.zhihu.matisse.internal.entity.IncapableCause;
 import com.zhihu.matisse.internal.entity.Item;
 import com.zhihu.matisse.internal.entity.SelectionSpec;
-import com.zhihu.matisse.internal.entity.IncapableCause;
 
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -56,12 +58,19 @@ public final class PhotoMetadataUtils {
         return size.x * size.y;
     }
 
-    public static Point getBitmapSize(Uri uri, Activity activity) {
-        ContentResolver resolver = activity.getContentResolver();
-        Point imageSize = getBitmapBound(resolver, uri);
+    private static Point getBitmapSize(Uri uri, String path, Activity activity) {
+        ContentResolver resolver = null;
+        Point imageSize = null;
+        if (TextUtils.isEmpty(path)) {
+            resolver = activity.getContentResolver();
+            imageSize = getBitmapBound(resolver, uri);
+        } else {
+            imageSize = getBitmapBound(path);
+        }
+
         int w = imageSize.x;
         int h = imageSize.y;
-        if (PhotoMetadataUtils.shouldRotate(resolver, uri)) {
+        if (PhotoMetadataUtils.shouldRotate(resolver, uri, path)) {
             w = imageSize.y;
             h = imageSize.x;
         }
@@ -78,12 +87,24 @@ public final class PhotoMetadataUtils {
         return new Point((int) (w * widthScale), (int) (h * heightScale));
     }
 
-    public static Point getBitmapBound(ContentResolver resolver, Uri uri) {
+    public static Point getBitmapSize(Uri uri, Activity activity) {
+        return getBitmapSize(uri, null, activity);
+    }
+
+    public static Point getBitmapSize(String path, Activity activity) {
+        return getBitmapSize(null, path, activity);
+    }
+
+    private static Point getBitmapBound(ContentResolver resolver, Uri uri, String path) {
         InputStream is = null;
         try {
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inJustDecodeBounds = true;
-            is = resolver.openInputStream(uri);
+            if (TextUtils.isEmpty(path)) {
+                is = resolver.openInputStream(uri);
+            } else {
+                is = new FileInputStream(path);
+            }
             BitmapFactory.decodeStream(is, null, options);
             int width = options.outWidth;
             int height = options.outHeight;
@@ -99,6 +120,14 @@ public final class PhotoMetadataUtils {
                 }
             }
         }
+    }
+
+    public static Point getBitmapBound(ContentResolver resolver, Uri uri) {
+        return getBitmapBound(resolver, uri, null);
+    }
+
+    public static Point getBitmapBound(String path) {
+        return getBitmapBound(null, null, path);
     }
 
     public static String getPath(ContentResolver resolver, Uri uri) {
@@ -154,10 +183,14 @@ public final class PhotoMetadataUtils {
         return false;
     }
 
-    private static boolean shouldRotate(ContentResolver resolver, Uri uri) {
+    private static boolean shouldRotate(ContentResolver resolver, Uri uri, String path) {
         ExifInterface exif;
         try {
-            exif = ExifInterfaceCompat.newInstance(getPath(resolver, uri));
+            if (TextUtils.isEmpty(path)) {
+                exif = ExifInterfaceCompat.newInstance(getPath(resolver, uri));
+            } else {
+                exif = ExifInterfaceCompat.newInstance(path);
+            }
         } catch (IOException e) {
             Log.e(TAG, "could not read exif info of the image: " + uri);
             return false;

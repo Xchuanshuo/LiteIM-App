@@ -22,10 +22,9 @@ import com.worldtreestd.finder.ui.release.adapter.GridViewAdapter;
 import com.yalantis.ucrop.UCrop;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
+import com.zhihu.matisse.internal.entity.CaptureStrategy;
 import com.zhihu.matisse.internal.entity.Item;
 import com.zhihu.matisse.internal.utils.PathUtils;
-
-import java.io.File;
 
 import butterknife.BindView;
 import byc.imagewatcher.ImageWatcher;
@@ -76,7 +75,6 @@ public class PictureTextFragment extends BaseFragment<PictureTextContract.Presen
             if (mAdapter.getData().size()>0) {
                 // 设置源uri及目标uri
                 curPosition = position;
-//                startCrop(file);
                 Matisse.from(this).choose(MimeType.ofImage())
                         .imageEngine(new Glide4Engine())
                         .forPreView(mAdapter.getData(), position);
@@ -85,24 +83,12 @@ public class PictureTextFragment extends BaseFragment<PictureTextContract.Presen
         mAdapter.setAddClickListener(this);
     }
 
-    private void startCrop(File file) {
-        UCrop.Options options = new UCrop.Options();
-        options.setToolbarColor(getResources().getColor(R.color.colorPrimary));
-        options.setStatusBarColor(getResources().getColor(R.color.colorPrimary));
-        UCrop.of(Uri.fromFile(file), Uri.fromFile(new File(_mActivity.getCacheDir(),System.currentTimeMillis() + ".jpg")))
-                // 长宽比
-                .withAspectRatio(1, 1)
-                // 图片大小
-                .withMaxResultSize(200, 200)
-                .withOptions(options)
-                // 配置参数
-                .start(getContext(), this);
-    }
-
     private void operationMedia(int count) {
         Matisse.from(this).choose(MimeType.ofImage())
                 .countable(true).maxSelectable(9)
                 .thumbnailScale(0.85f)
+                .capture(true)
+                .captureStrategy(new CaptureStrategy(true, "com.worldtreestd.finder.fileprovider","test"))
                 .imageEngine(new Glide4Engine())
                 .selectedCount(count)
                 .forResult(REQUEST_CODE_CHOOSE);
@@ -126,7 +112,7 @@ public class PictureTextFragment extends BaseFragment<PictureTextContract.Presen
 
     @Override
     public void onAddClickListener(View view) {
-        rxPermissions.request(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
+        rxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 .subscribe(aBoolean -> {
                     if (aBoolean) {
                         operationMedia(mAdapter.getCount()-1);
