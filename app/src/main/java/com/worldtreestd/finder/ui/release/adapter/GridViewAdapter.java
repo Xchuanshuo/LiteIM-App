@@ -3,7 +3,6 @@ package com.worldtreestd.finder.ui.release.adapter;
 import android.content.Context;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatImageView;
-import android.util.ArrayMap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +24,6 @@ import java.util.List;
  */
 public class GridViewAdapter extends BaseAdapter {
 
-    private ArrayMap<View, ViewHolder> viewArrayMap = new ArrayMap<>();
     private Context mContext;
     private LayoutInflater inflater;
     private List<Item> dataList = new ArrayList<>();
@@ -35,7 +33,6 @@ public class GridViewAdapter extends BaseAdapter {
 
     public GridViewAdapter(Context context) {
         this.mContext = context;
-//        this.dataList = list;
         inflater = LayoutInflater.from(context);
     }
 
@@ -102,8 +99,7 @@ public class GridViewAdapter extends BaseAdapter {
             final File file = new File(dataList.get(position).getPath());
             GlideUtil.loadImage(mContext, file, viewHolder.mImageView);
             viewHolder.mDeleteButton.setVisibility(View.VISIBLE);
-            ViewHolder finalViewHolder = viewHolder;
-            viewHolder.mImageView.setOnClickListener(v -> itemClickListener.onItemClickListener(position, file));
+            viewHolder.mImageView.setOnClickListener(v -> itemClickListener.onItemClickListener(position));
             viewHolder.mDeleteButton.setOnClickListener(v -> {
                 dataList.remove(position);
                 if (file.exists()) {
@@ -127,19 +123,8 @@ public class GridViewAdapter extends BaseAdapter {
     }
 
     public interface ItemClickListener {
-        void onItemClickListener(int position, File file);
+        void onItemClickListener(int position);
     }
-
-//    public List<ImageView> imageViewList() {
-//        LogUtils.logD(this, viewArrayMap.toString()+"");
-//        List<ImageView> list = new ArrayList<>();
-//        for (ViewHolder holder: viewArrayMap.values()) {
-//            list.add(holder.mImageView);
-//        }
-//        list.remove(list.size()-1);
-//        list.remove(list.size()-1);
-//        return list;
-//    }
 
     static class ViewHolder {
         AppCompatImageView mImageView;

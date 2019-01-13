@@ -59,10 +59,11 @@ public abstract class BasePreviewActivity extends AppCompatActivity implements V
     public static final String EXTRA_RESULT_ORIGINAL_ENABLE = "extra_result_original_enable";
     public static final String CHECK_STATE = "checkState";
     // 当前被选中剪裁的position
-    public static final String CURRENT_SELECTED = "current_selected";
+    public static final String CURRENT_SELECTED_POSITION = "current_selected_position";
+    public static final String CURRENT_SELECTED_ITEM = "current_selected_item";
     public static final Integer CROP_SUCCESS = 201;
 
-    public static final Integer CAPTURE_ID = -10;
+    public static final Long CAPTURE_ID = -10L;
 
     protected final SelectedItemCollection mSelectedCollection = new SelectedItemCollection(this);
     protected SelectionSpec mSpec;
@@ -241,11 +242,11 @@ public abstract class BasePreviewActivity extends AppCompatActivity implements V
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CROP && resultCode == RESULT_OK) {
-//            Item item = mAdapter.getMediaItem(mPager.getCurrentItem());
-//            item.uri = UCrop.getOutput(data);
-//            item.setPath(PathUtils.getPath(this, item.uri));
-//            mAdapter.notifyDataSetChanged();
-            data.putExtra(CURRENT_SELECTED, mPager.getCurrentItem());
+            Item item = mAdapter.getMediaItem(mPager.getCurrentItem());
+            item.uri = UCrop.getOutput(data);
+            item.setPath(PathUtils.getPath(this, item.uri));
+            data.putExtra(CURRENT_SELECTED_POSITION, mPager.getCurrentItem());
+            data.putExtra(CURRENT_SELECTED_ITEM, item);
             setResult(CROP_SUCCESS, data);
             finish();
         }
@@ -392,6 +393,7 @@ public abstract class BasePreviewActivity extends AppCompatActivity implements V
 
         if (item.isVideo()) {
             mOriginalLayout.setVisibility(View.GONE);
+            mTextViewCrop.setVisibility(View.GONE);
         } else if (mSpec.originalable) {
             mOriginalLayout.setVisibility(View.VISIBLE);
         }

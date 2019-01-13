@@ -192,7 +192,7 @@ public final class PhotoMetadataUtils {
                 exif = ExifInterfaceCompat.newInstance(path);
             }
         } catch (IOException e) {
-            Log.e(TAG, "could not read exif info of the image: " + uri);
+            Log.e(TAG, "could not read exif info of the image: " + uri + path);
             return false;
         }
         int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, -1);

@@ -30,6 +30,8 @@ import java.lang.ref.WeakReference;
 import java.util.List;
 import java.util.Set;
 
+import static com.zhihu.matisse.internal.ui.BasePreviewActivity.CURRENT_SELECTED_ITEM;
+
 /**
  * Entry for Matisse's media selection.
  */
@@ -116,7 +118,16 @@ public final class Matisse {
      */
     public static Integer obtainCurPosition(Intent data) {
         Log.d("selected-crop-position", data+"");
-        return data.getIntExtra(BasePreviewActivity.CURRENT_SELECTED, 0);
+        return data.getIntExtra(BasePreviewActivity.CURRENT_SELECTED_POSITION, 0);
+    }
+
+    /**
+     * 获取当前被选中的position
+     * @param data
+     * @return
+     */
+    public static Item obtainCurItem(Intent data) {
+        return data.getParcelableExtra(CURRENT_SELECTED_ITEM);
     }
 
     /**

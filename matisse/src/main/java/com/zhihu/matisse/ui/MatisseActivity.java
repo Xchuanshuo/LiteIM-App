@@ -63,6 +63,7 @@ import com.zhihu.matisse.internal.utils.PhotoMetadataUtils;
 import java.util.ArrayList;
 
 import static com.zhihu.matisse.internal.ui.BasePreviewActivity.CAPTURE_ID;
+import static com.zhihu.matisse.internal.ui.BasePreviewActivity.CROP_SUCCESS;
 
 /**
  * Main Activity to display albums and media content (images/videos) in each album
@@ -78,7 +79,7 @@ public class MatisseActivity extends AppCompatActivity implements
     public static final String EXTRA_RESULT_SELECTION_PATH = "extra_result_selection_path";
     public static final String EXTRA_RESULT_SELECTION_ITEM= "extra_result_items";
     public static final String EXTRA_RESULT_ORIGINAL_ENABLE = "extra_result_original_enable";
-    private static final int REQUEST_CODE_PREVIEW = 23;
+    public static final int REQUEST_CODE_PREVIEW = 23;
     private static final int REQUEST_CODE_CAPTURE = 24;
     public static final String CHECK_STATE = "checkState";
     private final AlbumCollection mAlbumCollection = new AlbumCollection();
@@ -204,6 +205,10 @@ public class MatisseActivity extends AppCompatActivity implements
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==REQUEST_CODE_PREVIEW && resultCode==CROP_SUCCESS) {
+            setResult(CROP_SUCCESS, data);
+            finish();
+        }
         if (resultCode != RESULT_OK)
             return;
 

@@ -2,7 +2,6 @@ package com.worldtreestd.finder.ui.release.fragment;
 
 import android.Manifest;
 import android.content.Intent;
-import android.net.Uri;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
@@ -14,17 +13,16 @@ import com.worldtreestd.finder.R;
 import com.worldtreestd.finder.common.base.mvp.fragment.BaseFragment;
 import com.worldtreestd.finder.common.utils.DialogUtils;
 import com.worldtreestd.finder.common.utils.ImageDisposeUtils;
-import com.worldtreestd.finder.common.utils.LogUtils;
 import com.worldtreestd.finder.common.widget.Glide4Engine;
 import com.worldtreestd.finder.contract.release.PictureTextContract;
 import com.worldtreestd.finder.presenter.release.PictureTextPresenter;
 import com.worldtreestd.finder.ui.release.adapter.GridViewAdapter;
-import com.yalantis.ucrop.UCrop;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
 import com.zhihu.matisse.internal.entity.Item;
-import com.zhihu.matisse.internal.utils.PathUtils;
+
+import java.util.Arrays;
 
 import butterknife.BindView;
 import byc.imagewatcher.ImageWatcher;
@@ -71,7 +69,7 @@ public class PictureTextFragment extends BaseFragment<PictureTextContract.Presen
         rxPermissions = new RxPermissions(this);
         mAdapter = new GridViewAdapter(getContext());
         mGridView.setAdapter(mAdapter);
-        mAdapter.setOnItemClickListener((position, file) -> {
+        mAdapter.setOnItemClickListener((position) -> {
             if (mAdapter.getData().size()>0) {
                 // 设置源uri及目标uri
                 curPosition = position;
@@ -99,20 +97,21 @@ public class PictureTextFragment extends BaseFragment<PictureTextContract.Presen
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_CHOOSE && resultCode == RESULT_OK) {
             mAdapter.addData(Matisse.obtainItemResult(data));
-        } else if (requestCode == REQUEST_CROP && resultCode == CROP_SUCCESS) {
-            this.curPosition = Matisse.obtainCurPosition(data);
-            final Uri originUri = UCrop.getOutput(data);
-            LogUtils.logD(this, "Result----Uri---"+originUri.toString());
-            Item item = mAdapter.getItem(curPosition);
-            item.uri = originUri;
-            item.setPath(PathUtils.getPath(_mActivity, originUri));
-            mAdapter.notifyDataSetChanged();
+        } else if (resultCode == CROP_SUCCESS) {
+            Item item = Matisse.obtainCurItem(data);
+            if (requestCode==REQUEST_CODE_CHOOSE) {
+                mAdapter.addData(Arrays.asList(item));
+            } else if (requestCode == REQUEST_CROP) {
+                this.curPosition = Matisse.obtainCurPosition(data);
+                mAdapter.updateData(curPosition, item);
+            }
         }
     }
 
     @Override
     public void onAddClickListener(View view) {
-        rxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        rxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE
+                , Manifest.permission.CAMERA)
                 .subscribe(aBoolean -> {
                     if (aBoolean) {
                         operationMedia(mAdapter.getCount()-1);
