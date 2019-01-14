@@ -22,11 +22,11 @@ public class Constant {
     public static final String PARAM1= "PARAM1";
     public static final String PARAM2= "PARAM2";
     public static final String KEY_WORD= "KEY_WORD";
-    public static final int HOME_ITEM_HEAD = 0;
-    public static final int HOME_ITEM_TAIL = 1;
-    public static final int HOME_ITEM_CENTER = 2;
-    public static final int DYNAMIC_ITEM_WORD_PICTURE = 3;
-    public static final int DYNAMIC_ITEM_WORD_VIDEO = 4;
+    public static final int HOME_ITEM_HEAD = 10;
+    public static final int HOME_ITEM_TAIL = 11;
+    public static final int HOME_ITEM_CENTER = 12;
+    public static final int DYNAMIC_ITEM_WORD_PICTURE = 0;
+    public static final int DYNAMIC_ITEM_WORD_VIDEO = 1;
 
     public static final String ACCESS_TOKEN = "access_token";
     public static final String OPEN_ID = "open_id";

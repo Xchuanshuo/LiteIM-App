@@ -6,12 +6,12 @@
         android:title="@string/title_home" />
 
     <item
-        android:id="@+id/navigation_dashboard"
+        android:id="@+id/navigation_more_info"
         android:icon="@drawable/ic_more_info_24dp"
         android:title="@string/title_dashboard" />
 
     <item
-        android:id="@+id/navigation_notifications"
+        android:id="@+id/navigation_dynamic"
         android:icon="@drawable/ic_dynamic"
         android:title="@string/title_notifications"/>
 </menu>

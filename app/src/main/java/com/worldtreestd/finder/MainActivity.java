@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -28,12 +27,10 @@ import com.worldtreestd.finder.ui.moreinfo.fragment.MoreInfoFragment;
 import com.worldtreestd.finder.ui.release.ReleaseActivity;
 import com.worldtreestd.finder.ui.userinfo.UserInfoActivity;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import butterknife.BindView;
 import cn.jzvd.JZVideoPlayer;
-import me.yokeyword.fragmentation.ISupportFragment;
+
+import static com.worldtreestd.finder.common.utils.Constant.POSITION;
 
 /**
  * @author legend
@@ -49,39 +46,21 @@ public class MainActivity extends BaseActivity {
     AppCompatTextView mReleasePicture;
     AppCompatTextView mReleaseVideo;
     private PopupWindow mPopupWindow;
-    final List<Fragment> mFragments = new ArrayList<>();
-    HomeFragment mHomeFragment;
-    MoreInfoFragment mMoreInfoFragment;
-    DynamicFragment mDynamicFragment;
+    final HomeFragment mHomeFragment = new HomeFragment();
+    final MoreInfoFragment mMoreInfoFragment = new MoreInfoFragment();
+    final DynamicFragment mDynamicFragment = new DynamicFragment();
 
-    public static void come(Context context) {
+    public static void come(Context context, Integer id) {
         Intent intent = new Intent(context, MainActivity.class);
+        if (id != null) {
+            intent.putExtra(POSITION, id);
+        }
         context.startActivity(intent);
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener onNavigationItemSelectedListener =
             item -> {
-                switch (item.getItemId()) {
-                    case R.id.navigation_home:
-                        setToolbarTitle(getString(R.string.title_home));
-                        showHideFragment(mHomeFragment);
-                        mSearchButton.setVisibility(View.VISIBLE);
-                        mWriteButton.setVisibility(View.INVISIBLE);
-                        break;
-                    case R.id.navigation_dashboard:
-                        setToolbarTitle(getString(R.string.title_dashboard));
-                        showHideFragment(mMoreInfoFragment);
-                        mSearchButton.setVisibility(View.VISIBLE);
-                        mWriteButton.setVisibility(View.INVISIBLE);
-                        break;
-                    case R.id.navigation_notifications:
-                        setToolbarTitle(getString(R.string.title_notifications));
-                        showHideFragment(mDynamicFragment);
-                        mSearchButton.setVisibility(View.GONE);
-                        mWriteButton.setVisibility(View.VISIBLE);
-                        break;
-                    default: break;
-                }
+                loadFragment(item.getItemId());
                 return true;
             };
 
@@ -95,20 +74,16 @@ public class MainActivity extends BaseActivity {
             window.setStatusBarColor(Color.TRANSPARENT);
         }
         super.onCreate(savedInstanceState);
-        loadMultipleRootFragment(R.id.container,0, (ISupportFragment) mFragments.get(0),
-                (ISupportFragment) mFragments.get(1), (ISupportFragment)mFragments.get(2));
+        loadMultipleRootFragment(R.id.container,0, mHomeFragment,
+                mMoreInfoFragment, mDynamicFragment);
+        Integer id = getIntent().getIntExtra(POSITION, -1);
+        setSelected(id);
     }
 
     @Override
     protected void initWidget() {
         super.initWidget();
         bottomNavigationView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
-        mHomeFragment = new HomeFragment();
-        mMoreInfoFragment = new MoreInfoFragment();
-        mDynamicFragment = new DynamicFragment();
-        mFragments.add(mHomeFragment);
-        mFragments.add(mMoreInfoFragment);
-        mFragments.add(mDynamicFragment);
         mPortrait.setOnClickListener(v -> startActivity(new Intent(this, UserInfoActivity.class)));
         mFloatButton.setOnClickListener(view->jumpTop(bottomNavigationView.getSelectedItemId()));
     }
@@ -134,15 +109,39 @@ public class MainActivity extends BaseActivity {
         //点击 back 键的时候，窗口会自动消失
         mPopupWindow.setBackgroundDrawable(new ColorDrawable());
         mReleasePicture = mView.findViewById(R.id.tv_release_picture);
-        mReleasePicture.setOnClickListener(v-> startActivity(new Intent().setClass(this, ReleaseActivity.class).putExtra("TYPE", "3")));
+        mReleasePicture.setOnClickListener(v-> startActivity(new Intent().setClass(this, ReleaseActivity.class).putExtra("TYPE", "0")));
         mReleaseVideo = mView.findViewById(R.id.tv_release_video);
-        mReleaseVideo.setOnClickListener(v-> startActivity(new Intent().setClass(this, ReleaseActivity.class).putExtra("TYPE", "4")));
+        mReleaseVideo.setOnClickListener(v-> startActivity(new Intent().setClass(this, ReleaseActivity.class).putExtra("TYPE", "1")));
     }
 
+    private void loadFragment(int id) {
+        switch (id) {
+            case R.id.navigation_home:
+                setToolbarTitle(getString(R.string.title_home));
+                showHideFragment(mHomeFragment);
+                mSearchButton.setVisibility(View.VISIBLE);
+                mWriteButton.setVisibility(View.INVISIBLE);
+                break;
+            case R.id.navigation_more_info:
+                setToolbarTitle(getString(R.string.title_dashboard));
+                showHideFragment(mMoreInfoFragment);
+                mSearchButton.setVisibility(View.VISIBLE);
+                mWriteButton.setVisibility(View.INVISIBLE);
+                break;
+            case R.id.navigation_dynamic:
+                setToolbarTitle(getString(R.string.title_notifications));
+                showHideFragment(mDynamicFragment);
+                mSearchButton.setVisibility(View.GONE);
+                mWriteButton.setVisibility(View.VISIBLE);
+                break;
+            default: break;
+        }
+    }
 
-    @Override
-    public boolean showHomeAsUp() {
-        return false;
+    private void setSelected(int id) {
+        if (id != -1) {
+            bottomNavigationView.setSelectedItemId(id);
+        }
     }
 
     @Override
@@ -155,10 +154,10 @@ public class MainActivity extends BaseActivity {
             case R.id.navigation_home:
                 mHomeFragment.jumpTop();
                 break;
-            case R.id.navigation_dashboard:
+            case R.id.navigation_more_info:
                 mMoreInfoFragment.jumpTop();
                 break;
-            case R.id.navigation_notifications:
+            case R.id.navigation_dynamic:
                 mDynamicFragment.jumpTop();
                 break;
             default:

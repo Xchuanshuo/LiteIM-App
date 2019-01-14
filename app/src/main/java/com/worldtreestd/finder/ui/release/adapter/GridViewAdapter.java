@@ -52,6 +52,14 @@ public class GridViewAdapter extends BaseAdapter {
         return dataList;
     }
 
+    public List<File> getFiles() {
+        List<File> files = new ArrayList<>();
+        for (Item i: dataList) {
+            files.add(new File(i.getPath()));
+        }
+        return files;
+    }
+
     public void setData(List<Item> list) {
         this.dataList = list;
         notifyDataSetChanged();

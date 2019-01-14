@@ -2,6 +2,7 @@ package com.worldtreestd.finder.ui.release;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.AppCompatTextView;
 import android.text.TextUtils;
 import android.view.WindowManager;
 
@@ -9,6 +10,8 @@ import com.worldtreestd.finder.R;
 import com.worldtreestd.finder.common.base.mvp.activity.BaseActivity;
 import com.worldtreestd.finder.ui.release.fragment.PictureTextFragment;
 import com.worldtreestd.finder.ui.release.fragment.VideoTextFragment;
+
+import butterknife.BindView;
 
 import static com.worldtreestd.finder.common.utils.Constant.DYNAMIC_ITEM_WORD_PICTURE;
 import static com.worldtreestd.finder.common.utils.Constant.DYNAMIC_ITEM_WORD_VIDEO;
@@ -22,6 +25,8 @@ public class ReleaseActivity extends BaseActivity {
 
     private final PictureTextFragment mPictureTextFragment = new PictureTextFragment();
     private final VideoTextFragment mVideoTextFragment = new VideoTextFragment();
+    @BindView(R.id.tv_send)
+    AppCompatTextView mSendTv;
 
     @Override
     public boolean showHomeAsUp() {
@@ -37,8 +42,6 @@ public class ReleaseActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-        loadMultipleRootFragment(R.id.container, 0,
-                mPictureTextFragment, mVideoTextFragment);
         String type = getIntent().getStringExtra("TYPE");
         if (!TextUtils.isEmpty(type)) {
             open(Integer.parseInt(type));
@@ -49,14 +52,18 @@ public class ReleaseActivity extends BaseActivity {
         switch (id) {
             case DYNAMIC_ITEM_WORD_PICTURE:
                 setToolbarTitle("发布图文...");
-                showHideFragment(mPictureTextFragment);
+                loadRootFragment(R.id.container, mPictureTextFragment);
                 break;
             case DYNAMIC_ITEM_WORD_VIDEO:
                 setToolbarTitle("发布视频...");
-                showHideFragment(mVideoTextFragment);
+                loadRootFragment(R.id.container, mVideoTextFragment);
                 break;
             default: break;
         }
+    }
+
+    public AppCompatTextView getSendTv() {
+        return mSendTv;
     }
 
     @Override

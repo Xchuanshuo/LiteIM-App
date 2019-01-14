@@ -1,5 +1,6 @@
 package com.worldtreestd.finder;
 
+import android.text.TextUtils;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -58,12 +59,11 @@ public class WelcomeActivity extends BaseActivity {
     private void deal() {
         SharedData data = SharedData.getInstance();
         String jwt = data.getJWT();
-        MainActivity.come(this);
-//        if (TextUtils.isEmpty(jwt)) {
-//            LoginActivity.come(this);
-//        } else {
-//            MainActivity.come(this);
-//        }
+        if (TextUtils.isEmpty(jwt)) {
+            LoginActivity.come(this);
+        } else {
+            MainActivity.come(this, null);
+        }
         finish();
     }
 

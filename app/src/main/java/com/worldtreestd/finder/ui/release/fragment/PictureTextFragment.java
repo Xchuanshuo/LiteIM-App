@@ -1,21 +1,25 @@
 package com.worldtreestd.finder.ui.release.fragment;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatTextView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.GridView;
 
 import com.example.legend.wheel.widget.PlaceSelectorDialog;
 import com.tbruyelle.rxpermissions2.RxPermissions;
+import com.worldtreestd.finder.MainActivity;
 import com.worldtreestd.finder.R;
 import com.worldtreestd.finder.common.base.mvp.fragment.BaseFragment;
+import com.worldtreestd.finder.common.net.UploadHelper;
 import com.worldtreestd.finder.common.utils.DialogUtils;
-import com.worldtreestd.finder.common.utils.ImageDisposeUtils;
 import com.worldtreestd.finder.common.widget.Glide4Engine;
-import com.worldtreestd.finder.contract.release.PictureTextContract;
-import com.worldtreestd.finder.presenter.release.PictureTextPresenter;
+import com.worldtreestd.finder.contract.release.ReleaseContract;
+import com.worldtreestd.finder.presenter.release.ReleasePresenter;
+import com.worldtreestd.finder.ui.release.ReleaseActivity;
 import com.worldtreestd.finder.ui.release.adapter.GridViewAdapter;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
@@ -25,7 +29,6 @@ import com.zhihu.matisse.internal.entity.Item;
 import java.util.Arrays;
 
 import butterknife.BindView;
-import byc.imagewatcher.ImageWatcher;
 
 import static com.yalantis.ucrop.UCrop.REQUEST_CROP;
 import static com.zhihu.matisse.internal.ui.BasePreviewActivity.CROP_SUCCESS;
@@ -35,8 +38,8 @@ import static com.zhihu.matisse.internal.ui.BasePreviewActivity.CROP_SUCCESS;
  * @data by on 18-8-23.
  * @description
  */
-public class PictureTextFragment extends BaseFragment<PictureTextContract.Presenter>
-    implements PictureTextContract.View, GridViewAdapter.AddClickListener {
+public class PictureTextFragment extends BaseFragment<ReleaseContract.Presenter>
+    implements ReleaseContract.View, GridViewAdapter.AddClickListener {
 
     @BindView(R.id.tv_select_address)
     AppCompatTextView mSelectAddress;
@@ -44,15 +47,15 @@ public class PictureTextFragment extends BaseFragment<PictureTextContract.Presen
     AppCompatEditText mEditText;
     @BindView(R.id.grid_view)
     GridView mGridView;
+
     private int curPosition = 0;
     GridViewAdapter mAdapter;
-    ImageWatcher mImageWatcher;
     RxPermissions rxPermissions;
-    private static final int REQUEST_CODE_CHOOSE = 100;
+    public static final int REQUEST_CODE_CHOOSE = 100;
 
     @Override
-    protected PictureTextContract.Presenter initPresenter() {
-        return new PictureTextPresenter(this);
+    protected ReleaseContract.Presenter initPresenter() {
+        return new ReleasePresenter(this);
     }
 
     @Override
@@ -63,7 +66,6 @@ public class PictureTextFragment extends BaseFragment<PictureTextContract.Presen
     @Override
     protected void initEventAndData() {
         super.initEventAndData();
-        mImageWatcher = ImageDisposeUtils.getWatcher(_mActivity);
         PlaceSelectorDialog selectorDialog = new PlaceSelectorDialog(getContext(), mSelectAddress);
         mSelectAddress.setOnClickListener(v -> selectorDialog.show());
         rxPermissions = new RxPermissions(this);
@@ -79,6 +81,7 @@ public class PictureTextFragment extends BaseFragment<PictureTextContract.Presen
             }
         });
         mAdapter.setAddClickListener(this);
+        ((ReleaseActivity)_mActivity).getSendTv().setOnClickListener(v -> requestRelease());
     }
 
     private void operationMedia(int count) {
@@ -108,6 +111,7 @@ public class PictureTextFragment extends BaseFragment<PictureTextContract.Presen
         }
     }
 
+    @SuppressLint("CheckResult")
     @Override
     public void onAddClickListener(View view) {
         rxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE
@@ -123,10 +127,34 @@ public class PictureTextFragment extends BaseFragment<PictureTextContract.Presen
 
     @Override
     public boolean onBackPressedSupport() {
-        if (mImageWatcher.handleBackPressed()) {
-            return true;
-        }
         return false;
     }
 
+    @Override
+    public void releaseSuccess(String msg) {
+        DialogUtils.showToast(_mActivity, msg);
+        MainActivity.come(_mActivity, R.id.navigation_dynamic);
+        _mActivity.finish();
+    }
+
+    @Override
+    public void requestRelease() {
+        String content = mEditText.getText().toString();
+        String address = mSelectAddress.getText().toString();
+        if (mAdapter.getData() == null || mAdapter.getData().size()==0) {
+            DialogUtils.showToast(_mActivity, "发布的照片不能为空!");
+        } else if (TextUtils.isEmpty(content)){
+            DialogUtils.showToast(_mActivity, "写点什么吧!");
+        } else if (getString(R.string.select_address).equals(address)) {
+            DialogUtils.showToast(_mActivity, "请选择地址!");
+        } else {
+            UploadHelper helper = new UploadHelper();
+            helper.addParameter("title", "test")
+                    .addParameter("content", mEditText.getText().toString())
+                    .addParameter("address", mSelectAddress.getText().toString())
+                    .addParameter("type", "0")
+                    .addParameter("files", mAdapter.getFiles());
+            mPresenter.addDynamic(helper.builder());
+        }
+    }
 }

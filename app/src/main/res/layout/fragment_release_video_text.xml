@@ -23,6 +23,17 @@
         android:layout_height="200dp"
         android:layout_below="@+id/dynamic_content"
         android:layout_marginTop="10dp"
+        android:visibility="gone"
+        android:transitionName="@string/dynamic_video_url"/>
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/image_placeholder"
+        android:padding="@dimen/dp_10"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:src="@mipmap/micro_video"
+        android:layout_below="@+id/dynamic_content"
+        android:layout_marginTop="10dp"
         android:transitionName="@string/dynamic_video_url"/>
 
     <android.support.v7.widget.AppCompatTextView

@@ -6,12 +6,16 @@ import com.worldtreestd.finder.common.bean.HomeCircleBean;
 import com.worldtreestd.finder.common.bean.MessageBean;
 
 import java.util.List;
+import java.util.Map;
 
 import io.reactivex.Observable;
 import okhttp3.RequestBody;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.PartMap;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -26,7 +30,7 @@ public interface FinderApiService {
     String BASE_URL = "http://192.168.43.21:8080";
 
     /**
-     * 登录接口
+     * 用户登录
      * @param username
      * @param password
      * @return
@@ -41,6 +45,16 @@ public interface FinderApiService {
      */
     @POST("/user/")
     Observable<ResultVo<User>> register(@Body RequestBody requestBody);
+
+    /**
+     * 添加动态
+     * @param jwt
+     * @Param params
+     * @return
+     */
+    @Multipart
+    @POST("/dynamic/")
+    Observable<ResultVo<String>> addDynamic(@Header("Authorization") String jwt, @PartMap Map<String, RequestBody> params);
 
     @GET("message/{id}")
     Observable<BaseResponse<List<MessageBean>>> getMessageList(@Path("id") String id);

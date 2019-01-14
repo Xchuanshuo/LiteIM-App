@@ -121,7 +121,7 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter>
 
     @Override
     public void loginAfter() {
-        MainActivity.come(LoginActivity.this);
+        MainActivity.come(LoginActivity.this, null);
         finish();
     }
 }
