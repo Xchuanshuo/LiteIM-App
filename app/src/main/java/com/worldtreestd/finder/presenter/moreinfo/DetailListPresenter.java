@@ -43,7 +43,6 @@ public class DetailListPresenter extends BasePresenter<DetailListContract.View>
 
     @Override
     public void requestData(int type, String...args) {
-        start();
         detailBeanList.clear();
         switch (type) {
             case 100:
@@ -72,7 +71,7 @@ public class DetailListPresenter extends BasePresenter<DetailListContract.View>
                                 public void onFail(String errorMsg) {
                                     super.onFail(errorMsg);
                                     if (errorMsg.length() != 0) {
-                                        mView.hideLoading();
+//                                        mView.hideLoading();
                                         DialogUtils.showToast(mView.getContext(), errorMsg);
                                     }
                                 }
@@ -92,6 +91,7 @@ public class DetailListPresenter extends BasePresenter<DetailListContract.View>
         List<CourseContentBean.WeeksBean.ScheduleBean> scheduleBeanList =
                 beanList.get(SharedPreferenceUtils.weekTHMap.get(args[1])).getWeeks()
                         .get(SharedPreferenceUtils.weekMap.get(args[2])).getSchedule();
+
         addDisposable(Observable.fromArray(scheduleBeanList)
                 .flatMap((Function<List<CourseContentBean.WeeksBean.ScheduleBean>, ObservableSource<?>>) scheduleBeans -> Observable.fromIterable(scheduleBeans))
                 .filter(o -> ((CourseContentBean.WeeksBean.ScheduleBean)o).getDetail().getCourse() != null)

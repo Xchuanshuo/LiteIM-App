@@ -11,7 +11,6 @@ import android.widget.GridView;
 
 import com.example.legend.wheel.widget.PlaceSelectorDialog;
 import com.tbruyelle.rxpermissions2.RxPermissions;
-import com.worldtreestd.finder.MainActivity;
 import com.worldtreestd.finder.R;
 import com.worldtreestd.finder.common.base.mvp.fragment.BaseFragment;
 import com.worldtreestd.finder.common.net.UploadHelper;
@@ -133,7 +132,6 @@ public class PictureTextFragment extends BaseFragment<ReleaseContract.Presenter>
     @Override
     public void releaseSuccess(String msg) {
         DialogUtils.showToast(_mActivity, msg);
-        MainActivity.come(_mActivity, R.id.navigation_dynamic);
         _mActivity.finish();
     }
 

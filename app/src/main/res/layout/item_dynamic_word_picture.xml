@@ -15,7 +15,7 @@
         android:transitionName="@string/portrait"/>
 
     <TextView
-        android:id="@+id/publisher_nickname"
+        android:id="@+id/tv_publisher_nickname"
         android:text="、legend"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -25,11 +25,11 @@
         android:transitionName="@string/publisher_name"/>
 
     <TextView
-        android:id="@+id/publish_time"
+        android:id="@+id/tv_publish_time"
         android:text="2018年6:59"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/publisher_nickname"
+        android:layout_below="@+id/tv_publisher_nickname"
         android:layout_marginTop="0.5dip"
         android:layout_toRightOf="@+id/publisher_portrait"
         android:textColor="#777"
@@ -37,7 +37,7 @@
         android:transitionName="@string/publish_time"/>
 
     <TextView
-        android:id="@+id/dynamic_content"
+        android:id="@+id/tv_dynamic_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/publisher_portrait"
@@ -53,14 +53,14 @@
         android:id="@+id/pictures"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/dynamic_content"
+        android:layout_below="@+id/tv_dynamic_content"
         android:layout_marginTop="10dip"
         app:img_visibility_count="6"
         android:transitionName="@string/dynamic_picture_urlList"/>
 
     <TextView
         android:layout_marginTop="@dimen/dp_10"
-        android:id="@+id/watch_count"
+        android:id="@+id/tv_watch_num"
         android:layout_below="@+id/pictures"
         android:text="666次围观"
         android:layout_width="wrap_content"
@@ -68,17 +68,17 @@
 
     <TextView
         android:layout_marginTop="@dimen/dp_10"
-        android:id="@+id/comment_count"
+        android:id="@+id/tv_comment_num"
         android:layout_below="@+id/pictures"
         android:layout_marginLeft="@dimen/dp_16"
-        android:layout_toRightOf="@+id/watch_count"
+        android:layout_toRightOf="@+id/tv_watch_num"
         android:text="666条评论"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
     <TextView
         android:layout_marginTop="@dimen/dp_10"
-        android:id="@+id/praise"
+        android:id="@+id/tv_collect_num"
         android:text="666"
         android:layout_below="@+id/pictures"
         android:layout_alignParentRight="true"
@@ -89,7 +89,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dip"
-        android:layout_below="@+id/praise"
+        android:layout_below="@+id/tv_collect_num"
         android:layout_marginLeft="3dip"
         android:layout_marginRight="3dip"
         android:layout_marginTop="10dip"

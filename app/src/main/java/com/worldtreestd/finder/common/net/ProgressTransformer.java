@@ -23,9 +23,9 @@ public class ProgressTransformer {
         return upstream -> upstream.doOnSubscribe(disposable -> {
 
         }).doOnTerminate(() -> {
-//            dialog.dismiss();
-        }).doOnSubscribe(disposable -> {
-//            dialog.dismiss();
+            dialog.dismiss();
+        }).doOnError(throwable -> {
+            dialog.dismiss();
         });
     }
 

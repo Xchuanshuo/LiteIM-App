@@ -41,11 +41,11 @@
             android:layout_weight="1"/>
 
         <TextView
-            android:id="@+id/tv_praise"
+            android:id="@+id/tv_collect_num"
             android:layout_marginTop="3dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/heart_drawable_blue"
+            android:drawableStart="@drawable/heart_drawable_blue"
             android:text="123"
             android:drawablePadding="2dp"
             android:textColor="@color/color_cacaca"/>

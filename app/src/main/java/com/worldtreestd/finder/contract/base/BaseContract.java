@@ -16,10 +16,10 @@ public interface BaseContract {
     }
 
     interface Presenter {
-        /**
-         *  初始化
-         */
-        void start();
+//        /**
+//         *  初始化
+//         */
+//        void start();
 
         /**
          *  view销毁操作
@@ -46,17 +46,15 @@ public interface BaseContract {
         default void refreshData() {
 
         }
+
         /**
-         *  显示加载进度条
+         * 加载更多数据
          */
-        default void showLoading() {
+        default void loadMoreData() {
 
         }
 
-        /**
-         *  隐藏加载进度条
-         */
-        default void hideLoading() {
+        default void showNoMoreData() {
 
         }
 

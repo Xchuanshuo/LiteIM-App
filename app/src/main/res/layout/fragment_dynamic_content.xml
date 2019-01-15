@@ -33,7 +33,7 @@
             android:transitionName="@string/publisher_name"/>
 
         <TextView
-            android:id="@+id/publish_time"
+            android:id="@+id/tv_publish_time"
             android:text="2018年9月"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

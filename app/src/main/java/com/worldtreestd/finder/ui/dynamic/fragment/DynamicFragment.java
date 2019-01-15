@@ -8,11 +8,11 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.worldtreestd.finder.R;
+import com.worldtreestd.finder.bean.Dynamic;
 import com.worldtreestd.finder.common.base.mvp.fragment.BaseFragment;
 import com.worldtreestd.finder.common.bean.CommonMultiBean;
-import com.worldtreestd.finder.common.bean.DynamicBean;
+import com.worldtreestd.finder.common.utils.DialogUtils;
 import com.worldtreestd.finder.common.utils.ImageDisposeUtils;
-import com.worldtreestd.finder.common.utils.TestDataUtils;
 import com.worldtreestd.finder.common.widget.multipicture.MultiPictureLayout;
 import com.worldtreestd.finder.contract.dynamic.DynamicContract;
 import com.worldtreestd.finder.presenter.dynamic.DynamicPresenter;
@@ -37,8 +37,9 @@ import static com.worldtreestd.finder.common.base.mvp.StatusType.REFRESH_SUCCESS
 public class DynamicFragment extends BaseFragment<DynamicContract.Presenter>
     implements DynamicContract.View, MultiPictureLayout.Callback {
 
+    private int currentPage = 1;
     ImageWatcher mImageWatcher;
-    private List<CommonMultiBean<DynamicBean>> dynamicBeanList = new ArrayList<>();
+    private List<CommonMultiBean<Dynamic>> beanList = new ArrayList<>();
 
     @Override
     protected DynamicContract.Presenter initPresenter() {
@@ -47,7 +48,7 @@ public class DynamicFragment extends BaseFragment<DynamicContract.Presenter>
 
     @Override
     protected BaseQuickAdapter getAdapter() {
-        return new DynamicItemAdapter(dynamicBeanList, _mActivity).setCallback(this);
+        return new DynamicItemAdapter(beanList, _mActivity).setCallback(this);
     }
 
     @Override
@@ -99,11 +100,25 @@ public class DynamicFragment extends BaseFragment<DynamicContract.Presenter>
 
     @Override
     public void refreshData() {
-        dynamicBeanList.clear();
+        beanList.clear();
         if (getUserVisibleHint()) {
-            dynamicBeanList = TestDataUtils.getDynamicData();
-            setLoadDataResult(dynamicBeanList, REFRESH_SUCCESS);
+            this.currentPage = 1;
+            mPresenter.getDynamicData(currentPage);
         }
+    }
+
+    @Override
+    public void loadMoreData() {
+        if (getUserVisibleHint()) {
+            currentPage++;
+            mPresenter.getDynamicData(currentPage);
+        }
+    }
+
+    @Override
+    public void showNoMoreData() {
+        DialogUtils.showToast(getContext(), "没有更多数据!");
+        mAdapter.loadMoreEnd();
     }
 
     @Override
@@ -136,4 +151,9 @@ public class DynamicFragment extends BaseFragment<DynamicContract.Presenter>
     }
 
 
+    @Override
+    public void showData(List<CommonMultiBean<Dynamic>> multiBeanList) {
+        beanList.addAll(multiBeanList);
+        setLoadDataResult(beanList, REFRESH_SUCCESS);
+    }
 }

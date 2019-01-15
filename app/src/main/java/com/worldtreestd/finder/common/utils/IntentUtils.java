@@ -2,12 +2,19 @@ package com.worldtreestd.finder.common.utils;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
 
+import com.google.gson.Gson;
 import com.worldtreestd.finder.R;
-import com.worldtreestd.finder.common.bean.DynamicBean;
+import com.worldtreestd.finder.bean.Dynamic;
 import com.worldtreestd.finder.ui.dynamic.DynamicDetailActivity;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import static com.worldtreestd.finder.common.utils.Constant.DYNAMIC_ITEM_WORD_PICTURE;
+import static com.worldtreestd.finder.common.utils.Constant.DYNAMIC_ITEM_WORD_VIDEO;
 
 /**
  * @author Legend
@@ -16,17 +23,27 @@ import java.util.ArrayList;
  */
 public class IntentUtils {
 
-    public static Intent createDynamicIntent(Context context, DynamicBean dynamicBean) {
+    public static Intent createDynamicIntent(Context context, Dynamic dynamic) {
         Intent intent = new Intent();
-        intent.putExtra(context.getString(R.string.portrait), dynamicBean.getPortraitUrl());
-        intent.putExtra(context.getString(R.string.publisher_name), dynamicBean.getName());
-        intent.putExtra(context.getString(R.string.publish_time), dynamicBean.getTime());
-        intent.putExtra(context.getString(R.string.dynamic_content), dynamicBean.getContent());
-        if (dynamicBean.getVideoUrl() == null) {
-            intent.putStringArrayListExtra(context.getString(R.string.dynamic_picture_urlList), (ArrayList<String>) dynamicBean.getImageUrlList());
-        } else {
-            intent.putExtra(context.getString(R.string.dynamic_video_url), dynamicBean.getVideoUrl());
-            intent.putExtra(context.getString(R.string.dynamic_video_image_url), dynamicBean.getVideoUrl());
+        intent.putExtra(context.getString(R.string.portrait), dynamic.getPortrait());
+        intent.putExtra(context.getString(R.string.publisher_name), dynamic.getUsername());
+        intent.putExtra(context.getString(R.string.publish_time), dynamic.getCreateTime());
+        intent.putExtra(context.getString(R.string.dynamic_content), dynamic.getContent());
+        Gson gson = new Gson();
+        if (!TextUtils.isEmpty(dynamic.getUrls())) {
+            switch (dynamic.getType()) {
+                case DYNAMIC_ITEM_WORD_PICTURE:
+                    List<String> urlList = gson.fromJson(dynamic.getUrls(), List.class);
+                    intent.putStringArrayListExtra(context.getString(R.string.dynamic_picture_urlList)
+                            , (ArrayList<String>) urlList);
+                    break;
+                case DYNAMIC_ITEM_WORD_VIDEO:
+                    Map<String, String> urlMap = gson.fromJson(dynamic.getUrls(), Map.class);
+                    intent.putExtra(context.getString(R.string.dynamic_video_url), urlMap.get("url"));
+                    intent.putExtra(context.getString(R.string.dynamic_video_image_url),urlMap.get("coverPath"));
+                    break;
+                default: break;
+            }
         }
         intent.setClass(context, DynamicDetailActivity.class);
         return intent;

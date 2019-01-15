@@ -1,5 +1,7 @@
 package com.worldtreestd.finder.common.net;
 
+import com.worldtreestd.finder.bean.Dynamic;
+import com.worldtreestd.finder.bean.Record;
 import com.worldtreestd.finder.bean.User;
 import com.worldtreestd.finder.common.bean.CourseBean;
 import com.worldtreestd.finder.common.bean.HomeCircleBean;
@@ -55,6 +57,16 @@ public interface FinderApiService {
     @Multipart
     @POST("/dynamic/")
     Observable<ResultVo<String>> addDynamic(@Header("Authorization") String jwt, @PartMap Map<String, RequestBody> params);
+
+    /**
+     * 动态信息分页展示
+     * @param page
+     * @param size
+     * @return
+     */
+    @GET("/dynamic/{page}/{size}")
+    Observable<ResultVo<Record<Dynamic>>> getDynamicList(@Path("page") Integer page, @Path("size") Integer size);
+
 
     @GET("message/{id}")
     Observable<BaseResponse<List<MessageBean>>> getMessageList(@Path("id") String id);

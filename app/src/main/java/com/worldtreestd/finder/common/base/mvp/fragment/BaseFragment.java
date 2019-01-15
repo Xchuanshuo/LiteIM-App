@@ -1,7 +1,6 @@
 package com.worldtreestd.finder.common.base.mvp.fragment;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -39,7 +38,6 @@ public abstract class BaseFragment<T extends BaseContract.Presenter> extends Sup
     protected T mPresenter;
     protected RecyclerView mRecyclerView;
     private View mEmptyView;
-    private Dialog mDialog;
     protected BaseQuickAdapter mAdapter;
     private boolean isRefreshing = false;
     @Nullable
@@ -75,6 +73,7 @@ public abstract class BaseFragment<T extends BaseContract.Presenter> extends Sup
                 mRecyclerView.setAdapter(mAdapter);
                 mEmptyView = getLayoutInflater().inflate(R.layout.layout_empty, (ViewGroup) mRecyclerView.getParent(), false);
                 mEmptyView.setOnClickListener(v -> refreshData());
+                mAdapter.setOnLoadMoreListener(this::loadMoreData, mRecyclerView);
                 if (mAdapter.getData().isEmpty()) {
                     mAdapter.setEmptyView(mEmptyView);
                 }
@@ -83,18 +82,6 @@ public abstract class BaseFragment<T extends BaseContract.Presenter> extends Sup
         if (null != mSwipeRefreshLayout) {
             mSwipeRefreshLayout.setOnRefreshListener(() -> refreshData());
         }
-
-        mDialog = DialogUtils.showLoadingDialog(_mActivity,getString(R.string.common_loading));
-    }
-
-    @Override
-    public void showLoading() {
-        mDialog.show();
-    }
-
-    @Override
-    public void hideLoading() {
-        mDialog.dismiss();
     }
 
     @Override
@@ -137,7 +124,6 @@ public abstract class BaseFragment<T extends BaseContract.Presenter> extends Sup
                 break;
             default: break;
         }
-        hideLoading();
         if (mAdapter.getData().isEmpty()) {
             mAdapter.setEmptyView(mEmptyView);
         }

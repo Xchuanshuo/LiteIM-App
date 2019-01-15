@@ -24,6 +24,6 @@ public class DynamicCommentAdapter extends BaseQuickAdapter<CommentBean, BaseVie
     protected void convert(BaseViewHolder helper, CommentBean item) {
         helper.setText(R.id.tv_username, item.getName());
         helper.setText(R.id.tv_content, item.getContent());
-        helper.setText(R.id.tv_praise, item.getPraiseCount());
+        helper.setText(R.id.tv_collect_num, item.getPraiseCount());
     }
 }

@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.worldtreestd.finder.R;
+import com.worldtreestd.finder.common.net.FinderApiService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -136,7 +137,7 @@ public class MultiPictureLayout extends FrameLayout implements View.OnClickListe
                 mVisiblePictureList.add(picture);
                 picture.setLayoutParams(lpChildImage);
                 picture.setBackgroundResource(R.drawable.defacult_picture);
-                Glide.with(getContext()).load(mDataList.get(i)).into(picture);
+                Glide.with(getContext()).load(FinderApiService.BASE_URL+mDataList.get(i)).into(picture);
                 picture.setTranslationX((i % column) * (imageSize + mSpace));
                 picture.setTranslationY((i / column) * (imageSize + mSpace));
             } else {

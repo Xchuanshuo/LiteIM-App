@@ -36,13 +36,13 @@ public class BasePresenter<T extends BaseContract.View> implements BaseContract.
         return mView;
     }
 
-    @Override
-    public void start() {
-        T view = getView();
-        if (view != null) {
-            view.showLoading();
-        }
-    }
+//    @Override
+//    public void start() {
+//        T view = getView();
+//        if (view != null) {
+//            view.showLoading();
+//        }
+//    }
 
     @Override
     public void detach() {

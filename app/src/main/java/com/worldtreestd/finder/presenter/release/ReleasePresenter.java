@@ -50,6 +50,12 @@ public class ReleasePresenter extends BasePresenter<ReleaseContract.View>
                             DialogUtils.showToast(mView.getContext(), "上传出错!");
                         }
                     }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        super.onError(e);
+                        DialogUtils.showToast(mView.getContext(), e.getMessage());
+                    }
                 }));
 
     }

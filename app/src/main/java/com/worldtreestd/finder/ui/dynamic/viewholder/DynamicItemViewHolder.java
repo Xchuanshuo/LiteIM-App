@@ -25,12 +25,18 @@ public class DynamicItemViewHolder extends BaseViewHolder {
     JZVideoPlayerStandard jzVideoPlayerStandard;
     @BindView(R.id.publisher_portrait)
     CircleImageView publisherPortrait;
-    @BindView(R.id.publisher_nickname)
+    @BindView(R.id.tv_publisher_nickname)
     TextView publisherName;
-    @BindView(R.id.publish_time)
+    @BindView(R.id.tv_publish_time)
     TextView publishTime;
-    @BindView(R.id.dynamic_content)
+    @BindView(R.id.tv_dynamic_content)
     TextView dynamicContent;
+    @BindView(R.id.tv_comment_num)
+    TextView dynamicCommentNum;
+    @BindView(R.id.tv_watch_num)
+    TextView dynamicWatchNum;
+    @BindView(R.id.tv_collect_num)
+    TextView dynamicCollectNum;
 
 
     public DynamicItemViewHolder(View view) {
@@ -60,5 +66,17 @@ public class DynamicItemViewHolder extends BaseViewHolder {
 
     public TextView getDynamicContent() {
         return dynamicContent;
+    }
+
+    public TextView getDynamicCommentNum() {
+        return dynamicCommentNum;
+    }
+
+    public TextView getDynamicWatchNum() {
+        return dynamicWatchNum;
+    }
+
+    public TextView getDynamicCollectNum() {
+        return dynamicCollectNum;
     }
 }
