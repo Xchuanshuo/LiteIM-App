@@ -16,9 +16,8 @@ import com.google.gson.Gson;
 import com.worldtreestd.finder.R;
 import com.worldtreestd.finder.bean.Dynamic;
 import com.worldtreestd.finder.common.bean.CommonMultiBean;
-import com.worldtreestd.finder.common.net.FinderApiService;
+import com.worldtreestd.finder.common.utils.DataUtils;
 import com.worldtreestd.finder.common.utils.IntentUtils;
-import com.worldtreestd.finder.common.utils.LogUtils;
 import com.worldtreestd.finder.common.widget.CircleImageView;
 import com.worldtreestd.finder.common.widget.multipicture.MultiPictureLayout;
 import com.worldtreestd.finder.ui.dynamic.viewholder.DynamicItemViewHolder;
@@ -93,13 +92,13 @@ public class DynamicItemAdapter extends BaseMultiItemQuickAdapter<CommonMultiBea
             case DYNAMIC_ITEM_WORD_PICTURE:
                 if (!TextUtils.isEmpty(dynamic.getUrls())) {
                     List<String> urlList = gson.fromJson(dynamic.getUrls(), List.class);
-                    setImageData(helper, urlList);
+                    setImageData(helper, DataUtils.totalListUrl(urlList));
                 }
                 break;
             case DYNAMIC_ITEM_WORD_VIDEO:
                 if (!TextUtils.isEmpty(dynamic.getUrls())) {
                     Map<String, String> map = gson.fromJson(dynamic.getUrls(), Map.class);
-                    videoPlayerConfig(helper, map);
+                    videoPlayerConfig(helper, DataUtils.totalMapUrl(map));
                 }
                 break;
             default: break;
@@ -108,11 +107,9 @@ public class DynamicItemAdapter extends BaseMultiItemQuickAdapter<CommonMultiBea
 
     private void videoPlayerConfig(DynamicItemViewHolder viewHolder, Map<String, String> urls) {
         jzVideoPlayerStandard = viewHolder.getView(R.id.video_player);
-        jzVideoPlayerStandard.setUp(FinderApiService.BASE_URL+urls.get("url"), SCREEN_WINDOW_LIST);
-        String coverPath = FinderApiService.BASE_URL+urls.get("coverPath");
-        LogUtils.logD(this, coverPath);
+        jzVideoPlayerStandard.setUp(urls.get("url"), SCREEN_WINDOW_LIST);
         Glide.with(jzVideoPlayerStandard.getContext()).
-                load(coverPath).into(jzVideoPlayerStandard.thumbImageView);
+                load(urls.get("coverPath")).into(jzVideoPlayerStandard.thumbImageView);
     }
 
     /** 图片加载 **/

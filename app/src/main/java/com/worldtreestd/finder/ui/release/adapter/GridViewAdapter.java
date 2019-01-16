@@ -52,12 +52,12 @@ public class GridViewAdapter extends BaseAdapter {
         return dataList;
     }
 
-    public List<File> getFiles() {
-        List<File> files = new ArrayList<>();
+    public List<String> getPaths() {
+        List<String> paths = new ArrayList<>();
         for (Item i: dataList) {
-            files.add(new File(i.getPath()));
+            paths.add(i.getPath());
         }
-        return files;
+        return paths;
     }
 
     public void setData(List<Item> list) {

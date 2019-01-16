@@ -38,7 +38,7 @@ public class ReleasePresenter extends BasePresenter<ReleaseContract.View>
             DialogUtils.showToast(mView.getContext(), "请先登录再进行操作!");
         }
         addDisposable(NetworkService.getInstance().addDynamic(jwt, params)
-                .compose(new NetworkService.NetworkTransformer<>())
+                .compose(new NetworkService.ThreadTransformer<>())
                 .compose(ProgressTransformer.applyProgressBar(mView.getContext(), "正在发布..."))
                 .subscribeWith(new BaseObserve<ResultVo<String>>() {
                     @Override

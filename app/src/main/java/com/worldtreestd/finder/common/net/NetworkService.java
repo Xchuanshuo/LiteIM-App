@@ -78,7 +78,7 @@ public class NetworkService  {
         return instance.mService;
     }
 
-    public static final class NetworkTransformer<T> implements ObservableTransformer<T,T> {
+    public static final class ThreadTransformer<T> implements ObservableTransformer<T,T> {
 
         @Override
         public ObservableSource<T> apply(Observable<T> upstream) {

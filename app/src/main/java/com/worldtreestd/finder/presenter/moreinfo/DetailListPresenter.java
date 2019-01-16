@@ -57,7 +57,7 @@ public class DetailListPresenter extends BasePresenter<DetailListContract.View>
                     dealCourseData(courseStr, args[0], args[1], args[2]);
                 } else {
                     addDisposable(NetworkService.getInstance().getCourseData(args[0])
-                            .compose(new NetworkService.NetworkTransformer<>())
+                            .compose(new NetworkService.ThreadTransformer<>())
                             .subscribeWith(new BaseObserve<List<CourseBean>>() {
                                 @Override
                                 public void onSuccess(List<CourseBean> data) {

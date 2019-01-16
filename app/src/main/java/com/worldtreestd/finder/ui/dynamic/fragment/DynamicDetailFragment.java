@@ -5,7 +5,6 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -13,9 +12,9 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.worldtreestd.finder.R;
 import com.worldtreestd.finder.common.base.mvp.fragment.BaseFragment;
 import com.worldtreestd.finder.common.bean.CommentBean;
-import com.worldtreestd.finder.common.utils.ImageDisposeUtils;
 import com.worldtreestd.finder.common.utils.TestDataUtils;
 import com.worldtreestd.finder.common.widget.multipicture.MultiPictureLayout;
+import com.worldtreestd.finder.common.widget.picturewatcher.PreviewActivity;
 import com.worldtreestd.finder.contract.dynamic.DynamicDetailContract;
 import com.worldtreestd.finder.presenter.dynamic.DynamicDetailPresenter;
 import com.worldtreestd.finder.ui.dynamic.adapter.DynamicCommentAdapter;
@@ -23,7 +22,6 @@ import com.worldtreestd.finder.ui.dynamic.adapter.DynamicCommentAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-import byc.imagewatcher.ImageWatcher;
 import cn.jzvd.JZVideoPlayer;
 import cn.jzvd.JZVideoPlayerStandard;
 
@@ -36,7 +34,7 @@ import static com.worldtreestd.finder.common.base.mvp.StatusType.REFRESH_SUCCESS
  * @description
  */
 public class DynamicDetailFragment extends BaseFragment<DynamicDetailContract.Presenter>
-    implements DynamicDetailContract.View, ImageWatcher.OnPictureLongPressListener, MultiPictureLayout.Callback  {
+    implements DynamicDetailContract.View, MultiPictureLayout.Callback  {
 
 //    @BindView(R.id.pictures)
     MultiPictureLayout mMultiPictureLayout;
@@ -44,7 +42,6 @@ public class DynamicDetailFragment extends BaseFragment<DynamicDetailContract.Pr
     TextView mDynamicContent;
 //    @BindView(R.id.video_player)
     JZVideoPlayerStandard mJzVideoPlayerStandard;
-    ImageWatcher mImageWatcher;
     private List<CommentBean> commentBeanList = new ArrayList<>();
 
     @Override
@@ -74,7 +71,6 @@ public class DynamicDetailFragment extends BaseFragment<DynamicDetailContract.Pr
     @Override
     protected void initEventAndData() {
         super.initEventAndData();
-        mImageWatcher = ImageDisposeUtils.getWatcher(_mActivity);
         View detailContentLayout = LayoutInflater.from(getContext()).inflate(R.layout.fragment_dynamic_content, null);
         mDynamicContent = detailContentLayout.findViewById(R.id.dynamic_content);
         mMultiPictureLayout = detailContentLayout.findViewById(R.id.pictures);
@@ -96,18 +92,13 @@ public class DynamicDetailFragment extends BaseFragment<DynamicDetailContract.Pr
     }
 
     @Override
-    public void onPictureLongPress(ImageView v, String url, int pos) {
-
-    }
-
-    @Override
-    public void onImageClickListener(ImageView i, List<ImageView> imageGroupList, List<String> urlList) {
-        mImageWatcher.show(i, imageGroupList, urlList);
+    public void onImageClickListener(int position, List<String> urlList) {
+        PreviewActivity.come(_mActivity, urlList, position);
     }
 
     @Override
     public boolean onBackPressedSupport() {
-        if (mImageWatcher.handleBackPressed() || JZVideoPlayer.backPress()) {
+        if (JZVideoPlayer.backPress()) {
             return true;
         }
         JZVideoPlayer.releaseAllVideos();

@@ -44,7 +44,7 @@ public class DetailActivityPresenter extends BasePresenter<DetailActivityContrac
         }
         String oldEncrypt = shared.get(Constant.LIST_MD5);
         addDisposable(NetworkService.getInstance().getClassGrade()
-                .compose(new NetworkService.NetworkTransformer<>())
+                .compose(new NetworkService.ThreadTransformer<>())
                 .subscribeWith(new BaseObserve<List<String>>() {
                     @Override
                     public void onSuccess(List<String> data) {

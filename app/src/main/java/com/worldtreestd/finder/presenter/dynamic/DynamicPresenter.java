@@ -40,7 +40,7 @@ public class DynamicPresenter extends BasePresenter<DynamicContract.View>
         }
         addDisposable(NetworkService.getInstance()
                 .getDynamicList(page, 5)
-                .compose(new NetworkService.NetworkTransformer<>())
+                .compose(new NetworkService.ThreadTransformer<>())
                 .subscribeWith(new BaseObserve<ResultVo<Record<Dynamic>>>() {
                     @Override
                     public void onSuccess(ResultVo<Record<Dynamic>> data) {

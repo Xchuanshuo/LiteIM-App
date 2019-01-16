@@ -228,11 +228,10 @@ public abstract class BasePreviewActivity extends AppCompatActivity implements V
         UCrop.Options options = new UCrop.Options();
         options.setToolbarColor(getResources().getColor(R.color.zhihu_primary));
         options.setStatusBarColor(getResources().getColor(R.color.zhihu_primary));
+        options.useSourceImageAspectRatio();
+        options.setFreeStyleCropEnabled(true);
         UCrop.of(Uri.fromFile(file), Uri.fromFile(new File(getCacheDir(),System.currentTimeMillis() + ".jpg")))
-                // 长宽比
-                .withAspectRatio(1, 1)
                 // 图片大小
-                .withMaxResultSize(200, 200)
                 .withOptions(options)
                 // 配置参数
                 .start(this);

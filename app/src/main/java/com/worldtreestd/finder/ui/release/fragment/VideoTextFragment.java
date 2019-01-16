@@ -13,7 +13,6 @@ import android.view.View;
 import com.bumptech.glide.Glide;
 import com.example.legend.wheel.widget.PlaceSelectorDialog;
 import com.tbruyelle.rxpermissions2.RxPermissions;
-import com.worldtreestd.finder.MainActivity;
 import com.worldtreestd.finder.R;
 import com.worldtreestd.finder.common.base.mvp.fragment.BaseFragment;
 import com.worldtreestd.finder.common.net.UploadHelper;
@@ -83,6 +82,7 @@ public class VideoTextFragment extends BaseFragment<ReleaseContract.Presenter>
                          if (aBoolean) {
                              Matisse.from(this).choose(MimeType.ofVideo())
                                      .imageEngine(new Glide4Engine())
+                                     .showSingleMediaType(true)
                                      .forResult(REQUEST_CODE_CHOOSE);
                          } else {
                              DialogUtils.showToast(getContext(), "请先开启相关的权限!");
@@ -130,7 +130,6 @@ public class VideoTextFragment extends BaseFragment<ReleaseContract.Presenter>
     @Override
     public void releaseSuccess(String msg) {
         DialogUtils.showToast(_mActivity, msg);
-//        MainActivity.come(_mActivity, R.id.navigation_dynamic);
         _mActivity.finish();
     }
 

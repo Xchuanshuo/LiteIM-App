@@ -3,7 +3,6 @@ package com.worldtreestd.finder.ui.dynamic.fragment;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -12,8 +11,8 @@ import com.worldtreestd.finder.bean.Dynamic;
 import com.worldtreestd.finder.common.base.mvp.fragment.BaseFragment;
 import com.worldtreestd.finder.common.bean.CommonMultiBean;
 import com.worldtreestd.finder.common.utils.DialogUtils;
-import com.worldtreestd.finder.common.utils.ImageDisposeUtils;
 import com.worldtreestd.finder.common.widget.multipicture.MultiPictureLayout;
+import com.worldtreestd.finder.common.widget.picturewatcher.PreviewActivity;
 import com.worldtreestd.finder.contract.dynamic.DynamicContract;
 import com.worldtreestd.finder.presenter.dynamic.DynamicPresenter;
 import com.worldtreestd.finder.ui.dynamic.adapter.DynamicItemAdapter;
@@ -21,7 +20,6 @@ import com.worldtreestd.finder.ui.dynamic.adapter.DynamicItemAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-import byc.imagewatcher.ImageWatcher;
 import cn.jzvd.JZMediaManager;
 import cn.jzvd.JZUtils;
 import cn.jzvd.JZVideoPlayer;
@@ -38,7 +36,6 @@ public class DynamicFragment extends BaseFragment<DynamicContract.Presenter>
     implements DynamicContract.View, MultiPictureLayout.Callback {
 
     private int currentPage = 1;
-    ImageWatcher mImageWatcher;
     private List<CommonMultiBean<Dynamic>> beanList = new ArrayList<>();
 
     @Override
@@ -60,7 +57,6 @@ public class DynamicFragment extends BaseFragment<DynamicContract.Presenter>
     @Override
     protected void initEventAndData() {
         super.initEventAndData();
-        mImageWatcher = ImageDisposeUtils.getWatcher(_mActivity);
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -122,13 +118,13 @@ public class DynamicFragment extends BaseFragment<DynamicContract.Presenter>
     }
 
     @Override
-    public void onImageClickListener(ImageView i, List<ImageView> imageGroupList, List<String> urlList) {
-        mImageWatcher.show(i, imageGroupList, urlList);
+    public void onImageClickListener(int position, List<String> urlList) {
+        PreviewActivity.come(_mActivity, urlList, position);
     }
 
     @Override
     public boolean onBackPressedSupport() {
-        if (!mImageWatcher.handleBackPressed() && !JZVideoPlayer.backPress()) {
+        if (!JZVideoPlayer.backPress()) {
             return super.onBackPressedSupport();
         }
         return false;
@@ -150,6 +146,11 @@ public class DynamicFragment extends BaseFragment<DynamicContract.Presenter>
         Log.d(this.getClass().getName(), "onPause()");
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        refreshData();
+    }
 
     @Override
     public void showData(List<CommonMultiBean<Dynamic>> multiBeanList) {

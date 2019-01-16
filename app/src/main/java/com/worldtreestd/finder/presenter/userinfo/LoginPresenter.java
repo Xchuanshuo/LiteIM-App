@@ -35,7 +35,7 @@ public class LoginPresenter extends BasePresenter<LoginContract.View>
     @Override
     public void login(JSONObject o, User user) {
         addDisposable(NetworkService.getInstance().login(user.getOpenId(), user.getPassword())
-                .compose(new NetworkService.NetworkTransformer<>())
+                .compose(new NetworkService.ThreadTransformer<>())
                 .subscribeWith(new BaseObserve<ResultVo<String>>() {
                     @Override
                     public void onSuccess(ResultVo<String> data) {
@@ -61,7 +61,7 @@ public class LoginPresenter extends BasePresenter<LoginContract.View>
         RequestBody body = RequestBody.create(
                 MediaType.parse("application/json;charset=utf-8"), userStr);
         addDisposable(NetworkService.getInstance().register(body)
-                .compose(new NetworkService.NetworkTransformer<>())
+                .compose(new NetworkService.ThreadTransformer<>())
                 .subscribeWith(new BaseObserve<ResultVo<User>>() {
                     @Override
                     public void onSuccess(ResultVo<User> data) {

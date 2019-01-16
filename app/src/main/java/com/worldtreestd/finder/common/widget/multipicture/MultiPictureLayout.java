@@ -13,8 +13,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
+import com.bumptech.glide.request.RequestOptions;
 import com.worldtreestd.finder.R;
-import com.worldtreestd.finder.common.net.FinderApiService;
+import com.worldtreestd.finder.common.utils.GlideUtil;
+import com.worldtreestd.finder.common.utils.LogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +27,7 @@ import java.util.List;
  * @data by on 18-7-19.
  * @description 动态页多图控件
  */
-public class MultiPictureLayout extends FrameLayout implements View.OnClickListener {
+public class MultiPictureLayout extends FrameLayout {
 
     /**
      *  最多可见数量
@@ -34,7 +37,7 @@ public class MultiPictureLayout extends FrameLayout implements View.OnClickListe
      *  是否显示全部图片
      */
     private boolean isShowAll;
-    private static final int MAX_DISPLAY_COUNT = 12;
+    private static final int MAX_DISPLAY_COUNT = 9;
     private final FrameLayout.LayoutParams lpChildImage = new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
     private final int mSingleMaxSize;
     private final int mSpace;
@@ -68,7 +71,8 @@ public class MultiPictureLayout extends FrameLayout implements View.OnClickListe
             ImageView squareImageView = new SquareImageView(mContext);
             squareImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             squareImageView.setVisibility(View.GONE);
-            squareImageView.setOnClickListener(this);
+            int finalI = i;
+            squareImageView.setOnClickListener(v -> mCallback.onImageClickListener(finalI, mDataList));
             addView(squareImageView);
             pictureList.add(squareImageView);
         }
@@ -107,7 +111,7 @@ public class MultiPictureLayout extends FrameLayout implements View.OnClickListe
         if (urlListSize>mVisibilityCount) {
             int temp = mVisibilityCount/mLineCount;
             row = mVisibilityCount%mLineCount==0?temp:temp+1;
-        } else if (urlListSize<=mVisibilityCount && isShowAll) {
+        } else {
             int temp= urlListSize/mLineCount;
             row = urlListSize%mLineCount==0?temp:temp+1;
         }
@@ -126,6 +130,7 @@ public class MultiPictureLayout extends FrameLayout implements View.OnClickListe
         lpChildImage.height = lpChildImage.width;
 
         mOverflowCount.setVisibility(urlListSize > mVisibilityCount ? View.VISIBLE : View.GONE);
+        LogUtils.logD(mContext, urlListSize - mVisibilityCount + "---"+urlListSize + ": "+mVisibilityCount);
         mOverflowCount.setText("+ " + (urlListSize - mVisibilityCount));
         mOverflowCount.setLayoutParams(lpChildImage);
 
@@ -137,7 +142,14 @@ public class MultiPictureLayout extends FrameLayout implements View.OnClickListe
                 mVisiblePictureList.add(picture);
                 picture.setLayoutParams(lpChildImage);
                 picture.setBackgroundResource(R.drawable.defacult_picture);
-                Glide.with(getContext()).load(FinderApiService.BASE_URL+mDataList.get(i)).into(picture);
+                String url = mDataList.get(i);
+                if (!url.endsWith(".gif")) {
+                    GlideUtil.loadImage(mContext, mDataList.get(i), picture);
+                } else {
+                    Glide.with(mContext).asGif().apply(new RequestOptions()
+                            .priority(Priority.HIGH)
+                            .fitCenter()).load(url      ).into(picture);
+                }
                 picture.setTranslationX((i % column) * (imageSize + mSpace));
                 picture.setTranslationY((i / column) * (imageSize + mSpace));
             } else {
@@ -152,21 +164,13 @@ public class MultiPictureLayout extends FrameLayout implements View.OnClickListe
         getLayoutParams().height = imageSize * row + mSpace * (row - 1);
     }
 
-    @Override
-    public void onClick(View v) {
-        if (mCallback != null) {
-            mCallback.onImageClickListener((ImageView) v, mVisiblePictureList, mDataList);
-        }
-    }
-
     public interface Callback {
         /**
          *  单个图片的点击事件
-         * @param i
-         * @param imageGroupList
+         * @param position
          * @param urlList
          */
-        void onImageClickListener(ImageView i, List<ImageView> imageGroupList, List<String> urlList);
+        void onImageClickListener(int position, List<String> urlList);
     }
 
     public void setCallback(Callback callback) {

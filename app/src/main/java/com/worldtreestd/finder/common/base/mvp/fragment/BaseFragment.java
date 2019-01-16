@@ -100,29 +100,24 @@ public abstract class BaseFragment<T extends BaseContract.Presenter> extends Sup
         switch (type) {
             case REFRESH_SUCCESS:
                 mAdapter.setNewData(list);
-                if (mSwipeRefreshLayout != null) {
-                    mSwipeRefreshLayout.setRefreshing(false);
-                }
-                mAdapter.notifyDataSetChanged();
                 break;
             case REFRESH_FAILURE:
                 mAdapter.notifyDataSetChanged();
-                if (mSwipeRefreshLayout != null) {
-                    mSwipeRefreshLayout.setRefreshing(false);
-                }
                 mAdapter.loadMoreFail();
                 break;
             case LOAD_MORE_SUCCESS:
                 if (list != null) {
                     mAdapter.addData(list);
                     mAdapter.loadMoreComplete();
-                    mAdapter.notifyDataSetChanged();
                 }
                 break;
             case LOAD_MORE_FAILURE:
                 mAdapter.loadMoreFail();
                 break;
             default: break;
+        }
+        if (mSwipeRefreshLayout != null) {
+            mSwipeRefreshLayout.setRefreshing(false);
         }
         if (mAdapter.getData().isEmpty()) {
             mAdapter.setEmptyView(mEmptyView);

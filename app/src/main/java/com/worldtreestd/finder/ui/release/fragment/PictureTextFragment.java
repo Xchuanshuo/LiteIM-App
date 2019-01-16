@@ -13,8 +13,12 @@ import com.example.legend.wheel.widget.PlaceSelectorDialog;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.worldtreestd.finder.R;
 import com.worldtreestd.finder.common.base.mvp.fragment.BaseFragment;
+import com.worldtreestd.finder.common.net.BaseObserve;
+import com.worldtreestd.finder.common.net.NetworkService;
+import com.worldtreestd.finder.common.net.ProgressTransformer;
 import com.worldtreestd.finder.common.net.UploadHelper;
 import com.worldtreestd.finder.common.utils.DialogUtils;
+import com.worldtreestd.finder.common.utils.LogUtils;
 import com.worldtreestd.finder.common.widget.Glide4Engine;
 import com.worldtreestd.finder.contract.release.ReleaseContract;
 import com.worldtreestd.finder.presenter.release.ReleasePresenter;
@@ -25,9 +29,13 @@ import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
 import com.zhihu.matisse.internal.entity.Item;
 
+import java.io.File;
 import java.util.Arrays;
+import java.util.List;
 
 import butterknife.BindView;
+import io.reactivex.Observable;
+import top.zibin.luban.Luban;
 
 import static com.yalantis.ucrop.UCrop.REQUEST_CROP;
 import static com.zhihu.matisse.internal.ui.BasePreviewActivity.CROP_SUCCESS;
@@ -90,6 +98,7 @@ public class PictureTextFragment extends BaseFragment<ReleaseContract.Presenter>
                 .capture(true)
                 .captureStrategy(new CaptureStrategy(true, "com.worldtreestd.finder.fileprovider","test"))
                 .imageEngine(new Glide4Engine())
+                .showSingleMediaType(true)
                 .selectedCount(count)
                 .forResult(REQUEST_CODE_CHOOSE);
     }
@@ -146,13 +155,27 @@ public class PictureTextFragment extends BaseFragment<ReleaseContract.Presenter>
         } else if (getString(R.string.select_address).equals(address)) {
             DialogUtils.showToast(_mActivity, "请选择地址!");
         } else {
-            UploadHelper helper = new UploadHelper();
-            helper.addParameter("title", "test")
-                    .addParameter("content", mEditText.getText().toString())
-                    .addParameter("address", mSelectAddress.getText().toString())
-                    .addParameter("type", "0")
-                    .addParameter("files", mAdapter.getFiles());
-            mPresenter.addDynamic(helper.builder());
+            prepare();
         }
+    }
+
+    private void prepare() {
+        Observable.just(mAdapter.getPaths())
+                .compose(new NetworkService.ThreadTransformer<>())
+                .compose(ProgressTransformer.applyProgressBar(getContext(),"正在发布..."))
+                .map(strings -> Luban.with(getContext()).filter(path -> !path.endsWith( ".gif")).load(strings).get())
+                .subscribe(new BaseObserve<List<File>>() {
+                    @Override
+                    public void onSuccess(List<File> data) {
+                        LogUtils.logD(this, mEditText.getText().toString());
+                        UploadHelper helper = new UploadHelper();
+                        helper.addParameter("title", "test")
+                                .addParameter("content", mEditText.getText().toString())
+                                .addParameter("address", mSelectAddress.getText().toString())
+                                .addParameter("type", "0")
+                                .addParameter("files", data);
+                        mPresenter.addDynamic(helper.builder());
+                    }
+                });
     }
 }

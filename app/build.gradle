@@ -59,10 +59,10 @@ dependencies {
     annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.butterknifeVersion"
 
     // media
-    implementation "com.byc:ImageWatcher:$rootProject.imageWatcherVersion"
     implementation "cn.jzvd:jiaozivideoplayer:$rootProject.videoplayerVersion"
-    implementation 'com.github.yalantis:ucrop:2.2.2'
-//    implementation 'com.theartofdev.edmodo:android-image-cropper:2.8.0'
+    implementation "com.github.yalantis:ucrop:$rootProject.ucropVersion"
+    implementation "top.zibin:Luban:$rootProject.lubanVersion"
+    implementation 'com.bm.photoview:library:1.4.1'
 
     //    implementation "com.zhihu.android:matisse:$matisseVersion"
 

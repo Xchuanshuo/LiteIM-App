@@ -38,7 +38,9 @@
         android:id="@+id/mProgressBar"
         style="?android:attr/progressBarStyleSmall"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:indeterminateDrawable="@drawable/brvah_sample_footer_loading_progress"
+        />
 
     <android.support.v7.widget.AppCompatTextView
         android:layout_marginLeft="@dimen/dp_4"
