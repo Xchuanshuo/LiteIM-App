@@ -9,19 +9,18 @@
     app:layout_collapseParallaxMultiplier="0.8">
 
     <LinearLayout
-        android:id="@+id/user_head_container"
+        android:id="@+id/layout_background"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:tag="overScroll"
         android:orientation="vertical">
 
 
         <ImageView
-            android:id="@+id/uc_zoomiv"
+            android:id="@+id/img_background"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:background="@drawable/g"
-            android:scaleType="centerCrop"
-            android:tag="overScroll" />
+            android:layout_height="280dp"
+            android:scaleType="centerCrop" />
 
     </LinearLayout>
 

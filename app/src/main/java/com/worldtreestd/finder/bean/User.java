@@ -1,13 +1,21 @@
 package com.worldtreestd.finder.bean;
 
+import com.google.gson.annotations.SerializedName;
+
+import org.litepal.crud.LitePalSupport;
+
 import java.io.Serializable;
 
 
-public class User implements Serializable {
+/**
+ * @author legend
+ */
+public class User extends LitePalSupport implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private Integer id;
+    @SerializedName("id")
+    private Integer userId;
 
     private String username;
 
@@ -37,11 +45,11 @@ public class User implements Serializable {
     }
 
     public Integer getId() {
-        return id;
+        return userId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setId(Integer userId) {
+        this.userId = userId;
     }
 
     public String getUsername() {
@@ -127,7 +135,7 @@ public class User implements Serializable {
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
+                "id=" + userId +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", signature='" + signature + '\'' +

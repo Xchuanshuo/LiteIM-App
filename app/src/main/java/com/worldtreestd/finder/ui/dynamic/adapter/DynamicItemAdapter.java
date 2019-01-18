@@ -17,6 +17,7 @@ import com.worldtreestd.finder.R;
 import com.worldtreestd.finder.bean.Dynamic;
 import com.worldtreestd.finder.common.bean.CommonMultiBean;
 import com.worldtreestd.finder.common.utils.DataUtils;
+import com.worldtreestd.finder.common.utils.GlideUtil;
 import com.worldtreestd.finder.common.utils.IntentUtils;
 import com.worldtreestd.finder.common.widget.CircleImageView;
 import com.worldtreestd.finder.common.widget.multipicture.MultiPictureLayout;
@@ -81,6 +82,7 @@ public class DynamicItemAdapter extends BaseMultiItemQuickAdapter<CommonMultiBea
                     makeSceneTransitionAnimation((Activity) mContext, pair1, pair2, pair3, pair4, pair5);
             mContext.startActivity(intent, options.toBundle());
         });
+        GlideUtil.loadImage(mContext, item.getData().getPortrait(), helper.getView(R.id.publisher_portrait));
         helper.setText(R.id.tv_publisher_nickname, item.getData().getUsername());
         helper.setText(R.id.tv_dynamic_content, item.getData().getContent());
         helper.setText(R.id.tv_publish_time, item.getData().getCreateTime().replace("T", " "));

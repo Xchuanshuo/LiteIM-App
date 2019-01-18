@@ -1,9 +1,11 @@
 package com.worldtreestd.finder.bean;
 
+import org.litepal.crud.LitePalSupport;
+
 /**
  * @author legend
  */
-public class Dynamic {
+public class Dynamic extends LitePalSupport {
         /**
          * id : 1
          * userId : 14

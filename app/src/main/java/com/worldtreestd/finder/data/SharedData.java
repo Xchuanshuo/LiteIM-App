@@ -115,4 +115,12 @@ public class SharedData {
         return expire;
     }
 
+    public String getCurrentUserId() {
+        return shared.get(Constant.LOGIN_USER_ID);
+    }
+
+    public void saveLoginUserId(String userId) {
+        shared.save(Constant.LOGIN_USER_ID, userId);
+    }
+
 }

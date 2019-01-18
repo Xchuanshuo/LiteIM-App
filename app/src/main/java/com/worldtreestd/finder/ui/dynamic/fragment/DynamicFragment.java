@@ -149,7 +149,6 @@ public class DynamicFragment extends BaseFragment<DynamicContract.Presenter>
     @Override
     public void onResume() {
         super.onResume();
-        refreshData();
     }
 
     @Override

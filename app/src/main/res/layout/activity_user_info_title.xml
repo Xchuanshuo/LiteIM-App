@@ -16,13 +16,13 @@
         android:orientation="horizontal">
 
         <com.worldtreestd.finder.common.widget.CircleImageView
-            android:id="@+id/title_portrait"
-            android:layout_width="60px"
-            android:layout_height="60px"
+            android:id="@+id/portrait_title"
+            android:layout_width="@dimen/dp_40"
+            android:layout_height="@dimen/dp_40"
             android:src="@drawable/g" />
 
         <TextView
-            android:id="@+id/username_tv"
+            android:id="@+id/tv_username_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -36,17 +36,17 @@
 
 
     <ImageView
-        android:id="@+id/setting_iv"
+        android:id="@+id/img_setting"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_centerVertical="true"
-        android:layout_toLeftOf="@+id/message_iv"
+        android:layout_toLeftOf="@+id/img_message"
         android:paddingLeft="10dp"
         android:paddingRight="8dp"
         android:src="@drawable/ic_settings_black_24dp" />
 
     <android.support.v7.widget.AppCompatImageView
-        android:id="@+id/message_iv"
+        android:id="@+id/img_message"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_alignParentRight="true"

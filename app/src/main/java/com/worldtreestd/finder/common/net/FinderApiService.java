@@ -1,6 +1,7 @@
 package com.worldtreestd.finder.common.net;
 
 import com.worldtreestd.finder.bean.Dynamic;
+import com.worldtreestd.finder.bean.LoginReturn;
 import com.worldtreestd.finder.bean.Record;
 import com.worldtreestd.finder.bean.User;
 import com.worldtreestd.finder.common.bean.CourseBean;
@@ -38,8 +39,8 @@ public interface FinderApiService {
      * @return
      */
     @POST("/user/login")
-    Observable<ResultVo<String>> login(@Query("openId") String username,
-                                       @Query("password") String password);
+    Observable<ResultVo<LoginReturn>> login(@Query("openId") String username,
+                                            @Query("password") String password);
     /**
      * 用户注册
      * @param requestBody

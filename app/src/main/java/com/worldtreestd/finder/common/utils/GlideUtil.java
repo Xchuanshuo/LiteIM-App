@@ -9,6 +9,8 @@ import com.bumptech.glide.request.RequestOptions;
 
 import java.io.File;
 
+import jp.wasabeef.glide.transformations.BlurTransformation;
+
 /**
  * @author Legend
  * @data by on 18-8-23.
@@ -35,5 +37,11 @@ public class GlideUtil {
         options.centerCrop().diskCacheStrategy(DiskCacheStrategy.ALL);
         Glide.with(context).load(file).apply(options)
                 .into(imageView);
+    }
+
+    public static void loadImageByBlur(Context context, String url, ImageView imageView) {
+        RequestOptions options = new RequestOptions();
+        options.transform(new BlurTransformation());
+        Glide.with(context).load(url).apply(options).into(imageView);
     }
 }

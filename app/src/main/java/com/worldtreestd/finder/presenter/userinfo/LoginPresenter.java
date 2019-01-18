@@ -1,6 +1,7 @@
 package com.worldtreestd.finder.presenter.userinfo;
 
 import com.google.gson.Gson;
+import com.worldtreestd.finder.bean.LoginReturn;
 import com.worldtreestd.finder.bean.User;
 import com.worldtreestd.finder.common.base.mvp.presenter.BasePresenter;
 import com.worldtreestd.finder.common.net.BaseObserve;
@@ -36,12 +37,18 @@ public class LoginPresenter extends BasePresenter<LoginContract.View>
     public void login(JSONObject o, User user) {
         addDisposable(NetworkService.getInstance().login(user.getOpenId(), user.getPassword())
                 .compose(new NetworkService.ThreadTransformer<>())
-                .subscribeWith(new BaseObserve<ResultVo<String>>() {
+                .subscribeWith(new BaseObserve<ResultVo<LoginReturn>>() {
                     @Override
-                    public void onSuccess(ResultVo<String> data) {
+                    public void onSuccess(ResultVo<LoginReturn> data) {
                         // 登录成功后保存jwt信息
                         if (data.getCode().equals(Code.SUCCESS)) {
-                            sharedData.saveJWT(data.getData());
+                            // 储存JWT
+                            String jwt = data.getData().getJwt();
+                            sharedData.saveJWT(jwt);
+                            // 拿到用户信息并进行存储
+                            User u = data.getData().getUser();
+                            u.saveOrUpdate();
+                            sharedData.saveLoginUserId(u.getId()+"");
                             if (mView != null) {
                                 mView.loginAfter();
                             }
@@ -85,7 +92,7 @@ public class LoginPresenter extends BasePresenter<LoginContract.View>
                 user.setSex(0);
             }
             user.setUsername(o.getString("nickname"));
-            user.setPortrait(o.getString("figureurl_1"));
+            user.setPortrait(o.getString("figureurl_2"));
             user.setBackground(o.getString("figureurl_2"));
         } catch (JSONException e) {
             e.printStackTrace();

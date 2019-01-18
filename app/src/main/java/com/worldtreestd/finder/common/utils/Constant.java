@@ -43,4 +43,6 @@ public class Constant {
 
     public static final String LAST_LOGIN_TIME = "last_login_time";
 
+    public static final String LOGIN_USER_ID = "login_user_id";
+
 }

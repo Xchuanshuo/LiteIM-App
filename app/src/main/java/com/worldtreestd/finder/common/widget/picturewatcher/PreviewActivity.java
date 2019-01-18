@@ -1,5 +1,6 @@
 package com.worldtreestd.finder.common.widget.picturewatcher;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -10,7 +11,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
+import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.worldtreestd.finder.R;
+import com.worldtreestd.finder.common.utils.DialogUtils;
+import com.worldtreestd.finder.data.StorageData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,12 +25,13 @@ import static com.worldtreestd.finder.common.utils.Constant.POSITION;
  * @author legend
  */
 public class PreviewActivity extends AppCompatActivity
-        implements ViewPager.OnPageChangeListener {
+        implements ViewPager.OnPageChangeListener, View.OnClickListener {
 
     public static final String URL_LIST = "url_list";
     private PreviewPagerAdapter mPagerAdapter;
     private ViewPager mViewPager;
-    private TextView mTvNum;
+    private TextView mSaveTv;
+    private TextView mNumTv;
     private List<String> urlList;
 
     public static void come(Context context,
@@ -52,13 +57,15 @@ public class PreviewActivity extends AppCompatActivity
             getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
         Integer position = getIntent().getIntExtra(POSITION, 0);
-        mTvNum = findViewById(R.id.tv_num);
-        mTvNum.setText(position+1+"/"+urlList.size());
+        mNumTv = findViewById(R.id.tv_num);
+        mNumTv.setText(position+1+"/"+urlList.size());
+        mSaveTv = findViewById(R.id.tv_save);
         mViewPager = findViewById(R.id.mViewPager);
         mPagerAdapter = new PreviewPagerAdapter(getSupportFragmentManager(), urlList);
         mViewPager.setAdapter(mPagerAdapter);
         mViewPager.addOnPageChangeListener(this);
         mViewPager.setCurrentItem(position);
+        mSaveTv.setOnClickListener(this);
     }
 
     @Override
@@ -68,11 +75,24 @@ public class PreviewActivity extends AppCompatActivity
 
     @Override
     public void onPageSelected(int position) {
-        mTvNum.setText(position+1+"/"+urlList.size());
+        mNumTv.setText(position+1+"/"+urlList.size());
     }
 
     @Override
     public void onPageScrollStateChanged(int state) {
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        StorageData data = StorageData.getInstance();
+        new RxPermissions(this).request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .subscribe(aBoolean -> {
+                    if (aBoolean) {
+                        data.downloadFile(urlList.get(mViewPager.getCurrentItem()));
+                    } else {
+                        DialogUtils.showToast(this, "未获取相关权限!");
+                    }
+                }).dispose();
     }
 }

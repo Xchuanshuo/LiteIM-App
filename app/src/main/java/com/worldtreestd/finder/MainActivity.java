@@ -19,8 +19,10 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.PopupWindow;
 
+import com.worldtreestd.finder.bean.User;
 import com.worldtreestd.finder.common.base.mvp.activity.BaseActivity;
 import com.worldtreestd.finder.common.utils.ScreenUtils;
+import com.worldtreestd.finder.data.DBData;
 import com.worldtreestd.finder.ui.dynamic.fragment.DynamicFragment;
 import com.worldtreestd.finder.ui.mainpage.fragment.HomeFragment;
 import com.worldtreestd.finder.ui.moreinfo.fragment.MoreInfoFragment;
@@ -49,6 +51,7 @@ public class MainActivity extends BaseActivity {
     final HomeFragment mHomeFragment = new HomeFragment();
     final MoreInfoFragment mMoreInfoFragment = new MoreInfoFragment();
     final DynamicFragment mDynamicFragment = new DynamicFragment();
+    User user  = DBData.getInstance().getCurrentUser();
 
     public static void come(Context context, Integer id) {
         Intent intent = new Intent(context, MainActivity.class);
@@ -84,7 +87,9 @@ public class MainActivity extends BaseActivity {
     protected void initWidget() {
         super.initWidget();
         bottomNavigationView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
-        mPortrait.setOnClickListener(v -> startActivity(new Intent(this, UserInfoActivity.class)));
+        mPortrait.setOnClickListener(v -> {
+            startActivity(new Intent(this, UserInfoActivity.class));
+        });
         mFloatButton.setOnClickListener(view->jumpTop(bottomNavigationView.getSelectedItemId()));
     }
 
@@ -93,6 +98,9 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void initEventAndData() {
         super.initEventAndData();
+        // 获取用户信息
+//        GlideUtil.loadImage(this, user.getPortrait(), mPortrait);
+
         initPopupWindow();
         mWriteButton.setOnClickListener(v -> {
             int[] windowPos = ScreenUtils.calculatePopWindowPos(v, mView);

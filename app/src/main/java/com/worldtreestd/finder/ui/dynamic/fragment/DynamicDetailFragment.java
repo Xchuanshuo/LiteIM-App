@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -42,6 +43,7 @@ public class DynamicDetailFragment extends BaseFragment<DynamicDetailContract.Pr
     TextView mDynamicContent;
 //    @BindView(R.id.video_player)
     JZVideoPlayerStandard mJzVideoPlayerStandard;
+    ImageView mPortraitImg;
     private List<CommentBean> commentBeanList = new ArrayList<>();
 
     @Override
@@ -75,6 +77,7 @@ public class DynamicDetailFragment extends BaseFragment<DynamicDetailContract.Pr
         mDynamicContent = detailContentLayout.findViewById(R.id.dynamic_content);
         mMultiPictureLayout = detailContentLayout.findViewById(R.id.pictures);
         mJzVideoPlayerStandard = detailContentLayout.findViewById(R.id.video_player);
+        mPortraitImg = detailContentLayout.findViewById(R.id.publisher_portrait);
         mAdapter.addHeaderView(detailContentLayout);
         Intent intent = _mActivity.getIntent();
         String content = intent.getStringExtra(getString(R.string.dynamic_content));

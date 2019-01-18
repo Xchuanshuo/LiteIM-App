@@ -2,6 +2,8 @@ package com.worldtreestd.finder.common.base.mvp;
 
 import android.app.Application;
 
+import org.litepal.LitePal;
+
 /**
  * @author Legend
  * @data by on 2018/1/27.
@@ -16,6 +18,7 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this;
+        LitePal.initialize(this);
     }
 
     public static MyApplication getInstance() {
