@@ -54,7 +54,17 @@ public interface BaseContract {
 
         }
 
+        /**
+         * 没有更多数据
+         */
         default void showNoMoreData() {
+
+        }
+
+        /**
+         * 刷新失败
+         */
+        default void refreshFailure() {
 
         }
 

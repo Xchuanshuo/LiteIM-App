@@ -14,6 +14,7 @@ import java.util.Map;
 import io.reactivex.Observable;
 import okhttp3.RequestBody;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Multipart;
@@ -67,6 +68,27 @@ public interface FinderApiService {
      */
     @GET("/dynamic/{page}/{size}")
     Observable<ResultVo<Record<Dynamic>>> getDynamicList(@Path("page") Integer page, @Path("size") Integer size);
+
+    /**
+     * 个人发布的动态
+     * @param jwt
+     * @param userId
+     * @param page
+     * @param size
+     * @return
+     */
+    @GET("/dynamic/{userId}/{page}/{size}")
+    Observable<ResultVo<Record<Dynamic>>> getPersonalDynamic(@Header("Authorization") String jwt, @Path("userId") Integer userId,
+                                                             @Path("page") Integer page, @Path("size") Integer size);
+
+    /**
+     * 删除发布的动态
+     * @param jwt
+     * @param dynamicId
+     * @return
+     */
+    @DELETE("/dynamic/{dynamicId}")
+    Observable<ResultVo<String>> deleteDynamic(@Header("Authorization") String jwt, @Path("dynamicId") Integer dynamicId);
 
 
     @GET("message/{id}")

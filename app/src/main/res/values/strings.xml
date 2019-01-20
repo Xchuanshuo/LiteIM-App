@@ -8,7 +8,7 @@
 
     <string name="app_name">Finder</string>
     <string name="title_home">主页</string>
-    <string name="title_dashboard">更多看点</string>
+    <string name="title_dashboard" translatable="false">更多看点</string>
     <string name="title_notifications">动态中心</string>
     <string name="create_circle_loading">正在创建圈子，请耐心等待~</string>
     <string name="release_plan_loading">正在发布一条计划，请稍后~</string>
@@ -45,7 +45,7 @@
     <string name="dynamic_content">dynamic_content</string>
     <string name="dynamic_video_url">dynamic_video_url</string>
     <string name="dynamic_video_image_url">dynamic_video_image_url</string>
-    <string name="dynamic_picture_urlList">dynamic_picture</string>
+    <string name="dynamic_picture_urlList" translatable="false">dynamic_picture</string>
     <string name="detail_write_comment">说点什么呢...</string>
     <string name="record_feel_text">记录此刻的感受...</string>
     <string name="class_number">时间:</string>
@@ -57,4 +57,5 @@
     <string name="select_address">请选择详细的地址</string>
     <string name="title_activity_welcome">WelcomeActivity</string>
     <string name="login">登录</string>
+    <string name="login_request">请先进行登录再进行后续的操作!</string>
 </resources>

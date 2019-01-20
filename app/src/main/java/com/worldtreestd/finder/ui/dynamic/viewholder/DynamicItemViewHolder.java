@@ -1,5 +1,6 @@
 package com.worldtreestd.finder.ui.dynamic.viewholder;
 
+import android.support.v7.widget.AppCompatImageView;
 import android.view.View;
 import android.widget.TextView;
 
@@ -25,6 +26,8 @@ public class DynamicItemViewHolder extends BaseViewHolder {
     JZVideoPlayerStandard jzVideoPlayerStandard;
     @BindView(R.id.publisher_portrait)
     CircleImageView publisherPortrait;
+    @BindView(R.id.img_selector)
+    AppCompatImageView mSelectorImg;
     @BindView(R.id.tv_publisher_nickname)
     TextView publisherName;
     @BindView(R.id.tv_publish_time)

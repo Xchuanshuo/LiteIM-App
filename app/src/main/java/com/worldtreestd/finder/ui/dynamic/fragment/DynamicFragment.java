@@ -11,8 +11,6 @@ import com.worldtreestd.finder.bean.Dynamic;
 import com.worldtreestd.finder.common.base.mvp.fragment.BaseFragment;
 import com.worldtreestd.finder.common.bean.CommonMultiBean;
 import com.worldtreestd.finder.common.utils.DialogUtils;
-import com.worldtreestd.finder.common.widget.multipicture.MultiPictureLayout;
-import com.worldtreestd.finder.common.widget.picturewatcher.PreviewActivity;
 import com.worldtreestd.finder.contract.dynamic.DynamicContract;
 import com.worldtreestd.finder.presenter.dynamic.DynamicPresenter;
 import com.worldtreestd.finder.ui.dynamic.adapter.DynamicItemAdapter;
@@ -33,7 +31,7 @@ import static com.worldtreestd.finder.common.base.mvp.StatusType.REFRESH_SUCCESS
  * @description
  */
 public class DynamicFragment extends BaseFragment<DynamicContract.Presenter>
-    implements DynamicContract.View, MultiPictureLayout.Callback {
+    implements DynamicContract.View {
 
     private int currentPage = 1;
     private List<CommonMultiBean<Dynamic>> beanList = new ArrayList<>();
@@ -45,7 +43,7 @@ public class DynamicFragment extends BaseFragment<DynamicContract.Presenter>
 
     @Override
     protected BaseQuickAdapter getAdapter() {
-        return new DynamicItemAdapter(beanList, _mActivity).setCallback(this);
+        return new DynamicItemAdapter(beanList, _mActivity);
     }
 
     @Override
@@ -115,11 +113,6 @@ public class DynamicFragment extends BaseFragment<DynamicContract.Presenter>
     public void showNoMoreData() {
         DialogUtils.showToast(getContext(), "没有更多数据!");
         mAdapter.loadMoreEnd();
-    }
-
-    @Override
-    public void onImageClickListener(int position, List<String> urlList) {
-        PreviewActivity.come(_mActivity, urlList, position);
     }
 
     @Override

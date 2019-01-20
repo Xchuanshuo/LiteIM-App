@@ -42,7 +42,8 @@ public abstract class BaseFragment<T extends BaseContract.Presenter> extends Sup
     private boolean isRefreshing = false;
     @Nullable
     @BindView(R.id.mSwipeRefresh)
-    SwipeRefreshLayout mSwipeRefreshLayout;
+    protected SwipeRefreshLayout mSwipeRefreshLayout;
+    ProgressBar mProgressBar;
 
     @Override
     public void onAttach(Activity activity) {
@@ -72,6 +73,7 @@ public abstract class BaseFragment<T extends BaseContract.Presenter> extends Sup
                 mAdapter.setEnableLoadMore(true);
                 mRecyclerView.setAdapter(mAdapter);
                 mEmptyView = getLayoutInflater().inflate(R.layout.layout_empty, (ViewGroup) mRecyclerView.getParent(), false);
+                mProgressBar = mEmptyView.findViewById(R.id.mProgressBar);
                 mEmptyView.setOnClickListener(v -> refreshData());
                 mAdapter.setOnLoadMoreListener(this::loadMoreData, mRecyclerView);
                 if (mAdapter.getData().isEmpty()) {
@@ -121,6 +123,16 @@ public abstract class BaseFragment<T extends BaseContract.Presenter> extends Sup
         }
         if (mAdapter.getData().isEmpty()) {
             mAdapter.setEmptyView(mEmptyView);
+        }
+    }
+
+    @Override
+    public void refreshFailure() {
+        if (mSwipeRefreshLayout!=null) {
+            mSwipeRefreshLayout.setRefreshing(false);
+        }
+        if (mProgressBar != null) {
+            mProgressBar.setVisibility(View.VISIBLE);
         }
     }
 

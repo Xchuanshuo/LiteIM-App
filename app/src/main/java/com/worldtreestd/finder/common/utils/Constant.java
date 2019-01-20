@@ -45,4 +45,6 @@ public class Constant {
 
     public static final String LOGIN_USER_ID = "login_user_id";
 
+    public static final String LOOK_USER = "look_user";
+
 }

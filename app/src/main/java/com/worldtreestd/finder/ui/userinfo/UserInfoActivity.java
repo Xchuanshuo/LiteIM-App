@@ -1,7 +1,10 @@
 package com.worldtreestd.finder.ui.userinfo;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.view.View;
@@ -18,6 +21,8 @@ import com.worldtreestd.finder.data.DBData;
 import com.worldtreestd.finder.ui.userinfo.adapter.UserRelationPageAdapter;
 
 import butterknife.BindView;
+
+import static com.worldtreestd.finder.common.utils.Constant.LOOK_USER;
 
 /**
  * @author Legend
@@ -48,12 +53,25 @@ public class UserInfoActivity extends BaseActivity {
     ViewGroup titleContainer;
     @BindView(R.id.title_center_layout)
     ViewGroup titleCenterLayout;
-    final UserRelationPageAdapter pageAdapter = new UserRelationPageAdapter(getSupportFragmentManager());
-    private User user = DBData.getInstance().getCurrentUser();
+    private UserRelationPageAdapter pageAdapter;
+    private User localUser = DBData.getInstance().getCurrentUser();
+    private User lookUser;
+
+    public static void come(Context context, Bundle bundle) {
+        Intent intent = new Intent();
+        intent.putExtras(bundle);
+        intent.setClass(context, UserInfoActivity.class);
+        context.startActivity(intent);
+    }
 
     @Override
     public int getLayoutId() {
         return R.layout.activity_user_info_main;
+    }
+
+    @Override
+    public boolean showHomeAsUp() {
+        return true;
     }
 
     @Override
@@ -65,6 +83,16 @@ public class UserInfoActivity extends BaseActivity {
             getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
     }
+
+    @Override
+    protected void initBefore() {
+        super.initBefore();
+        Bundle bundle = getIntent().getExtras();
+        assert bundle != null;
+        this.lookUser = (User) bundle.getSerializable(LOOK_USER);
+        pageAdapter = new UserRelationPageAdapter(getSupportFragmentManager(), lookUser);
+    }
+
 
     @Override
     protected void initEventAndData() {
@@ -87,11 +115,20 @@ public class UserInfoActivity extends BaseActivity {
 
             }
         });
-        mUsernameTvTitle.setText(user.getUsername());
-        mUsernameTv.setText(user.getUsername());
-        GlideUtil.loadImageByBlur(this, user.getBackground(), mBackgroundImg);
-        GlideUtil.loadImage(this, user.getPortrait(), mPortrait);
-        GlideUtil.loadImage(this, user.getPortrait(), mPortraitTitle);
+
+        mUsernameTvTitle.setText(lookUser.getUsername());
+        mUsernameTv.setText(lookUser.getUsername());
+        GlideUtil.loadImageByBlur(this, lookUser.getBackground(), mBackgroundImg);
+        GlideUtil.loadImage(this, lookUser.getPortrait(), mPortrait);
+        GlideUtil.loadImage(this, lookUser.getPortrait(), mPortraitTitle);
+        // 判断当前查看的用户是否是登录的用户
+        if (lookUser!=null && localUser!=null) {
+            if (!lookUser.getId().equals(localUser.getId())) {
+                // todo:
+            } else {
+                // todo:
+            }
+        }
     }
 
 

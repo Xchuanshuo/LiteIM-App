@@ -148,14 +148,13 @@ public class MultiPictureLayout extends FrameLayout {
                 } else {
                     Glide.with(mContext).asGif().apply(new RequestOptions()
                             .priority(Priority.HIGH)
-                            .fitCenter()).load(url      ).into(picture);
+                            .fitCenter()).load(url).into(picture);
                 }
                 picture.setTranslationX((i % column) * (imageSize + mSpace));
                 picture.setTranslationY((i / column) * (imageSize + mSpace));
             } else {
                 picture.setVisibility(View.GONE);
             }
-
             if (i == mVisibilityCount - 1) {
                 mOverflowCount.setTranslationX((i % column) * (imageSize + mSpace));
                 mOverflowCount.setTranslationY((i / column) * (imageSize + mSpace));

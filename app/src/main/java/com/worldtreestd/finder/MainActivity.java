@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.AppCompatTextView;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,8 +22,10 @@ import android.widget.PopupWindow;
 
 import com.worldtreestd.finder.bean.User;
 import com.worldtreestd.finder.common.base.mvp.activity.BaseActivity;
+import com.worldtreestd.finder.common.utils.DialogUtils;
 import com.worldtreestd.finder.common.utils.ScreenUtils;
 import com.worldtreestd.finder.data.DBData;
+import com.worldtreestd.finder.data.SharedData;
 import com.worldtreestd.finder.ui.dynamic.fragment.DynamicFragment;
 import com.worldtreestd.finder.ui.mainpage.fragment.HomeFragment;
 import com.worldtreestd.finder.ui.moreinfo.fragment.MoreInfoFragment;
@@ -32,6 +35,7 @@ import com.worldtreestd.finder.ui.userinfo.UserInfoActivity;
 import butterknife.BindView;
 import cn.jzvd.JZVideoPlayer;
 
+import static com.worldtreestd.finder.common.utils.Constant.LOOK_USER;
 import static com.worldtreestd.finder.common.utils.Constant.POSITION;
 
 /**
@@ -88,7 +92,17 @@ public class MainActivity extends BaseActivity {
         super.initWidget();
         bottomNavigationView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
         mPortrait.setOnClickListener(v -> {
-            startActivity(new Intent(this, UserInfoActivity.class));
+            String jwt = SharedData.getInstance().getJWT();
+            if (TextUtils.isEmpty(jwt)) {
+                DialogUtils.showToast(this, getString(R.string.login_request));
+                LoginActivity.come(this);
+                finish();
+                return;
+            }
+            Bundle bundle = new Bundle();
+            User user = DBData.getInstance().getCurrentUser();
+            bundle.putSerializable(LOOK_USER, user);
+            UserInfoActivity.come(this, bundle);
         });
         mFloatButton.setOnClickListener(view->jumpTop(bottomNavigationView.getSelectedItemId()));
     }
@@ -99,8 +113,6 @@ public class MainActivity extends BaseActivity {
     protected void initEventAndData() {
         super.initEventAndData();
         // 获取用户信息
-//        GlideUtil.loadImage(this, user.getPortrait(), mPortrait);
-
         initPopupWindow();
         mWriteButton.setOnClickListener(v -> {
             int[] windowPos = ScreenUtils.calculatePopWindowPos(v, mView);

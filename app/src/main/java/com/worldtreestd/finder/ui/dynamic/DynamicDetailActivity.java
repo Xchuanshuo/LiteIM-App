@@ -4,7 +4,7 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.transition.Fade;
+import android.transition.Slide;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -39,11 +39,11 @@ public class DynamicDetailActivity extends BaseActivity {
 //        getWindow().setEnterTransition(new Explode().setDuration(500));
 //        getWindow().setExitTransition(new Explode().setDuration(500));
 //        // 滑动进出
-//        getWindow().setEnterTransition(new Slide().setDuration(500));
-//        getWindow().setExitTransition(new Slide().setDuration(500));
-        // 淡入淡出
-        getWindow().setEnterTransition(new Fade().setDuration(1000));
-        getWindow().setExitTransition(new Fade().setDuration(1000));
+        getWindow().setEnterTransition(new Slide().setDuration(500));
+        getWindow().setExitTransition(new Slide().setDuration(500));
+//        // 淡入淡出
+//        getWindow().setEnterTransition(new Fade().setDuration(1000));
+//        getWindow().setExitTransition(new Fade().setDuration(1000));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    android:layout_width="300dp"
+    android:layout_height="match_parent"
+    app:cardElevation="@dimen/dp_4"
+    app:cardCornerRadius="@dimen/dp_4"
+    android:foreground="?attr/selectableItemBackground"
+    android:background="@mipmap/ic_popup_bg"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/tv_share"
+        android:layout_margin="@dimen/dp_4"
+        android:layout_width="80dp"
+        android:foreground="?attr/selectableItemBackground"
+        android:drawablePadding="@dimen/dp_4"
+        android:padding="6dp"
+        android:text="分享"
+        android:textSize="18sp"
+        android:layout_height="wrap_content" />
+
+    <View
+        android:background="@color/deep_grey"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/tv_report"
+        android:layout_margin="@dimen/dp_4"
+        android:layout_width="80dp"
+        android:foreground="?attr/selectableItemBackground"
+        android:drawablePadding="@dimen/dp_4"
+        android:padding="6dp"
+        android:text="举报"
+        android:textSize="18sp"
+        android:layout_height="wrap_content" />
+
+    <View
+        android:background="@color/deep_grey"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/tv_delete"
+        android:layout_margin="@dimen/dp_4"
+        android:layout_width="80dp"
+        android:foreground="?attr/selectableItemBackground"
+        android:drawablePadding="@dimen/dp_4"
+        android:padding="6dp"
+        android:text="删除"
+        android:textSize="18sp"
+        android:layout_height="wrap_content" />
+    <View
+        android:background="@color/deep_grey"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
+</LinearLayout>
+
+</android.support.v7.widget.CardView>

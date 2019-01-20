@@ -3,10 +3,16 @@ package com.worldtreestd.finder.ui.dynamic.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.util.Pair;
+import android.support.v7.widget.AppCompatImageView;
 import android.text.TextUtils;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -15,13 +21,17 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.Gson;
 import com.worldtreestd.finder.R;
 import com.worldtreestd.finder.bean.Dynamic;
+import com.worldtreestd.finder.bean.User;
 import com.worldtreestd.finder.common.bean.CommonMultiBean;
 import com.worldtreestd.finder.common.utils.DataUtils;
 import com.worldtreestd.finder.common.utils.GlideUtil;
 import com.worldtreestd.finder.common.utils.IntentUtils;
+import com.worldtreestd.finder.common.utils.ScreenUtils;
 import com.worldtreestd.finder.common.widget.CircleImageView;
 import com.worldtreestd.finder.common.widget.multipicture.MultiPictureLayout;
+import com.worldtreestd.finder.common.widget.picturewatcher.PreviewActivity;
 import com.worldtreestd.finder.ui.dynamic.viewholder.DynamicItemViewHolder;
+import com.worldtreestd.finder.ui.userinfo.UserInfoActivity;
 
 import java.util.List;
 import java.util.Map;
@@ -31,6 +41,7 @@ import cn.jzvd.JZVideoPlayerStandard;
 import static cn.jzvd.JZVideoPlayer.SCREEN_WINDOW_LIST;
 import static com.worldtreestd.finder.common.utils.Constant.DYNAMIC_ITEM_WORD_PICTURE;
 import static com.worldtreestd.finder.common.utils.Constant.DYNAMIC_ITEM_WORD_VIDEO;
+import static com.worldtreestd.finder.common.utils.Constant.LOOK_USER;
 
 /**
  * @author Legend
@@ -58,11 +69,34 @@ public class DynamicItemAdapter extends BaseMultiItemQuickAdapter<CommonMultiBea
 
     @Override
     protected void convert(DynamicItemViewHolder helper, CommonMultiBean<Dynamic> item) {
-        helper.addOnClickListener(R.id.dynamic_item);
+        helper.addOnClickListener(R.id.cardView);
         final Dynamic dynamic = item.getData();
         helper.itemView.setOnClickListener(v -> {
-            Intent intent = IntentUtils.createDynamicIntent(mContext, dynamic);
+            Intent intent = IntentUtils.createDynamicIntent(mContext,item.getData());
             CircleImageView portrait = helper.getView(R.id.publisher_portrait);
+            portrait.setOnClickListener(view -> {
+                Bundle bundle = new Bundle();
+                User user = new User();
+                user.setId(item.getData().getUserId());
+                user.setUsername(item.getData().getUsername());
+                user.setPortrait(item.getData().getPortrait());
+                user.setBackground(item.getData().getPortrait());
+                bundle.putSerializable(LOOK_USER, user);
+                UserInfoActivity.come(mContext, bundle);
+            });
+            View mView = LayoutInflater.from(mContext).inflate(R.layout.dynamic_item_popupwindow, null);
+            AppCompatImageView mSelector = helper.getView(R.id.img_selector);
+            PopupWindow mPopupWindow= new PopupWindow(mView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            mPopupWindow.setElevation(10.5f);
+            mPopupWindow.setOutsideTouchable(true);
+            mPopupWindow.setFocusable(true);
+            //点击 back 键的时候，窗口会自动消失
+//            mPopupWindow.setBackgroundDrawable(new ColorDrawable());
+            mSelector.setOnClickListener(v1 -> {
+                int[] windowPos = ScreenUtils.calculatePopWindowPos(v1, mView);
+                mPopupWindow.showAtLocation(v1, Gravity.TOP|Gravity.START
+                        , windowPos[0]-30, windowPos[1]-27);
+            });
             TextView publisherName = helper.getView(R.id.tv_publisher_nickname);
             TextView publishTime = helper.getView(R.id.tv_publish_time);
             TextView dynamicContent = helper.getView(R.id.tv_dynamic_content);
@@ -117,7 +151,7 @@ public class DynamicItemAdapter extends BaseMultiItemQuickAdapter<CommonMultiBea
     /** 图片加载 **/
     private void setImageData(DynamicItemViewHolder viewHolder, List<String> urlList) {
         multiPictureLayout = viewHolder.getView(R.id.pictures);
-        multiPictureLayout.setCallback(callback);
+        multiPictureLayout.setCallback((position, urlList1) -> PreviewActivity.come(mContext, urlList1, position));
         multiPictureLayout.set(urlList, urlList);
     }
 

@@ -15,19 +15,19 @@
         android:layout_marginRight="@dimen/dp_16">
 
         <com.worldtreestd.finder.common.widget.CircleImageView
-            android:id="@+id/publisher_portrait"
+            android:id="@+id/portrait"
             android:src="@drawable/g"
             android:layout_width="36dp"
             android:layout_height="36dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"
             android:transitionName="@string/portrait"/>
 
         <TextView
-            android:id="@+id/publisher_nickname"
+            android:id="@+id/tv_nickname"
             android:text="、legend"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/publisher_portrait"
+            android:layout_toRightOf="@+id/portrait"
             android:textColor="#000"
             android:textSize="15sp"
             android:transitionName="@string/publisher_name"/>
@@ -37,18 +37,18 @@
             android:text="2018年9月"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/publisher_nickname"
+            android:layout_below="@+id/tv_nickname"
             android:layout_marginTop="0.5dip"
-            android:layout_toRightOf="@+id/publisher_portrait"
+            android:layout_toRightOf="@+id/portrait"
             android:textColor="#777"
             android:textSize="13sp"
             android:transitionName="@string/publish_time"/>
 
         <TextView
-            android:id="@+id/dynamic_content"
+            android:id="@+id/tv_dynamic_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/publisher_portrait"
+            android:layout_below="@+id/portrait"
             android:layout_marginTop="10dip"
             android:textColor="#000"
             android:text="content"
@@ -60,7 +60,7 @@
             android:id="@+id/pictures"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/dynamic_content"
+            android:layout_below="@+id/tv_dynamic_content"
             android:layout_marginTop="10dip"
             app:img_show_all="true"
             app:img_line_count="2"
@@ -72,7 +72,7 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:visibility="invisible"
-            android:layout_below="@+id/dynamic_content"
+            android:layout_below="@+id/tv_dynamic_content"
             android:layout_marginTop="10dp"
             android:transitionName="@string/dynamic_video_url"/>
 

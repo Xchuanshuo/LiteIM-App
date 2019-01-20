@@ -27,7 +27,6 @@ public class GlideUtil {
 
     public static void loadImage(Context context, String url, ImageView imageView) {
         RequestOptions options = new RequestOptions();
-        options.diskCacheStrategy(DiskCacheStrategy.ALL);
         Glide.with(context).load(url).apply(options)
                 .into(imageView);
     }
@@ -41,7 +40,7 @@ public class GlideUtil {
 
     public static void loadImageByBlur(Context context, String url, ImageView imageView) {
         RequestOptions options = new RequestOptions();
-        options.transform(new BlurTransformation());
+        options.transform(new BlurTransformation(25, 3));
         Glide.with(context).load(url).apply(options).into(imageView);
     }
 }
