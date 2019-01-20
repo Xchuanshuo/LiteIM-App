@@ -81,12 +81,7 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter>
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             DialogUtils.showToast(getContext(), "OnItemClick: "+position);
         });
-        mAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
-            @Override
-            public void onLoadMoreRequested() {
-                refreshData();
-            }
-        }, mRecyclerView);
+        mAdapter.setOnLoadMoreListener(() -> refreshData(), mRecyclerView);
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             int actualPosition = position+1;
             switch (adapter.getItemViewType(actualPosition)) {

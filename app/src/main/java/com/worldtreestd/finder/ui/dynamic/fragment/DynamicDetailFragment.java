@@ -130,4 +130,14 @@ public class DynamicDetailFragment extends BaseFragment<DynamicDetailContract.Pr
         JZVideoPlayer.releaseAllVideos();
         Log.d(this.getClass().getName(), "onPause()");
     }
+
+    @Override
+    public void showCollectedSuccess() {
+
+    }
+
+    @Override
+    public void showUnCollectedSuccess() {
+
+    }
 }

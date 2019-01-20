@@ -116,6 +116,7 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter>
 
     public static void come(Context context) {
         Intent intent = new Intent(context, LoginActivity.class);
+        DialogUtils.showToast(context, context.getString(R.string.login_request));
         context.startActivity(intent);
     }
 

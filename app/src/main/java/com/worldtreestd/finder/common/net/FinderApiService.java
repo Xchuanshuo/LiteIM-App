@@ -80,7 +80,6 @@ public interface FinderApiService {
     @GET("/dynamic/{userId}/{page}/{size}")
     Observable<ResultVo<Record<Dynamic>>> getPersonalDynamic(@Header("Authorization") String jwt, @Path("userId") Integer userId,
                                                              @Path("page") Integer page, @Path("size") Integer size);
-
     /**
      * 删除发布的动态
      * @param jwt
@@ -90,6 +89,23 @@ public interface FinderApiService {
     @DELETE("/dynamic/{dynamicId}")
     Observable<ResultVo<String>> deleteDynamic(@Header("Authorization") String jwt, @Path("dynamicId") Integer dynamicId);
 
+    /**
+     * 收藏动态
+     * @param jwt
+     * @param dynamicId
+     * @return
+     */
+    @POST("/dynamic-collect/{dynamicId}")
+    Observable<ResultVo<String>> collectDynamic(@Header("Authorization") String jwt, @Path("dynamicId") Integer dynamicId);
+
+    /**
+     * 取消收藏动态
+     * @param jwt
+     * @param dynamicId
+     * @return
+     */
+    @POST("/dynamic-collect/{dynamicId}")
+    Observable<ResultVo<String>> unCollectDynamic(@Header("Authorization") String jwt, @Path("dynamicId") Integer dynamicId);
 
     @GET("message/{id}")
     Observable<BaseResponse<List<MessageBean>>> getMessageList(@Path("id") String id);

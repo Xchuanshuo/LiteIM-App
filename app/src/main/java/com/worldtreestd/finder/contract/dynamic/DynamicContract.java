@@ -23,6 +23,10 @@ public interface DynamicContract {
     }
 
     interface Presenter extends BaseContract.Presenter {
+        /**
+         * 得到全部动态数据
+         * @param page
+         */
         void getDynamicData(Integer page);
     }
 }

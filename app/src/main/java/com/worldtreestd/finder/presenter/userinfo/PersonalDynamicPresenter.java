@@ -88,7 +88,9 @@ public class PersonalDynamicPresenter extends BasePresenter<PersonalDynamicContr
                     @Override
                     public void onSuccess(ResultVo<String> data) {
                         if (data.getCode().equals(SUCCESS)) {
-                            DialogUtils.showToast(mContext, data.getData());
+                            mView.showDeleteSuccess(data.getData());
+                        } else {
+                            DialogUtils.showToast(mContext, "只能删除自己发布的动态!");
                         }
                     }
 

@@ -1,6 +1,7 @@
 package com.worldtreestd.finder.common.base.mvp.presenter;
 
 import com.worldtreestd.finder.contract.base.BaseContract;
+import com.worldtreestd.finder.data.SharedData;
 
 import java.lang.ref.WeakReference;
 
@@ -14,6 +15,7 @@ import io.reactivex.disposables.Disposable;
  */
 public class BasePresenter<T extends BaseContract.View> implements BaseContract.Presenter {
 
+    protected SharedData sharedData = SharedData.getInstance();
     protected T mView;
     /**
      * 统一Disposable管理

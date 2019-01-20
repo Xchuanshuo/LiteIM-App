@@ -22,7 +22,6 @@ import android.widget.PopupWindow;
 
 import com.worldtreestd.finder.bean.User;
 import com.worldtreestd.finder.common.base.mvp.activity.BaseActivity;
-import com.worldtreestd.finder.common.utils.DialogUtils;
 import com.worldtreestd.finder.common.utils.ScreenUtils;
 import com.worldtreestd.finder.data.DBData;
 import com.worldtreestd.finder.data.SharedData;
@@ -94,7 +93,6 @@ public class MainActivity extends BaseActivity {
         mPortrait.setOnClickListener(v -> {
             String jwt = SharedData.getInstance().getJWT();
             if (TextUtils.isEmpty(jwt)) {
-                DialogUtils.showToast(this, getString(R.string.login_request));
                 LoginActivity.come(this);
                 finish();
                 return;

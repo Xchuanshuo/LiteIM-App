@@ -19,6 +19,12 @@ public interface PersonalDynamicContract {
          * @param multiBeanList
          */
         void showData(List<CommonMultiBean<Dynamic>> multiBeanList);
+
+        /**
+         * 显示删除成功
+         * @Param msg
+         */
+        void showDeleteSuccess(String msg);
     }
 
     interface Presenter extends BaseContract.Presenter {
@@ -29,6 +35,8 @@ public interface PersonalDynamicContract {
          * @param page
          */
         void personalDynamic(Integer userId, Integer page);
+
+        void collectDynamic();
 
         /**
          * 删除已经发布的动态

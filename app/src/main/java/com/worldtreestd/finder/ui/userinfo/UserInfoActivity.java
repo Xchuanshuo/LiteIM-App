@@ -125,6 +125,7 @@ public class UserInfoActivity extends BaseActivity {
         if (lookUser!=null && localUser!=null) {
             if (!lookUser.getId().equals(localUser.getId())) {
                 // todo:
+
             } else {
                 // todo:
             }

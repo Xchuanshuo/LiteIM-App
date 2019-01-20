@@ -8,6 +8,8 @@ import com.worldtreestd.finder.common.net.BaseObserve;
 import com.worldtreestd.finder.common.net.NetworkService;
 import com.worldtreestd.finder.common.net.ResultVo;
 import com.worldtreestd.finder.contract.dynamic.DynamicContract;
+import com.worldtreestd.finder.event.RefreshEvent;
+import com.worldtreestd.finder.event.RxBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +32,12 @@ public class DynamicPresenter extends BasePresenter<DynamicContract.View>
 
     public DynamicPresenter(DynamicContract.View view) {
         super(view);
+        registerEvent();
+    }
+
+    private void registerEvent() {
+        addDisposable(RxBus.getDefault().toObservable(RefreshEvent.class)
+                .subscribe(refreshEvent -> mView.refreshData()));
     }
 
     @Override

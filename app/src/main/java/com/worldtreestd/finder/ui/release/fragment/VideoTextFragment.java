@@ -19,6 +19,8 @@ import com.worldtreestd.finder.common.net.UploadHelper;
 import com.worldtreestd.finder.common.utils.DialogUtils;
 import com.worldtreestd.finder.common.widget.Glide4Engine;
 import com.worldtreestd.finder.contract.release.ReleaseContract;
+import com.worldtreestd.finder.event.RefreshEvent;
+import com.worldtreestd.finder.event.RxBus;
 import com.worldtreestd.finder.presenter.release.ReleasePresenter;
 import com.worldtreestd.finder.ui.release.ReleaseActivity;
 import com.zhihu.matisse.Matisse;
@@ -130,6 +132,7 @@ public class VideoTextFragment extends BaseFragment<ReleaseContract.Presenter>
     @Override
     public void releaseSuccess(String msg) {
         DialogUtils.showToast(_mActivity, msg);
+        RxBus.getDefault().post(new RefreshEvent());
         _mActivity.finish();
     }
 

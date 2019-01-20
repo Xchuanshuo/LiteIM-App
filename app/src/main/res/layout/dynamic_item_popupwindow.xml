@@ -5,10 +5,9 @@
     app:cardElevation="@dimen/dp_4"
     app:cardCornerRadius="@dimen/dp_4"
     android:foreground="?attr/selectableItemBackground"
-    android:background="@mipmap/ic_popup_bg"
+    android:background="#FFFFFF"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -40,6 +39,7 @@
         android:drawablePadding="@dimen/dp_4"
         android:padding="6dp"
         android:text="举报"
+        android:visibility="gone"
         android:textSize="18sp"
         android:layout_height="wrap_content" />
 
@@ -57,11 +57,8 @@
         android:padding="6dp"
         android:text="删除"
         android:textSize="18sp"
+        android:visibility="gone"
         android:layout_height="wrap_content" />
-    <View
-        android:background="@color/deep_grey"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"/>
 
 </LinearLayout>
 

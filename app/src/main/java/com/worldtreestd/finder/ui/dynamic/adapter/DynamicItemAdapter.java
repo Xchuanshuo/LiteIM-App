@@ -8,16 +8,11 @@ import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.util.Pair;
 import android.support.v7.widget.AppCompatImageView;
 import android.text.TextUtils;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.Gson;
 import com.worldtreestd.finder.R;
 import com.worldtreestd.finder.bean.Dynamic;
@@ -26,7 +21,6 @@ import com.worldtreestd.finder.common.bean.CommonMultiBean;
 import com.worldtreestd.finder.common.utils.DataUtils;
 import com.worldtreestd.finder.common.utils.GlideUtil;
 import com.worldtreestd.finder.common.utils.IntentUtils;
-import com.worldtreestd.finder.common.utils.ScreenUtils;
 import com.worldtreestd.finder.common.widget.CircleImageView;
 import com.worldtreestd.finder.common.widget.multipicture.MultiPictureLayout;
 import com.worldtreestd.finder.common.widget.picturewatcher.PreviewActivity;
@@ -48,11 +42,12 @@ import static com.worldtreestd.finder.common.utils.Constant.LOOK_USER;
  * @data by on 18-7-19.
  * @description
  */
-public class DynamicItemAdapter extends BaseMultiItemQuickAdapter<CommonMultiBean<Dynamic>, DynamicItemViewHolder> implements BaseQuickAdapter.OnItemChildClickListener {
+public class DynamicItemAdapter extends BaseMultiItemQuickAdapter<CommonMultiBean<Dynamic>, DynamicItemViewHolder>  {
 
     private JZVideoPlayerStandard jzVideoPlayerStandard;
     private MultiPictureLayout multiPictureLayout;
     private MultiPictureLayout.Callback callback;
+    private SelectorListener selectorListener;
     private Context mContext;
     /**
      * Same as QuickAdapter#QuickAdapter(Context,int) but with
@@ -84,18 +79,11 @@ public class DynamicItemAdapter extends BaseMultiItemQuickAdapter<CommonMultiBea
                 bundle.putSerializable(LOOK_USER, user);
                 UserInfoActivity.come(mContext, bundle);
             });
-            View mView = LayoutInflater.from(mContext).inflate(R.layout.dynamic_item_popupwindow, null);
             AppCompatImageView mSelector = helper.getView(R.id.img_selector);
-            PopupWindow mPopupWindow= new PopupWindow(mView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            mPopupWindow.setElevation(10.5f);
-            mPopupWindow.setOutsideTouchable(true);
-            mPopupWindow.setFocusable(true);
-            //点击 back 键的时候，窗口会自动消失
-//            mPopupWindow.setBackgroundDrawable(new ColorDrawable());
             mSelector.setOnClickListener(v1 -> {
-                int[] windowPos = ScreenUtils.calculatePopWindowPos(v1, mView);
-                mPopupWindow.showAtLocation(v1, Gravity.TOP|Gravity.START
-                        , windowPos[0]-30, windowPos[1]-27);
+                if (selectorListener!=null) {
+                    selectorListener.onSelectorClickListener(v1, helper.getAdapterPosition());
+                }
             });
             TextView publisherName = helper.getView(R.id.tv_publisher_nickname);
             TextView publishTime = helper.getView(R.id.tv_publish_time);
@@ -160,7 +148,13 @@ public class DynamicItemAdapter extends BaseMultiItemQuickAdapter<CommonMultiBea
         return this;
     }
 
-    @Override
-    public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+
+
+    public void setSelectorListener(SelectorListener selectorListener) {
+        this.selectorListener = selectorListener;
+    }
+
+    public interface SelectorListener {
+        void onSelectorClickListener(View v, int position);
     }
 }
