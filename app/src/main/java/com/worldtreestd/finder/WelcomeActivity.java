@@ -28,6 +28,8 @@ public class WelcomeActivity extends BaseActivity {
     protected void initWindows() {
         // 全屏
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        // 设置不可滑动
+        setSwipeBackEnable(false);
     }
 
     @Override
@@ -67,5 +69,4 @@ public class WelcomeActivity extends BaseActivity {
 //        }
         finish();
     }
-
 }

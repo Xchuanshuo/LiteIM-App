@@ -18,7 +18,7 @@ import java.util.List;
  */
 public class UserRelationPageAdapter extends FragmentPagerAdapter {
 
-    private final String[] titles = {"dynamic", "follow", "fans"};
+    private final String[] titles = {"动态", "关注", "粉丝"};
     private final List<Fragment> fragmentList = new ArrayList<>();
 
     public UserRelationPageAdapter(FragmentManager fm, User user) {

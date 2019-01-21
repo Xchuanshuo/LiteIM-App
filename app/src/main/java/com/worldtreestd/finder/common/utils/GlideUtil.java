@@ -26,9 +26,7 @@ public class GlideUtil {
     }
 
     public static void loadImage(Context context, String url, ImageView imageView) {
-        RequestOptions options = new RequestOptions();
-        Glide.with(context).load(url).apply(options)
-                .into(imageView);
+        Glide.with(context).load(url).into(imageView);
     }
 
     public static void loadImage(Context context, File file, ImageView imageView) {

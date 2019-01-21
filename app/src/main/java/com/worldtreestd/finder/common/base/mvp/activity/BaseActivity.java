@@ -1,7 +1,10 @@
 package com.worldtreestd.finder.common.base.mvp.activity;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.pm.ActivityInfo;
+import android.content.res.TypedArray;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -21,13 +24,15 @@ import com.worldtreestd.finder.common.widget.CircleImageView;
 import com.worldtreestd.finder.contract.base.BaseContract;
 import com.worldtreestd.finder.ui.search.SearchActivity;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import me.yokeyword.fragmentation.SupportActivity;
 import me.yokeyword.fragmentation.anim.DefaultHorizontalAnimator;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
+import me.yokeyword.fragmentation_swipeback.SwipeBackActivity;
 
 import static com.worldtreestd.finder.common.base.mvp.StatusType.LOAD_MORE_FAILURE;
 import static com.worldtreestd.finder.common.base.mvp.StatusType.LOAD_MORE_SUCCESS;
@@ -40,7 +45,7 @@ import static com.worldtreestd.finder.common.base.mvp.StatusType.REFRESH_SUCCESS
  * @description
  */
 public abstract class BaseActivity<T extends BaseContract.Presenter>
-        extends SupportActivity implements BaseContract.View<T> {
+        extends SwipeBackActivity implements BaseContract.View<T> {
 
     @Nullable
     @BindView(R.id.toolbar)
@@ -68,6 +73,9 @@ public abstract class BaseActivity<T extends BaseContract.Presenter>
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.O && isTranslucentOrFloating()) {
+            boolean result = fixOrientation();
+        }
         super.onCreate(savedInstanceState);
         initWindows();
         setContentView(getLayoutId());
@@ -76,6 +84,44 @@ public abstract class BaseActivity<T extends BaseContract.Presenter>
         initWidget();
         initEventAndData();
     }
+
+    private boolean fixOrientation(){
+        try {
+            Field field = Activity.class.getDeclaredField("mActivityInfo");
+            field.setAccessible(true);
+            ActivityInfo o = (ActivityInfo)field.get(this);
+            o.screenOrientation = -1;
+            field.setAccessible(false);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    @Override
+    public void setRequestedOrientation(int requestedOrientation) {
+        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.O && isTranslucentOrFloating()) {
+            return;
+        }
+        super.setRequestedOrientation(requestedOrientation);
+    }
+
+    private boolean isTranslucentOrFloating(){
+        boolean isTranslucentOrFloating = false;
+        try {
+            int [] styleableRes = (int[]) Class.forName("com.android.internal.R$styleable").getField("Window").get(null);
+            final TypedArray ta = obtainStyledAttributes(styleableRes);
+            Method m = ActivityInfo.class.getMethod("isTranslucentOrFloating", TypedArray.class);
+            m.setAccessible(true);
+            isTranslucentOrFloating = (boolean)m.invoke(null, ta);
+            m.setAccessible(false);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return isTranslucentOrFloating;
+    }
+
 
     /**
      *  设置布局前进行的操作

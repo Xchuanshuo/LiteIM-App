@@ -18,7 +18,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".common.widget.picturewatcher.PreviewActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:theme="@style/SwipeBackTheme" />
         <activity
             android:name=".WelcomeActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"

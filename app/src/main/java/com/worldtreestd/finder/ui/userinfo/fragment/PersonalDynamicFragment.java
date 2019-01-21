@@ -77,7 +77,6 @@ public class PersonalDynamicFragment extends BaseFragment<PersonalDynamicContrac
     }
 
 
-
     @Override
     protected void initEventAndData() {
         super.initEventAndData();

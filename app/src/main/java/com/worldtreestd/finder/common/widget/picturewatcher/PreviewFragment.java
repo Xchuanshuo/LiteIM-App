@@ -4,7 +4,6 @@ import android.graphics.Point;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,12 +15,14 @@ import com.bumptech.glide.request.RequestOptions;
 import com.worldtreestd.finder.R;
 import com.zhihu.matisse.internal.utils.PhotoMetadataUtils;
 
+import me.yokeyword.fragmentation_swipeback.SwipeBackFragment;
+
 /**
  * @author Legend
  * @data by on 19-1-16.
  * @description
  */
-public class PreviewFragment extends Fragment {
+public class PreviewFragment extends SwipeBackFragment {
 
     private static final String ARGS_ITEM = "args_item";
 
@@ -42,6 +43,7 @@ public class PreviewFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        setSwipeBackEnable(false);
         final String url = getArguments().getString(ARGS_ITEM);
         if (url == null) {
             return;

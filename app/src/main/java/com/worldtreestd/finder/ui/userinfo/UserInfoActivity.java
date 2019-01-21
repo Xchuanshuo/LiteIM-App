@@ -7,6 +7,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -17,10 +18,15 @@ import com.worldtreestd.finder.bean.User;
 import com.worldtreestd.finder.common.base.mvp.activity.BaseActivity;
 import com.worldtreestd.finder.common.utils.GlideUtil;
 import com.worldtreestd.finder.common.widget.NoScrollViewPager;
+import com.worldtreestd.finder.common.widget.picturewatcher.PreviewActivity;
 import com.worldtreestd.finder.data.DBData;
 import com.worldtreestd.finder.ui.userinfo.adapter.UserRelationPageAdapter;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
 import butterknife.BindView;
+import butterknife.OnClick;
 
 import static com.worldtreestd.finder.common.utils.Constant.LOOK_USER;
 
@@ -41,6 +47,8 @@ public class UserInfoActivity extends BaseActivity {
     TextView mUsernameTv;
     @BindView(R.id.tv_username_title)
     TextView mUsernameTvTitle;
+    @BindView(R.id.tv_signature)
+    TextView mSignatureTV;
     @BindView(R.id.portrait_title)
     ImageView mPortraitTitle;
     @BindView(R.id.img_background)
@@ -115,9 +123,13 @@ public class UserInfoActivity extends BaseActivity {
 
             }
         });
-
         mUsernameTvTitle.setText(lookUser.getUsername());
         mUsernameTv.setText(lookUser.getUsername());
+        if (TextUtils.isEmpty(lookUser.getSignature())) {
+            mSignatureTV.setText("签名: 一切都是空空如也~");
+        } else {
+            mSignatureTV.setText("签名: "+lookUser.getSignature());
+        }
         GlideUtil.loadImageByBlur(this, lookUser.getBackground(), mBackgroundImg);
         GlideUtil.loadImage(this, lookUser.getPortrait(), mPortrait);
         GlideUtil.loadImage(this, lookUser.getPortrait(), mPortraitTitle);
@@ -132,6 +144,10 @@ public class UserInfoActivity extends BaseActivity {
         }
     }
 
+    @OnClick(R.id.portrait)
+    public void watchPortrait() {
+        PreviewActivity.come(this, new ArrayList<>(Collections.singletonList(lookUser.getPortrait())));
+    }
 
     @Override
     public void onBackPressedSupport() {

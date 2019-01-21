@@ -13,14 +13,14 @@ import com.worldtreestd.finder.common.utils.DialogUtils;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import me.yokeyword.fragmentation.SupportFragment;
+import me.yokeyword.fragmentation_swipeback.SwipeBackFragment;
 
 /**
  * @author Legend
  * @data by on 18-5-28.
  * @description Fragment公共父类
  */
-public abstract class SuperFragment extends SupportFragment {
+public abstract class SuperFragment extends SwipeBackFragment {
 
     private Unbinder mUnbinder;
     protected boolean isInnerView;

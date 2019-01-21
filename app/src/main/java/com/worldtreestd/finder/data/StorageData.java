@@ -40,8 +40,11 @@ public class StorageData {
                 .map(s -> Glide.with(context).asFile().load(s).submit().get())
                 .map(file -> {
                     String fileName = url.substring(url.lastIndexOf("/"));
+                    if (!fileName.contains(".")) {
+                        fileName += ".jpg";
+                    }
                     String targetPath = Environment.getExternalStorageDirectory()
-                            .getCanonicalPath()+"/finder/files/";
+                            .getCanonicalPath()+"/Finder/files/";
                     File f = new File(targetPath);
                     if (!f.exists()) {
                         f.mkdirs();

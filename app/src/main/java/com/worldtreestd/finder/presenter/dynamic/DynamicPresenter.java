@@ -1,8 +1,5 @@
 package com.worldtreestd.finder.presenter.dynamic;
 
-import android.text.TextUtils;
-
-import com.worldtreestd.finder.LoginActivity;
 import com.worldtreestd.finder.bean.Dynamic;
 import com.worldtreestd.finder.bean.Record;
 import com.worldtreestd.finder.common.base.mvp.presenter.BasePresenter;
@@ -10,9 +7,7 @@ import com.worldtreestd.finder.common.bean.CommonMultiBean;
 import com.worldtreestd.finder.common.net.BaseObserve;
 import com.worldtreestd.finder.common.net.NetworkService;
 import com.worldtreestd.finder.common.net.ResultVo;
-import com.worldtreestd.finder.common.utils.Code;
 import com.worldtreestd.finder.contract.dynamic.DynamicContract;
-import com.worldtreestd.finder.event.CollectEvent;
 import com.worldtreestd.finder.event.RefreshEvent;
 import com.worldtreestd.finder.event.RxBus;
 
@@ -43,53 +38,6 @@ public class DynamicPresenter extends BasePresenter<DynamicContract.View>
     private void registerEvent() {
         addDisposable(RxBus.getDefault().toFlowable(RefreshEvent.class)
                 .subscribe(refreshEvent -> mView.refreshData()));
-        addDisposable(RxBus.getDefault().toFlowable(CollectEvent.class)
-                .subscribe(collectEvent -> {
-                    if (collectEvent.isCollected()) {
-                        mView.showCollectedSuccess();
-                    } else {
-                        mView.showUnCollectedSuccess();
-                    }
-                }));
-    }
-
-    @Override
-    public void collectDynamic(Integer dynamicId) {
-        String jwt = sharedData.getJWT();
-        if (TextUtils.isEmpty(jwt)) {
-            LoginActivity.come(mView.getContext());
-            return;
-        }
-        addDisposable(NetworkService.getInstance().collectDynamic(jwt, dynamicId)
-                .compose(new NetworkService.ThreadTransformer<>())
-                .subscribeWith(new BaseObserve<ResultVo<String>>() {
-                    @Override
-                    public void onSuccess(ResultVo<String> data) {
-                        if (data.getCode().equals(Code.SUCCESS)) {
-                            RxBus.getDefault().post(new CollectEvent(true));
-                        }
-                    }
-                }));
-    }
-
-    @Override
-    public void unCollectDynamic(Integer dynamicId) {
-        String jwt = sharedData.getJWT();
-        if (TextUtils.isEmpty(jwt)) {
-            LoginActivity.come(mView.getContext());
-            return;
-        }
-        addDisposable(NetworkService.getInstance().unCollectDynamic(jwt, dynamicId)
-                .compose(new NetworkService.ThreadTransformer<>())
-                .subscribeWith(new BaseObserve<ResultVo<String>>() {
-                    @Override
-                    public void onSuccess(ResultVo<String> data) {
-                        if (data.getCode().equals(Code.SUCCESS)) {
-                            RxBus.getDefault().post(new CollectEvent(false));
-                        }
-                    }
-                }));
-
     }
 
     @Override

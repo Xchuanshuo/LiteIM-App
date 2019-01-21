@@ -80,6 +80,8 @@ public class MainActivity extends BaseActivity {
             window.setStatusBarColor(Color.TRANSPARENT);
         }
         super.onCreate(savedInstanceState);
+        // 设置不可滑动
+        setSwipeBackEnable(false);
         loadMultipleRootFragment(R.id.container,0, mHomeFragment,
                 mMoreInfoFragment, mDynamicFragment);
         Integer id = getIntent().getIntExtra(POSITION, -1);

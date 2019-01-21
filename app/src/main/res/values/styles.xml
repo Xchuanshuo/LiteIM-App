@@ -11,7 +11,7 @@
         <item name="searchViewStyle">@style/SearchViewStyle</item>
         <!--<item name="preferenceTheme">@style/PreferenceScreen</item>-->
         <item name="android:windowContentTransitions">true</item>
-        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowIsTranslucent">true</item>
 
     </style>
 
@@ -42,7 +42,7 @@
     </style>
 
     <style name="SwipeBackTheme" parent="AppTheme">
-        <!--<item name="android:windowIsTranslucent">true</item>-->
+        <item name="android:windowIsTranslucent">true</item>
     </style>
 
     <style name="line_view">

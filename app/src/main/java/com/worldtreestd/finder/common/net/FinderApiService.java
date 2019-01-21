@@ -1,5 +1,6 @@
 package com.worldtreestd.finder.common.net;
 
+import com.worldtreestd.finder.bean.Comment;
 import com.worldtreestd.finder.bean.Dynamic;
 import com.worldtreestd.finder.bean.LoginReturn;
 import com.worldtreestd.finder.bean.Record;
@@ -107,6 +108,30 @@ public interface FinderApiService {
     @DELETE("/dynamic-collect/{dynamicId}")
     Observable<ResultVo<String>> unCollectDynamic(@Header("Authorization") String jwt, @Path("dynamicId") Integer dynamicId);
 
+    /**
+     * 动态评论列表
+     * @param jwt
+     * @param dynamicId
+     * @param page
+     * @param size
+     * @return
+     */
+    @GET("/dynamic-comment/{dynamicId}/{page}/{size}")
+    Observable<ResultVo<Record<Comment>>> dynamicCommentList(@Header("Authorization") String jwt, @Path("dynamicId") Integer dynamicId,
+                                                             @Path("page") Integer page, @Path("size") Integer size);
+    /**
+     * 增加一条评论
+     * @param jwt
+     * @param dynamicId
+     * @param content
+     * @return
+     */
+    @POST("/dynamic-comment/{dynamicId}")
+    Observable<ResultVo<String>> addDynamicComment(@Header("Authorization") String jwt, @Path("dynamicId") Integer dynamicId,
+                                                   @Query("content") String content);
+    @DELETE("/dynamic-comment/{commentId}")
+    Observable<ResultVo<String>> deleteDynamicComent(@Header("Authorization") String jwt, @Path("commentId") Integer commentId);
+
     @GET("message/{id}")
     Observable<BaseResponse<List<MessageBean>>> getMessageList(@Path("id") String id);
 
@@ -116,7 +141,6 @@ public interface FinderApiService {
     @GET("circles/{id}")
     Observable<HomeCircleBean> getCircleDetail(@Path("id") String id);
 
-    
     @GET("courses/")
     Observable<List<CourseBean>> getCourseData(@Query("search") String grade);
 

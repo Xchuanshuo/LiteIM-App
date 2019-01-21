@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
@@ -19,12 +18,14 @@ import com.worldtreestd.finder.data.StorageData;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.yokeyword.fragmentation_swipeback.SwipeBackActivity;
+
 import static com.worldtreestd.finder.common.utils.Constant.POSITION;
 
 /**
  * @author legend
  */
-public class PreviewActivity extends AppCompatActivity
+public class PreviewActivity extends SwipeBackActivity
         implements ViewPager.OnPageChangeListener, View.OnClickListener {
 
     public static final String URL_LIST = "url_list";
@@ -34,13 +35,16 @@ public class PreviewActivity extends AppCompatActivity
     private TextView mNumTv;
     private List<String> urlList;
 
-    public static void come(Context context,
-                                       List<String> urlList, int position) {
+    public static void come(Context context, List<String> urlList, int position) {
         Intent intent = new Intent();
         intent.putStringArrayListExtra(URL_LIST, (ArrayList<String>) urlList);
         intent.putExtra(POSITION, position);
         intent.setClass(context, PreviewActivity.class);
         context.startActivity(intent);
+    }
+
+    public static void come(Context context, List<String> urlList) {
+        come(context, urlList, 0);
     }
 
     @Override

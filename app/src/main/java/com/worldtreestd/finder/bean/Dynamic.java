@@ -36,6 +36,8 @@ public class Dynamic extends LitePalSupport implements Serializable {
         private int collectNum;
         private String username;
         private String portrait;
+        private String background;
+        private String signature;
         private int status;
         private String createTime;
         private boolean collected;
@@ -151,4 +153,20 @@ public class Dynamic extends LitePalSupport implements Serializable {
         public void setCollected(boolean collected) {
             this.collected = collected;
         }
-    }
+
+        public String getBackground() {
+            return background;
+        }
+
+        public void setBackground(String background) {
+            this.background = background;
+        }
+
+        public String getSignature() {
+            return signature;
+        }
+
+        public void setSignature(String signature) {
+            this.signature = signature;
+        }
+}

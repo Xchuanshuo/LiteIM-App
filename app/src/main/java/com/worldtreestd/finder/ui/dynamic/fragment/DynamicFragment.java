@@ -1,8 +1,13 @@
 package com.worldtreestd.finder.ui.dynamic.fragment;
 
+import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.PopupWindow;
 
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -11,6 +16,7 @@ import com.worldtreestd.finder.bean.Dynamic;
 import com.worldtreestd.finder.common.base.mvp.fragment.BaseFragment;
 import com.worldtreestd.finder.common.bean.CommonMultiBean;
 import com.worldtreestd.finder.common.utils.DialogUtils;
+import com.worldtreestd.finder.common.utils.ScreenUtils;
 import com.worldtreestd.finder.contract.dynamic.DynamicContract;
 import com.worldtreestd.finder.presenter.dynamic.DynamicPresenter;
 import com.worldtreestd.finder.ui.dynamic.adapter.DynamicItemAdapter;
@@ -56,6 +62,23 @@ public class DynamicFragment extends BaseFragment<DynamicContract.Presenter>
     @Override
     protected void initEventAndData() {
         super.initEventAndData();
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.dynamic_item_popupwindow, null);
+        PopupWindow mPopupWindow= new PopupWindow(view, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        mPopupWindow.setElevation(10.5f);
+        mPopupWindow.setOutsideTouchable(true);
+        mPopupWindow.setFocusable(true);
+        ((DynamicItemAdapter)mAdapter).setSelectorListener((v, position) -> {
+            int[] windowPos = ScreenUtils.calculatePopWindowPos(v, view);
+            mPopupWindow.showAtLocation(v, Gravity.TOP|Gravity.START
+                    , windowPos[0]-30, windowPos[1]-27);
+            AppCompatTextView mReportTv = view.findViewById(R.id.tv_report);
+            mReportTv.setVisibility(View.VISIBLE);
+            curPosition = position;
+            Dynamic dynamic = beanList.get(curPosition).getData();
+            mReportTv.setOnClickListener(v1 -> {
+                DialogUtils.showToast(v1.getContext(), "举报了动态"+dynamic.getId());
+            });
+        });
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -91,20 +114,6 @@ public class DynamicFragment extends BaseFragment<DynamicContract.Presenter>
                 }
             }
         });
-//        mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
-//            switch (view.getId()) {
-//                case R.id.img_collect:
-//                    curPosition = position;
-//                    Dynamic dynamic = beanList.get(curPosition).getData();
-//                    if (!dynamic.isCollected()) {
-//                        mPresenter.collectDynamic(dynamic.getId());
-//                    } else {
-//                        mPresenter.unCollectDynamic(dynamic.getId());
-//                    }
-//                    break;
-//                default: break;
-//            }
-//        });
     }
 
     @Override
@@ -149,39 +158,8 @@ public class DynamicFragment extends BaseFragment<DynamicContract.Presenter>
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
-        Log.d(this.getClass().getName(), "onPause()");
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
-
-    @Override
     public void showData(List<CommonMultiBean<Dynamic>> multiBeanList) {
         beanList.addAll(multiBeanList);
         setLoadDataResult(beanList, REFRESH_SUCCESS);
-    }
-
-    @Override
-    public void showCollectedSuccess() {
-        if (curPosition != -1) {
-            Dynamic dynamic = beanList.get(curPosition).getData();
-            dynamic.setCollected(true);
-            dynamic.setCollectNum(dynamic.getCollectNum()+1);
-            mAdapter.notifyItemChanged(curPosition, 0);
-        }
-    }
-
-    @Override
-    public void showUnCollectedSuccess() {
-        if (curPosition != -1) {
-            Dynamic dynamic = beanList.get(curPosition).getData();
-            dynamic.setCollected(false);
-            dynamic.setCollectNum(dynamic.getCollectNum()!=0?dynamic.getCollectNum()-1:0);
-            mAdapter.notifyItemChanged(curPosition, 0);
-        }
     }
 }

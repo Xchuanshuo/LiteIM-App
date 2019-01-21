@@ -6,17 +6,17 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.worldtreestd.finder.R;
 import com.worldtreestd.finder.bean.Dynamic;
+import com.worldtreestd.finder.common.base.mvp.MyApplication;
 import com.worldtreestd.finder.common.base.mvp.fragment.BaseFragment;
 import com.worldtreestd.finder.common.bean.CommentBean;
 import com.worldtreestd.finder.common.utils.GlideUtil;
-import com.worldtreestd.finder.common.utils.TestDataUtils;
+import com.worldtreestd.finder.common.widget.CircleImageView;
 import com.worldtreestd.finder.common.widget.multipicture.MultiPictureLayout;
 import com.worldtreestd.finder.common.widget.picturewatcher.PreviewActivity;
 import com.worldtreestd.finder.contract.dynamic.DynamicDetailContract;
@@ -32,7 +32,6 @@ import cn.jzvd.JZVideoPlayer;
 import cn.jzvd.JZVideoPlayerStandard;
 
 import static cn.jzvd.JZVideoPlayer.SCREEN_WINDOW_LIST;
-import static com.worldtreestd.finder.common.base.mvp.StatusType.REFRESH_SUCCESS;
 
 /**
  * @author Legend
@@ -45,7 +44,7 @@ public class DynamicDetailFragment extends BaseFragment<DynamicDetailContract.Pr
     MultiPictureLayout mMultiPictureLayout;
     TextView mDynamicContent, mUsernameTv, mPublishTimeTV;
     JZVideoPlayerStandard mJzVideoPlayerStandard;
-    ImageView mPortraitImg;
+    CircleImageView mPortraitImg;
     @BindView(R.id.img_collect)
     AppCompatImageView mCollectImg;
     private List<CommentBean> commentBeanList = new ArrayList<>();
@@ -70,17 +69,17 @@ public class DynamicDetailFragment extends BaseFragment<DynamicDetailContract.Pr
 
     @Override
     public void refreshData() {
-        commentBeanList.clear();
-        if (getUserVisibleHint()) {
-            commentBeanList = TestDataUtils.getCommentList();
-            setLoadDataResult(commentBeanList, REFRESH_SUCCESS);
-        }
+//        commentBeanList.clear();
+//        if (getUserVisibleHint()) {
+//            commentBeanList = TestDataUtils.getCommentList();
+//            setLoadDataResult(commentBeanList, REFRESH_SUCCESS);
+//        }
     }
 
     @Override
     protected void initWidget() {
         super.initWidget();
-        this.detailContentLayout = LayoutInflater.from(getContext()).inflate(R.layout.fragment_dynamic_content, null);
+        this.detailContentLayout = LayoutInflater.from(getContext()).inflate(R.layout.fragment_dynamic_content, mRecyclerView);
         mDynamicContent = detailContentLayout.findViewById(R.id.tv_dynamic_content);
         mMultiPictureLayout = detailContentLayout.findViewById(R.id.pictures);
         mJzVideoPlayerStandard = detailContentLayout.findViewById(R.id.video_player);
@@ -92,8 +91,18 @@ public class DynamicDetailFragment extends BaseFragment<DynamicDetailContract.Pr
     @Override
     protected void initEventAndData() {
         super.initEventAndData();
+        commentBeanList.add(new CommentBean("sas", "asa"));
         mAdapter.addHeaderView(detailContentLayout);
         Intent intent = _mActivity.getIntent();
+        this.dynamic = (Dynamic) intent.getSerializableExtra(getString(R.string.dynamic));
+        if (dynamic != null) {
+            mUsernameTv.setText(dynamic.getUsername()+"");
+            mPublishTimeTV.setText(dynamic.getCreateTime().replace("T"," ")+"");
+            mDynamicContent.setText(dynamic.getContent()+"");
+            this.isCollected = dynamic.isCollected();
+            mCollectImg.setImageResource(isCollected?R.drawable.ic_collect_solid:R.drawable.ic_collect_hollow);
+            GlideUtil.loadImage(MyApplication.getInstance(), dynamic.getPortrait(), mPortraitImg);
+        }
         if (TextUtils.isEmpty(intent.getStringExtra(getString(R.string.dynamic_video_url)))) {
             List<String> imageUrlList = intent.getStringArrayListExtra(getString(R.string.dynamic_picture_urlList));
             setImageData(imageUrlList);
@@ -103,15 +112,6 @@ public class DynamicDetailFragment extends BaseFragment<DynamicDetailContract.Pr
             String videoUrl = intent.getStringExtra(getString(R.string.dynamic_video_url));
             String videoImageUrl = intent.getStringExtra(getString(R.string.dynamic_video_image_url));
             videoPlayerConfig(videoUrl, videoImageUrl);
-        }
-        this.dynamic = (Dynamic) intent.getSerializableExtra(getString(R.string.dynamic));
-        if (dynamic != null) {
-            mUsernameTv.setText(dynamic.getUsername()+"");
-            mPublishTimeTV.setText(dynamic.getCreateTime().replace("T"," ")+"");
-            mDynamicContent.setText(dynamic.getContent()+"");
-            this.isCollected = dynamic.isCollected();
-            mCollectImg.setImageResource(isCollected?R.drawable.ic_collect_solid:R.drawable.ic_collect_hollow);
-            GlideUtil.loadImage(getContext(), dynamic.getPortrait(), mPortraitImg);
         }
     }
 
@@ -125,8 +125,6 @@ public class DynamicDetailFragment extends BaseFragment<DynamicDetailContract.Pr
             }
         }
     }
-
-
 
 
     @Override

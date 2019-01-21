@@ -1,15 +1,11 @@
 package com.worldtreestd.finder.ui.dynamic.adapter;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.util.Pair;
 import android.support.v7.widget.AppCompatImageView;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
@@ -92,7 +88,8 @@ public class DynamicItemAdapter extends BaseMultiItemQuickAdapter<CommonMultiBea
             user.setId(dynamic.getUserId());
             user.setUsername(dynamic.getUsername());
             user.setPortrait(dynamic.getPortrait());
-            user.setBackground(dynamic.getPortrait());
+            user.setBackground(dynamic.getBackground());
+            user.setSignature(dynamic.getSignature());
             bundle.putSerializable(LOOK_USER, user);
             UserInfoActivity.come(mContext, bundle);
         });
@@ -106,31 +103,15 @@ public class DynamicItemAdapter extends BaseMultiItemQuickAdapter<CommonMultiBea
             }
         });
         helper.itemView.setOnClickListener(v -> {
-            Intent intent = IntentUtils.createDynamicIntent(mContext,item.getData());
+            curPosition = helper.getAdapterPosition();
             AppCompatImageView mSelector = helper.getView(R.id.img_selector);
             mSelector.setOnClickListener(v1 -> {
                 if (selectorListener!=null) {
                     selectorListener.onSelectorClickListener(v1, helper.getAdapterPosition());
                 }
             });
-            TextView publisherName = helper.getView(R.id.tv_publisher_nickname);
-            TextView publishTime = helper.getView(R.id.tv_publish_time);
-            TextView dynamicContent = helper.getView(R.id.tv_dynamic_content);
-            MultiPictureLayout multiPicture = helper.getView(R.id.pictures);
-            JZVideoPlayerStandard videoPlayer = helper.getView(R.id.video_player);
-            Pair<View, String> pair1 = Pair.create(portrait, v.getContext().getString(R.string.portrait));
-            Pair<View, String> pair2 = Pair.create(publishTime, v.getContext().getString(R.string.publish_time));
-            Pair<View, String> pair3 = Pair.create(publisherName, v.getContext().getString(R.string.publisher_name));
-            Pair<View, String> pair4 = Pair.create(dynamicContent, v.getContext().getString(R.string.dynamic_content));
-            Pair<View, String> pair5;
-            if (helper.getItemViewType() == DYNAMIC_ITEM_WORD_PICTURE) {
-                pair5 = Pair.create(multiPicture, v.getContext().getString(R.string.dynamic_picture_urlList));
-            } else {
-                pair5 = Pair.create(videoPlayer, v.getContext().getString(R.string.dynamic_video_url));
-            }
-            ActivityOptionsCompat options = ActivityOptionsCompat.
-                    makeSceneTransitionAnimation((Activity) mContext, pair1, pair2, pair3, pair4, pair5);
-            mContext.startActivity(intent, options.toBundle());
+            Intent intent = IntentUtils.createDynamicIntent(mContext,item.getData());
+            mContext.startActivity(intent);
         });
         GlideUtil.loadImage(mContext, item.getData().getPortrait(), helper.getView(R.id.publisher_portrait));
         helper.setText(R.id.tv_publisher_nickname, item.getData().getUsername());
@@ -195,7 +176,7 @@ public class DynamicItemAdapter extends BaseMultiItemQuickAdapter<CommonMultiBea
     }
 
     private void showUnCollectSuccess() {
-        if (curPosition != -1 && curPosition<getData().size()) {
+        if (curPosition != -1 && curPosition < getData().size()) {
             Dynamic dynamic = getData().get(curPosition).getData();
             dynamic.setCollected(false);
             dynamic.setCollectNum(dynamic.getCollectNum() - 1);

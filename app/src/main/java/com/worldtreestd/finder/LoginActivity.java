@@ -54,6 +54,8 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter>
 
     @Override
     protected void initEventAndData() {
+        // 设置不可滑动
+        setSwipeBackEnable(false);
         mTencent = Tencent.createInstance(APP_ID, MyApplication.getInstance());
         mLoginBtn.setOnClickListener(v -> {
             if (!mTencent.isSessionValid()) {
@@ -125,4 +127,5 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter>
         MainActivity.come(LoginActivity.this, null);
         finish();
     }
+
 }
