@@ -67,7 +67,7 @@ public interface FinderApiService {
      * @return
      */
     @GET("/dynamic/{page}/{size}")
-    Observable<ResultVo<Record<Dynamic>>> getDynamicList(@Path("page") Integer page, @Path("size") Integer size);
+    Observable<ResultVo<Record<Dynamic>>> getDynamicList(@Header("Authorization") String jwt, @Path("page") Integer page, @Path("size") Integer size);
 
     /**
      * 个人发布的动态
@@ -104,7 +104,7 @@ public interface FinderApiService {
      * @param dynamicId
      * @return
      */
-    @POST("/dynamic-collect/{dynamicId}")
+    @DELETE("/dynamic-collect/{dynamicId}")
     Observable<ResultVo<String>> unCollectDynamic(@Header("Authorization") String jwt, @Path("dynamicId") Integer dynamicId);
 
     @GET("message/{id}")

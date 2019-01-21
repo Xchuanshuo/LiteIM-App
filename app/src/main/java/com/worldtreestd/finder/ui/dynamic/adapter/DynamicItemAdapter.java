@@ -24,6 +24,9 @@ import com.worldtreestd.finder.common.utils.IntentUtils;
 import com.worldtreestd.finder.common.widget.CircleImageView;
 import com.worldtreestd.finder.common.widget.multipicture.MultiPictureLayout;
 import com.worldtreestd.finder.common.widget.picturewatcher.PreviewActivity;
+import com.worldtreestd.finder.event.CollectEvent;
+import com.worldtreestd.finder.event.RxBus;
+import com.worldtreestd.finder.model.DynamicCollectModel;
 import com.worldtreestd.finder.ui.dynamic.viewholder.DynamicItemViewHolder;
 import com.worldtreestd.finder.ui.userinfo.UserInfoActivity;
 
@@ -49,6 +52,8 @@ public class DynamicItemAdapter extends BaseMultiItemQuickAdapter<CommonMultiBea
     private MultiPictureLayout.Callback callback;
     private SelectorListener selectorListener;
     private Context mContext;
+    private DynamicCollectModel collectModel;
+    private int curPosition = -1;
     /**
      * Same as QuickAdapter#QuickAdapter(Context,int) but with
      * some initialization data.
@@ -60,25 +65,48 @@ public class DynamicItemAdapter extends BaseMultiItemQuickAdapter<CommonMultiBea
         this.mContext = context;
         addItemType(DYNAMIC_ITEM_WORD_PICTURE, R.layout.item_dynamic_word_picture);
         addItemType(DYNAMIC_ITEM_WORD_VIDEO, R.layout.item_dynamic_word_video);
+        collectModel = new DynamicCollectModel(mContext);
+        registerEvent();
+    }
+
+    private void registerEvent() {
+        RxBus.getDefault().toFlowable(CollectEvent.class)
+                .subscribe(event -> {
+                    if (event.isCollected()) {
+                        showCollectSuccess();
+                    } else {
+                        showUnCollectSuccess();
+                    }
+                });
     }
 
     @Override
     protected void convert(DynamicItemViewHolder helper, CommonMultiBean<Dynamic> item) {
         helper.addOnClickListener(R.id.cardView);
+        helper.addOnClickListener(R.id.img_collect);
         final Dynamic dynamic = item.getData();
+        CircleImageView portrait = helper.getView(R.id.publisher_portrait);
+        portrait.setOnClickListener(view -> {
+            Bundle bundle = new Bundle();
+            User user = new User();
+            user.setId(dynamic.getUserId());
+            user.setUsername(dynamic.getUsername());
+            user.setPortrait(dynamic.getPortrait());
+            user.setBackground(dynamic.getPortrait());
+            bundle.putSerializable(LOOK_USER, user);
+            UserInfoActivity.come(mContext, bundle);
+        });
+        AppCompatImageView mCollectImg = helper.getView(R.id.img_collect);
+        mCollectImg.setOnClickListener(v -> {
+            curPosition = helper.getAdapterPosition();
+            if (!dynamic.isCollected()) {
+                collectModel.collectDynamic(dynamic.getId());
+            } else {
+                collectModel.unCollectDynamic(dynamic.getId());
+            }
+        });
         helper.itemView.setOnClickListener(v -> {
             Intent intent = IntentUtils.createDynamicIntent(mContext,item.getData());
-            CircleImageView portrait = helper.getView(R.id.publisher_portrait);
-            portrait.setOnClickListener(view -> {
-                Bundle bundle = new Bundle();
-                User user = new User();
-                user.setId(item.getData().getUserId());
-                user.setUsername(item.getData().getUsername());
-                user.setPortrait(item.getData().getPortrait());
-                user.setBackground(item.getData().getPortrait());
-                bundle.putSerializable(LOOK_USER, user);
-                UserInfoActivity.come(mContext, bundle);
-            });
             AppCompatImageView mSelector = helper.getView(R.id.img_selector);
             mSelector.setOnClickListener(v1 -> {
                 if (selectorListener!=null) {
@@ -107,6 +135,7 @@ public class DynamicItemAdapter extends BaseMultiItemQuickAdapter<CommonMultiBea
         GlideUtil.loadImage(mContext, item.getData().getPortrait(), helper.getView(R.id.publisher_portrait));
         helper.setText(R.id.tv_publisher_nickname, item.getData().getUsername());
         helper.setText(R.id.tv_dynamic_content, item.getData().getContent());
+        helper.setImageResource(R.id.img_collect, dynamic.isCollected()?R.drawable.ic_collect_solid: R.drawable.ic_collect_hollow);
         helper.setText(R.id.tv_publish_time, item.getData().getCreateTime().replace("T", " "));
         helper.setText(R.id.tv_comment_num, item.getData().getCommentNum()+"条评论");
         helper.setText(R.id.tv_watch_num, item.getData().getWatchNum()+"次围观");
@@ -148,13 +177,29 @@ public class DynamicItemAdapter extends BaseMultiItemQuickAdapter<CommonMultiBea
         return this;
     }
 
-
-
     public void setSelectorListener(SelectorListener selectorListener) {
         this.selectorListener = selectorListener;
     }
 
     public interface SelectorListener {
         void onSelectorClickListener(View v, int position);
+    }
+
+    private void showCollectSuccess() {
+        if (curPosition != -1 && curPosition < getData().size()) {
+            Dynamic dynamic = getData().get(curPosition).getData();
+            dynamic.setCollected(true);
+            dynamic.setCollectNum(dynamic.getCollectNum() + 1);
+            notifyItemChanged(curPosition, 0);
+        }
+    }
+
+    private void showUnCollectSuccess() {
+        if (curPosition != -1 && curPosition<getData().size()) {
+            Dynamic dynamic = getData().get(curPosition).getData();
+            dynamic.setCollected(false);
+            dynamic.setCollectNum(dynamic.getCollectNum() - 1);
+            notifyItemChanged(curPosition, 0);
+        }
     }
 }

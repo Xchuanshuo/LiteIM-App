@@ -14,7 +14,6 @@ import com.worldtreestd.finder.common.net.NetworkService;
 import com.worldtreestd.finder.common.net.ResultVo;
 import com.worldtreestd.finder.common.utils.DialogUtils;
 import com.worldtreestd.finder.contract.userinfo.PersonalDynamicContract;
-import com.worldtreestd.finder.data.SharedData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +29,6 @@ public class PersonalDynamicPresenter extends BasePresenter<PersonalDynamicContr
     implements PersonalDynamicContract.Presenter {
 
     private static int totalPage = -1;
-    private SharedData sharedData = SharedData.getInstance();
 
     public PersonalDynamicPresenter(PersonalDynamicContract.View view) {
         super(view);
@@ -41,14 +39,14 @@ public class PersonalDynamicPresenter extends BasePresenter<PersonalDynamicContr
         String jwt = sharedData.getJWT();
         if (TextUtils.isEmpty(jwt)) {
             Context mContext = mView.getContext();
-            DialogUtils.showToast(mContext, mContext.getString(R.string.login_request));
             LoginActivity.come(mContext);
+            return;
         }
         if (totalPage!=-1 && page > totalPage) {
             mView.showNoMoreData();
             return;
         }
-        addDisposable(NetworkService.getInstance().getPersonalDynamic(jwt, userId, page, 5)
+        addDisposable(NetworkService.getInstance().getPersonalDynamic(sharedData.getJWT(), userId, page, 5)
                 .map(recordResultVo -> {
                     List<CommonMultiBean<Dynamic>> beanList = new ArrayList<>();
                     if (recordResultVo.getCode().equals(SUCCESS)) {

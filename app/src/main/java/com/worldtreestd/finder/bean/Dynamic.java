@@ -2,10 +2,12 @@ package com.worldtreestd.finder.bean;
 
 import org.litepal.crud.LitePalSupport;
 
+import java.io.Serializable;
+
 /**
  * @author legend
  */
-public class Dynamic extends LitePalSupport {
+public class Dynamic extends LitePalSupport implements Serializable {
         /**
          * id : 1
          * userId : 14

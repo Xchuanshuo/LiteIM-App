@@ -25,10 +25,12 @@ public class IntentUtils {
 
     public static Intent createDynamicIntent(Context context, Dynamic dynamic) {
         Intent intent = new Intent();
-        intent.putExtra(context.getString(R.string.portrait), dynamic.getPortrait());
-        intent.putExtra(context.getString(R.string.publisher_name), dynamic.getUsername());
-        intent.putExtra(context.getString(R.string.publish_time), dynamic.getCreateTime());
-        intent.putExtra(context.getString(R.string.dynamic_content), dynamic.getContent());
+        intent.putExtra(context.getString(R.string.dynamic), dynamic);
+//        intent.putExtra(context.getString(R.string.portrait), dynamic.getPortrait());
+//        intent.putExtra(context.getString(R.string.publisher_name), dynamic.getUsername());
+//        intent.putExtra(context.getString(R.string.publish_time), dynamic.getCreateTime());
+//        intent.putExtra(context.getString(R.string.dynamic_content), dynamic.getContent());
+//        intent.putExtra(context.getString(R.string.dynamic_is_collected), dynamic.isCollected());
         Gson gson = new Gson();
         if (!TextUtils.isEmpty(dynamic.getUrls())) {
             switch (dynamic.getType()) {

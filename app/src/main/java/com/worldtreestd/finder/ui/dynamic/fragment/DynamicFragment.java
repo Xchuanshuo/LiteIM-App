@@ -33,6 +33,7 @@ import static com.worldtreestd.finder.common.base.mvp.StatusType.REFRESH_SUCCESS
 public class DynamicFragment extends BaseFragment<DynamicContract.Presenter>
     implements DynamicContract.View {
 
+    private int curPosition = -1;
     private int currentPage = 1;
     private List<CommonMultiBean<Dynamic>> beanList = new ArrayList<>();
 
@@ -90,6 +91,20 @@ public class DynamicFragment extends BaseFragment<DynamicContract.Presenter>
                 }
             }
         });
+//        mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+//            switch (view.getId()) {
+//                case R.id.img_collect:
+//                    curPosition = position;
+//                    Dynamic dynamic = beanList.get(curPosition).getData();
+//                    if (!dynamic.isCollected()) {
+//                        mPresenter.collectDynamic(dynamic.getId());
+//                    } else {
+//                        mPresenter.unCollectDynamic(dynamic.getId());
+//                    }
+//                    break;
+//                default: break;
+//            }
+//        });
     }
 
     @Override
@@ -148,5 +163,25 @@ public class DynamicFragment extends BaseFragment<DynamicContract.Presenter>
     public void showData(List<CommonMultiBean<Dynamic>> multiBeanList) {
         beanList.addAll(multiBeanList);
         setLoadDataResult(beanList, REFRESH_SUCCESS);
+    }
+
+    @Override
+    public void showCollectedSuccess() {
+        if (curPosition != -1) {
+            Dynamic dynamic = beanList.get(curPosition).getData();
+            dynamic.setCollected(true);
+            dynamic.setCollectNum(dynamic.getCollectNum()+1);
+            mAdapter.notifyItemChanged(curPosition, 0);
+        }
+    }
+
+    @Override
+    public void showUnCollectedSuccess() {
+        if (curPosition != -1) {
+            Dynamic dynamic = beanList.get(curPosition).getData();
+            dynamic.setCollected(false);
+            dynamic.setCollectNum(dynamic.getCollectNum()!=0?dynamic.getCollectNum()-1:0);
+            mAdapter.notifyItemChanged(curPosition, 0);
+        }
     }
 }

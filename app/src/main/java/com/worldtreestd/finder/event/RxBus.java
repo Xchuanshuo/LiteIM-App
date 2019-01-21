@@ -1,8 +1,8 @@
 package com.worldtreestd.finder.event;
 
-import io.reactivex.Observable;
-import io.reactivex.subjects.PublishSubject;
-import io.reactivex.subjects.Subject;
+import io.reactivex.Flowable;
+import io.reactivex.processors.FlowableProcessor;
+import io.reactivex.processors.PublishProcessor;
 
 /**
  * @author Legend
@@ -11,10 +11,10 @@ import io.reactivex.subjects.Subject;
  */
 public class RxBus {
 
-    private final Subject<Object> mBus;
+    private final FlowableProcessor<Object> mBus;
 
     private RxBus() {
-        this.mBus = PublishSubject.create().toSerialized();
+        this.mBus = PublishProcessor.create().toSerialized();
     }
 
     public static RxBus getDefault() {
@@ -25,12 +25,12 @@ public class RxBus {
         mBus.onNext(o);
     }
 
-    public <T> Observable<T> toObservable(Class<T> eventType) {
+    public <T> Flowable<T> toFlowable(Class<T> eventType) {
         return mBus.ofType(eventType);
     }
 
     public boolean hasObservers() {
-        return mBus.hasObservers();
+        return mBus.hasSubscribers();
     }
 
     public static class Holder {

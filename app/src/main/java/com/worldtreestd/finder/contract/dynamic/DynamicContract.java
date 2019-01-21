@@ -20,6 +20,16 @@ public interface DynamicContract {
          * @param multiBeanList
          */
         void showData(List<CommonMultiBean<Dynamic>> multiBeanList);
+
+        /**
+         * 收藏成功
+         */
+        void showCollectedSuccess();
+
+        /**
+         * 收藏失败
+         */
+        void showUnCollectedSuccess();
     }
 
     interface Presenter extends BaseContract.Presenter {
@@ -28,5 +38,17 @@ public interface DynamicContract {
          * @param page
          */
         void getDynamicData(Integer page);
+
+        /**
+         * 收藏动态
+         * @param dynamicId
+         */
+        void collectDynamic(Integer dynamicId);
+
+        /**
+         * 取消收藏动态
+         * @param dynamicId
+         */
+        void unCollectDynamic(Integer dynamicId);
     }
 }

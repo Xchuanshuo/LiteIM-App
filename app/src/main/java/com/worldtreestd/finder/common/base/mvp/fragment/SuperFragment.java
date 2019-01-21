@@ -51,6 +51,7 @@ public abstract class SuperFragment extends SupportFragment {
             mIsFirstInitData = false;
             onFirstInit();
         }
+        initWidget();
         initEventAndData();
     }
 
@@ -103,6 +104,10 @@ public abstract class SuperFragment extends SupportFragment {
      *  加载事件和数据
      */
     protected abstract void initEventAndData();
+
+    protected void initWidget() {
+
+    }
 
     /**
      * 首次初始化时调用

@@ -36,8 +36,6 @@ public interface PersonalDynamicContract {
          */
         void personalDynamic(Integer userId, Integer page);
 
-        void collectDynamic();
-
         /**
          * 删除已经发布的动态
          * @param dynamicId
