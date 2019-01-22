@@ -50,7 +50,7 @@ public class PersonalDynamicPresenter extends BasePresenter<PersonalDynamicContr
                 .map(recordResultVo -> {
                     List<CommonMultiBean<Dynamic>> beanList = new ArrayList<>();
                     if (recordResultVo.getCode().equals(SUCCESS)) {
-                        Record record = recordResultVo.getData();
+                        Record<Dynamic> record = recordResultVo.getData();
                         totalPage = record.getPages();
                         List<Dynamic> list = record.getRecords();
                         for (Dynamic d: list) {
@@ -63,11 +63,7 @@ public class PersonalDynamicPresenter extends BasePresenter<PersonalDynamicContr
                 .subscribeWith(new BaseObserve<List<CommonMultiBean<Dynamic>>>() {
                     @Override
                     public void onSuccess(List<CommonMultiBean<Dynamic>> data) {
-                        if (data.size() > 0) {
-                            mView.showData(data);
-                        } else {
-                            mView.refreshFailure();
-                        }
+                        mView.showData(data);
                     }
                 }));
     }

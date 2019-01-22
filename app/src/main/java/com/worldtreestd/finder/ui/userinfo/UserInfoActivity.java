@@ -16,10 +16,13 @@ import android.widget.TextView;
 import com.worldtreestd.finder.R;
 import com.worldtreestd.finder.bean.User;
 import com.worldtreestd.finder.common.base.mvp.activity.BaseActivity;
+import com.worldtreestd.finder.common.utils.DialogUtils;
 import com.worldtreestd.finder.common.utils.GlideUtil;
 import com.worldtreestd.finder.common.widget.NoScrollViewPager;
 import com.worldtreestd.finder.common.widget.picturewatcher.PreviewActivity;
+import com.worldtreestd.finder.contract.userinfo.UserInfoContract;
 import com.worldtreestd.finder.data.DBData;
+import com.worldtreestd.finder.presenter.userinfo.UserInfoPresenter;
 import com.worldtreestd.finder.ui.userinfo.adapter.UserRelationPageAdapter;
 
 import java.util.ArrayList;
@@ -35,7 +38,8 @@ import static com.worldtreestd.finder.common.utils.Constant.LOOK_USER;
  * @data by on 18-7-20.
  * @description 用户信息Activity
  */
-public class UserInfoActivity extends BaseActivity {
+public class UserInfoActivity extends BaseActivity<UserInfoContract.Presenter>
+    implements UserInfoContract.View {
 
     @BindView(R.id.mViewPager)
     NoScrollViewPager mViewPager;
@@ -49,21 +53,28 @@ public class UserInfoActivity extends BaseActivity {
     TextView mUsernameTvTitle;
     @BindView(R.id.tv_signature)
     TextView mSignatureTV;
+    @BindView(R.id.tv_operate)
+    TextView mOperateTv;
     @BindView(R.id.portrait_title)
     ImageView mPortraitTitle;
     @BindView(R.id.img_background)
     ImageView mBackgroundImg;
     @BindView(R.id.img_setting)
     ImageView mSettingImg;
-    @BindView(R.id.img_message)
-    ImageView mMsgImg;
     @BindView(R.id.title_layout)
     ViewGroup titleContainer;
     @BindView(R.id.title_center_layout)
     ViewGroup titleCenterLayout;
     private UserRelationPageAdapter pageAdapter;
+    private boolean isSelf = false;
+    private boolean isFollow = false;
     private User localUser = DBData.getInstance().getCurrentUser();
     private User lookUser;
+
+    @Override
+    protected UserInfoContract.Presenter initPresenter() {
+        return new UserInfoPresenter(this);
+    }
 
     public static void come(Context context, Bundle bundle) {
         Intent intent = new Intent();
@@ -75,11 +86,6 @@ public class UserInfoActivity extends BaseActivity {
     @Override
     public int getLayoutId() {
         return R.layout.activity_user_info_main;
-    }
-
-    @Override
-    public boolean showHomeAsUp() {
-        return true;
     }
 
     @Override
@@ -135,13 +141,30 @@ public class UserInfoActivity extends BaseActivity {
         GlideUtil.loadImage(this, lookUser.getPortrait(), mPortraitTitle);
         // 判断当前查看的用户是否是登录的用户
         if (lookUser!=null && localUser!=null) {
-            if (!lookUser.getId().equals(localUser.getId())) {
-                // todo:
-
-            } else {
-                // todo:
-            }
+            this.isSelf = lookUser.getId().equals(localUser.getId());
         }
+        if (isSelf) {
+            mOperateTv.setText("修改资料");
+        } else {
+            mPresenter.followState(lookUser.getId());
+        }
+    }
+
+    @OnClick(R.id.tv_operate)
+    public void operate() {
+        if (isSelf) {
+            // todo
+            DialogUtils.showToast(this, "进入修改资料页面");
+        } else if (isFollow) {
+            mPresenter.unFollowUser(lookUser.getId());
+        } else {
+            mPresenter.followUser(lookUser.getId());
+        }
+    }
+
+    @OnClick(R.id.img_return)
+    public void returnUp() {
+        finish();
     }
 
     @OnClick(R.id.portrait)
@@ -149,8 +172,25 @@ public class UserInfoActivity extends BaseActivity {
         PreviewActivity.come(this, new ArrayList<>(Collections.singletonList(lookUser.getPortrait())));
     }
 
+    @OnClick(R.id.tv_chat)
+    public void chatPage() {
+        if (isSelf) {
+            // todo
+            DialogUtils.showToast(this, "进入留言页面");
+        } else {
+            // todo
+            DialogUtils.showToast(this, "进入私聊页面");
+        }
+    }
+
     @Override
     public void onBackPressedSupport() {
         finish();
+    }
+
+    @Override
+    public void showFollowState(boolean isFollow) {
+        this.isFollow = isFollow;
+        mOperateTv.setText(isFollow?"已关注":"关注");
     }
 }

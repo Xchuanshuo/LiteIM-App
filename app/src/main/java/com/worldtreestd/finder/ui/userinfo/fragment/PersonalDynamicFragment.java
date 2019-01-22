@@ -69,13 +69,11 @@ public class PersonalDynamicFragment extends BaseFragment<PersonalDynamicContrac
 
     @Override
     public void refreshData() {
+        DialogUtils.showToast(getContext(), "执行了刷新");
         beanList.clear();
         this.currentPage = 1;
-        if (getUserVisibleHint()) {
-            mPresenter.personalDynamic(lookUser.getId(), currentPage);
-        }
+        mPresenter.personalDynamic(lookUser.getId(), currentPage);
     }
-
 
     @Override
     protected void initEventAndData() {
@@ -108,6 +106,10 @@ public class PersonalDynamicFragment extends BaseFragment<PersonalDynamicContrac
     @Override
     public void showData(List<CommonMultiBean<Dynamic>> multiBeanList) {
         beanList.addAll(multiBeanList);
+        if (beanList.size() == 0) {
+            getEmptyTextView().setText("当前还未发布任何动态");
+            return;
+        }
         mAdapter.setNewData(beanList);
     }
 
@@ -118,11 +120,6 @@ public class PersonalDynamicFragment extends BaseFragment<PersonalDynamicContrac
             mAdapter.notifyItemRangeRemoved(curPosition, 1);
         }
         DialogUtils.showToast(getContext(), msg);
-    }
-
-    @Override
-    public void showNoMoreData() {
-        mAdapter.loadMoreEnd();
     }
 
     @Override

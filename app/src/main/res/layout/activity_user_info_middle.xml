@@ -39,22 +39,22 @@
                 android:layout_marginTop="37dp"
                 android:orientation="horizontal">
 
-                <TextView
+                <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/tv_chat"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/select_user_chat_tv"
                     android:text="私聊"
+                    android:foreground="@drawable/ic_touch_menu"
                     android:textColor="@color/colorBlack33" />
 
                 <TextView
-                    android:id="@+id/tv_follow"
+                    android:id="@+id/tv_operate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="15dp"
+                    android:layout_marginStart="15dp"
                     android:background="@drawable/select_user_chat_tv"
+                    android:foreground="@drawable/ic_touch_menu"
                     android:gravity="center"
                     android:text="关注"
                     android:textColor="@color/colorBlack33" />
@@ -85,7 +85,7 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="1px"
+            android:layout_height="2px"
             android:background="@color/colorBg" />
 
     </LinearLayout>

@@ -7,6 +7,8 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import com.worldtreestd.finder.bean.User;
 import com.worldtreestd.finder.ui.userinfo.fragment.PersonalDynamicFragment;
+import com.worldtreestd.finder.ui.userinfo.fragment.UserFansFragment;
+import com.worldtreestd.finder.ui.userinfo.fragment.UserFollowFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,9 +25,9 @@ public class UserRelationPageAdapter extends FragmentPagerAdapter {
 
     public UserRelationPageAdapter(FragmentManager fm, User user) {
         super(fm);
-        for (int i=0;i<3;i++) {
-            fragmentList.add(PersonalDynamicFragment.newInstance(user));
-        }
+        fragmentList.add(PersonalDynamicFragment.newInstance(user));
+        fragmentList.add(UserFollowFragment.newInstance(user));
+        fragmentList.add(UserFansFragment.newInstance(user));
     }
 
     @Override

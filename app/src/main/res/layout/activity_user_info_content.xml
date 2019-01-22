@@ -22,10 +22,8 @@
                 android:id="@+id/tab_layout"
                 android:layout_width="match_parent"
                 android:layout_height="54dp"
-                app:tabIndicatorHeight="4dp"
-                android:layout_centerVertical="true"
-                android:paddingBottom="8dp"
-                app:tabIndicatorColor="@android:color/white" />
+                app:tabIndicatorHeight="2dp"
+                app:tabIndicatorColor="@color/colorPrimary" />
 
             <View
                 android:layout_width="match_parent"

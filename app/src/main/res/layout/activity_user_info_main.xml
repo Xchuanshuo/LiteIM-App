@@ -2,7 +2,6 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBg"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:clipToPadding="false"
     android:clipChildren="false">
@@ -34,6 +33,7 @@
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
+                android:paddingTop="@dimen/dp_15"
                 android:layout_height="60dp"
                 android:alpha="0"
                 android:background="@android:color/white"
@@ -47,6 +47,14 @@
     </android.support.design.widget.AppBarLayout>
 
     <include layout="@layout/activity_user_info_content" />
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/img_return"
+        android:layout_margin="@dimen/dp_32"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:src="@drawable/ic_keyboard_backspace_black_24dp" />
 
 
     <com.worldtreestd.finder.common.widget.CircleImageView

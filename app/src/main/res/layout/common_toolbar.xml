@@ -9,8 +9,8 @@
         android:id="@+id/portrait"
         android:src="@drawable/g"
         android:foreground="@drawable/ic_touch_menu"
-        android:layout_width="@dimen/dp_48"
-        android:layout_height="@dimen/dp_48" />
+        android:layout_width="@dimen/dp_40"
+        android:layout_height="@dimen/dp_40" />
     <TextView
         android:id="@+id/toolbar_title_tv"
         android:layout_width="wrap_content"
@@ -37,7 +37,7 @@
         android:layout_height="30dp"
         android:layout_gravity="right"
         android:foreground="?android:attr/selectableItemBackground"
-        android:layout_marginRight="@dimen/dp_10"/>
+        android:layout_marginEnd="@dimen/dp_10"/>
 
     <android.support.v7.widget.AppCompatSpinner
         android:id="@+id/mSpinner"

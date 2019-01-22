@@ -1,7 +1,6 @@
 package com.worldtreestd.finder.common.base.mvp.activity;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.content.res.TypedArray;
@@ -9,7 +8,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -19,7 +17,6 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.worldtreestd.finder.R;
-import com.worldtreestd.finder.common.utils.DialogUtils;
 import com.worldtreestd.finder.common.widget.CircleImageView;
 import com.worldtreestd.finder.contract.base.BaseContract;
 import com.worldtreestd.finder.ui.search.SearchActivity;
@@ -27,17 +24,13 @@ import com.worldtreestd.finder.ui.search.SearchActivity;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.yokeyword.fragmentation.anim.DefaultHorizontalAnimator;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
 import me.yokeyword.fragmentation_swipeback.SwipeBackActivity;
-
-import static com.worldtreestd.finder.common.base.mvp.StatusType.LOAD_MORE_FAILURE;
-import static com.worldtreestd.finder.common.base.mvp.StatusType.LOAD_MORE_SUCCESS;
-import static com.worldtreestd.finder.common.base.mvp.StatusType.REFRESH_FAILURE;
-import static com.worldtreestd.finder.common.base.mvp.StatusType.REFRESH_SUCCESS;
 
 /**
  * @author Legend
@@ -66,7 +59,6 @@ public abstract class BaseActivity<T extends BaseContract.Presenter>
     @BindView(R.id.mWrite_Button)
     protected AppCompatImageView mWriteButton;
     private View mEmptyView;
-    private Dialog mDialog;
     protected BaseQuickAdapter mAdapter;
     protected T mPresenter;
 
@@ -162,38 +154,7 @@ public abstract class BaseActivity<T extends BaseContract.Presenter>
             mAdapter = getAdapter();
             mRecyclerView.setAdapter(mAdapter);
             mEmptyView = getLayoutInflater().inflate(R.layout.layout_empty, (ViewGroup) mRecyclerView.getParent(), false);
-//            mEmptyView.setOnClickListener(v->refreshData());
-        }
-        mDialog = DialogUtils.showLoadingDialog(this,getString(R.string.common_loading));
-    }
-
-
-    /**
-     *  对数据加载结果进行统一处理
-     */
-    protected void setLoadDataResult(SwipeRefreshLayout refreshLayout,
-                                     List list, int type) {
-        switch (type) {
-            case REFRESH_SUCCESS:
-                mAdapter.setNewData(list);
-                refreshLayout.setRefreshing(false);
-                break;
-            case REFRESH_FAILURE:
-                refreshLayout.setRefreshing(false);
-                break;
-            case LOAD_MORE_SUCCESS:
-                if (list != null) {
-                    mAdapter.addData(list);
-                    mAdapter.loadMoreComplete();
-                }
-                break;
-            case LOAD_MORE_FAILURE:
-                mAdapter.loadMoreFail();
-                break;
-            default: break;
-        }
-        if (mAdapter.getData().isEmpty()) {
-            mAdapter.setEmptyView(mEmptyView);
+            mEmptyView.setOnClickListener(v->refreshData());
         }
     }
 
@@ -202,7 +163,8 @@ public abstract class BaseActivity<T extends BaseContract.Presenter>
             return;
         }
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(showHomeAsUp());
+        Objects.requireNonNull(getSupportActionBar())
+                .setDisplayHomeAsUpEnabled(showHomeAsUp());
         /**mToolbar除掉阴影*/
         getSupportActionBar().setElevation(0);
         getSupportActionBar().setTitle("");

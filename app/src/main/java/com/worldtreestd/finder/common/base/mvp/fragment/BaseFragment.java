@@ -10,7 +10,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.worldtreestd.finder.R;
@@ -43,7 +42,6 @@ public abstract class BaseFragment<T extends BaseContract.Presenter> extends Sup
     @Nullable
     @BindView(R.id.mSwipeRefresh)
     protected SwipeRefreshLayout mSwipeRefreshLayout;
-    ProgressBar mProgressBar;
 
     @Override
     public void onAttach(Activity activity) {
@@ -73,7 +71,6 @@ public abstract class BaseFragment<T extends BaseContract.Presenter> extends Sup
                 mAdapter.setEnableLoadMore(true);
                 mRecyclerView.setAdapter(mAdapter);
                 mEmptyView = getLayoutInflater().inflate(R.layout.layout_empty, (ViewGroup) mRecyclerView.getParent(), false);
-                mProgressBar = mEmptyView.findViewById(R.id.mProgressBar);
                 mEmptyView.setOnClickListener(v -> refreshData());
                 mAdapter.setOnLoadMoreListener(this::loadMoreData, mRecyclerView);
                 if (mAdapter.getData().isEmpty()) {
@@ -131,9 +128,6 @@ public abstract class BaseFragment<T extends BaseContract.Presenter> extends Sup
         if (mSwipeRefreshLayout!=null) {
             mSwipeRefreshLayout.setRefreshing(false);
         }
-        if (mProgressBar != null) {
-            mProgressBar.setVisibility(View.VISIBLE);
-        }
     }
 
     protected View getChildView(int position) {
@@ -182,15 +176,18 @@ public abstract class BaseFragment<T extends BaseContract.Presenter> extends Sup
 
     public AppCompatTextView getEmptyTextView() {
         AppCompatTextView textView = mEmptyView.findViewById(R.id.empty_txt);
-        ProgressBar progressBar = mEmptyView.findViewById(R.id.mProgressBar);
-        AppCompatTextView retryTextView = mEmptyView.findViewById(R.id.tv_retry);
-        progressBar.setVisibility(View.GONE);
-        retryTextView.setVisibility(View.INVISIBLE);
         return textView;
     }
 
     @Override
     public void setPresenter(T presenter) {
         this.mPresenter = presenter;
+    }
+
+    @Override
+    public void showNoMoreData() {
+        if (mAdapter != null) {
+            mAdapter.loadMoreEnd();
+        }
     }
 }

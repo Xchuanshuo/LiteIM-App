@@ -52,6 +52,54 @@ public interface FinderApiService {
     Observable<ResultVo<User>> register(@Body RequestBody requestBody);
 
     /**
+     * 是否已经关注该用户
+     * @param jwt
+     * @param targetId
+     * @return
+     */
+    @GET("/user-fans/is-follow/{targetId}")
+    Observable<ResultVo<Boolean>> isAlreadyFollow(@Header("Authorization") String jwt, @Path("targetId") Integer targetId);
+
+    /**
+     * 关注用户
+     * @param jwt
+     * @param targetId
+     * @return
+     */
+    @POST("/user-fans/{targetId}")
+    Observable<ResultVo<String>> followUser(@Header("Authorization") String jwt, @Path("targetId") Integer targetId);
+
+    /**
+     * 取消关注用户
+     * @param jwt
+     * @param targetId
+     * @return
+     */
+    @DELETE("/user-fans/{targetId}")
+    Observable<ResultVo<String>> unFollowUser(@Header("Authorization") String jwt, @Path("targetId") Integer targetId);
+
+    /**
+     * 用户关注人列表
+     * @param userId
+     * @param page
+     * @param size
+     * @return
+     */
+    @GET("/user-fans/user-like/{userId}/{page}/{size}")
+    Observable<ResultVo<Record<User>>> userFollowList(@Path("userId") Integer userId, @Path("page") Integer page,
+                                                          @Path("size") Integer size);
+
+    /**
+     * 用户粉丝列表
+     * @param userId
+     * @param page
+     * @param size
+     * @return
+     */
+    @GET("/user-fans/user-fans/{userId}/{page}/{size}")
+    Observable<ResultVo<Record<User>>> userFansList(@Path("userId") Integer userId, @Path("page") Integer page,
+                                                        @Path("size") Integer size);
+    /**
      * 添加动态
      * @param jwt
      * @Param params

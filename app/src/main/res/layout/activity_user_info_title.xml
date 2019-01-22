@@ -40,19 +40,8 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_centerVertical="true"
-        android:layout_toLeftOf="@+id/img_message"
-        android:paddingLeft="10dp"
-        android:paddingRight="8dp"
+        android:layout_alignParentEnd="true"
+        android:paddingEnd="@dimen/dp_15"
         android:src="@drawable/ic_settings_black_24dp" />
-
-    <android.support.v7.widget.AppCompatImageView
-        android:id="@+id/img_message"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:paddingLeft="10dp"
-        android:paddingRight="15dp"
-        android:src="@drawable/ic_message_black_24dp" />
 
 </RelativeLayout>
