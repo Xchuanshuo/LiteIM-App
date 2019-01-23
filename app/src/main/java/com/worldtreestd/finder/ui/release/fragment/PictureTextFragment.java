@@ -56,7 +56,6 @@ public class PictureTextFragment extends BaseFragment<ReleaseContract.Presenter>
     AppCompatEditText mEditText;
     @BindView(R.id.grid_view)
     GridView mGridView;
-
     private int curPosition = 0;
     GridViewAdapter mAdapter;
     RxPermissions rxPermissions;

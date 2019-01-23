@@ -4,8 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:paddingBottom="@dimen/dp_4"
-    android:background="@color/grey_200">
+    android:paddingBottom="@dimen/dp_4">
 
     <View
         android:layout_width="match_parent"
@@ -23,13 +22,14 @@
         >
 
         <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/edt_comment"
             android:layout_width="@dimen/dp_72"
             android:layout_height="wrap_content"
             android:maxLines="10"
             android:layout_gravity="center"
-            android:layout_weight="5"
+            android:layout_weight="8"
             android:background="@drawable/shape"
-            android:drawableLeft="@drawable/ic_write_24dp"
+            android:drawableStart="@drawable/ic_write_24dp"
             android:drawablePadding="6dp"
             android:gravity="center|left"
             android:paddingLeft="12dp"
@@ -55,13 +55,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <ImageView
+                <android.support.v7.widget.AppCompatImageView
+                    android:id="@+id/img_send"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:layout_marginRight="5dp"
+                    android:paddingStart="@dimen/dp_10"
+                    android:layout_marginEnd="5dp"
                     android:scaleType="center"
-                    android:src="@mipmap/comment_count"/>
+                    android:src="@drawable/ic_send_blue_24dp" />
 
             </FrameLayout>
         </FrameLayout>
@@ -72,17 +74,20 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_weight="2"
-            android:paddingLeft="5dip"
+            android:paddingStart="5dip"
             android:scaleType="center"
+            android:foreground="?android:attr/selectableItemBackground"
             android:src="@drawable/ic_collect_hollow"/>
 
-        <ImageView
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/img_share"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_weight="2"
-            android:paddingLeft="5dip"
+            android:paddingStart="5dip"
             android:scaleType="center"
+            android:foreground="?android:attr/selectableItemBackground"
             android:src="@mipmap/share"/>
 
     </LinearLayout>

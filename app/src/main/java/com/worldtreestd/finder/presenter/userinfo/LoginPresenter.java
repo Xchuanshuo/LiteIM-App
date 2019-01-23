@@ -11,7 +11,6 @@ import com.worldtreestd.finder.common.utils.Code;
 import com.worldtreestd.finder.common.utils.LogUtils;
 import com.worldtreestd.finder.common.utils.MD5Util;
 import com.worldtreestd.finder.contract.userinfo.LoginContract;
-import com.worldtreestd.finder.data.SharedData;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,8 +25,6 @@ import okhttp3.RequestBody;
  */
 public class LoginPresenter extends BasePresenter<LoginContract.View>
     implements LoginContract.Presenter {
-
-    private SharedData sharedData = SharedData.getInstance();
 
     public LoginPresenter(LoginContract.View view) {
         super(view);

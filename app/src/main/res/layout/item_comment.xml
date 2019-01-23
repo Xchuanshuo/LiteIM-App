@@ -10,16 +10,14 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
+        android:orientation="horizontal">
 
-        <ImageView
+        <com.worldtreestd.finder.common.widget.CircleImageView
             android:id="@+id/portrait"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:background="@drawable/g"
-            android:layout_gravity="center"
-            />
+            android:layout_gravity="center" />
 
         <TextView
             android:id="@+id/tv_username"
@@ -27,7 +25,6 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="15dp"
-            android:ellipsize="end"
             android:includeFontPadding="false"
             android:singleLine="true"
             android:textColor="@color/color_406599"
@@ -41,7 +38,7 @@
             android:layout_weight="1"/>
 
         <TextView
-            android:id="@+id/tv_collect_num"
+            android:id="@+id/tv_favor_num"
             android:layout_marginTop="3dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -76,6 +73,6 @@
         android:text="7小时前"
         android:layout_marginTop="10dp"
         android:textColor="@color/color_505050"
-        android:layout_marginLeft="45dp"
+        android:layout_marginStart="45dp"
         />
 </LinearLayout>

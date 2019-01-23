@@ -18,7 +18,7 @@ import static com.worldtreestd.finder.common.utils.Code.SUCCESS;
 public class UserFansPresenter extends BasePresenter<UserFansContract.View>
     implements UserFansContract.Presenter {
 
-    private int totalPage = -1;
+    private int totalPage = 0;
 
     public UserFansPresenter(UserFansContract.View view) {
         super(view);
@@ -26,7 +26,7 @@ public class UserFansPresenter extends BasePresenter<UserFansContract.View>
 
     @Override
     public void fansList(Integer userId, Integer page) {
-        if (totalPage != -1 && page > totalPage) {
+        if (totalPage != 0 && page > totalPage) {
             mView.showNoMoreData();
             return;
         }

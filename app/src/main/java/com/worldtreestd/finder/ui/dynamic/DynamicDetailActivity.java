@@ -9,8 +9,11 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.worldtreestd.finder.R;
+import com.worldtreestd.finder.bean.Dynamic;
 import com.worldtreestd.finder.common.base.mvp.activity.BaseActivity;
 import com.worldtreestd.finder.ui.dynamic.fragment.DynamicDetailFragment;
+
+import static com.worldtreestd.finder.common.utils.Constant.LOOK_DYNAMIC;
 
 /**
  * @author Legend
@@ -19,7 +22,6 @@ import com.worldtreestd.finder.ui.dynamic.fragment.DynamicDetailFragment;
  */
 public class DynamicDetailActivity extends BaseActivity {
 
-    private final DynamicDetailFragment mDynamicDetailFragment = new DynamicDetailFragment();
     @Override
     public boolean showHomeAsUp() {
         return true;
@@ -40,12 +42,15 @@ public class DynamicDetailActivity extends BaseActivity {
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.setStatusBarColor(Color.TRANSPARENT);
         }
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+
     }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        loadRootFragment(R.id.container, mDynamicDetailFragment);
+        Dynamic dynamic = (Dynamic) getIntent().getSerializableExtra(LOOK_DYNAMIC);
+        loadRootFragment(R.id.container, DynamicDetailFragment.newInstance(dynamic));
     }
 
     @Override

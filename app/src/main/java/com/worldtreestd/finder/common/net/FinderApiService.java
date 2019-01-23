@@ -177,6 +177,12 @@ public interface FinderApiService {
     @POST("/dynamic-comment/{dynamicId}")
     Observable<ResultVo<String>> addDynamicComment(@Header("Authorization") String jwt, @Path("dynamicId") Integer dynamicId,
                                                    @Query("content") String content);
+    /**
+     * 删除一条评论
+     * @param jwt
+     * @param commentId
+     * @return
+     */
     @DELETE("/dynamic-comment/{commentId}")
     Observable<ResultVo<String>> deleteDynamicComent(@Header("Authorization") String jwt, @Path("commentId") Integer commentId);
 

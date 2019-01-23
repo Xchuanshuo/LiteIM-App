@@ -28,7 +28,10 @@ public interface ReleaseContract {
     }
 
     interface Presenter extends BaseContract.Presenter {
-
+        /**
+         * 发布一条动态
+         * @param params
+         */
         void addDynamic(Map<String, RequestBody> params);
     }
 }

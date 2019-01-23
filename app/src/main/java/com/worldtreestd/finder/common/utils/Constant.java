@@ -47,4 +47,6 @@ public class Constant {
 
     public static final String LOOK_USER = "look_user";
 
+    public static final String LOOK_DYNAMIC = "look_dynamic";
+
 }

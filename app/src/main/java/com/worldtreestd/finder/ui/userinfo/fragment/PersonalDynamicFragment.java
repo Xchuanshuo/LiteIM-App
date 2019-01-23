@@ -69,7 +69,6 @@ public class PersonalDynamicFragment extends BaseFragment<PersonalDynamicContrac
 
     @Override
     public void refreshData() {
-        DialogUtils.showToast(getContext(), "执行了刷新");
         beanList.clear();
         this.currentPage = 1;
         mPresenter.personalDynamic(lookUser.getId(), currentPage);

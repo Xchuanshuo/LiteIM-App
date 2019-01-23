@@ -28,7 +28,7 @@ import static com.worldtreestd.finder.common.utils.Code.SUCCESS;
 public class PersonalDynamicPresenter extends BasePresenter<PersonalDynamicContract.View>
     implements PersonalDynamicContract.Presenter {
 
-    private static int totalPage = -1;
+    private static int totalPage = 0;
 
     public PersonalDynamicPresenter(PersonalDynamicContract.View view) {
         super(view);
@@ -42,7 +42,7 @@ public class PersonalDynamicPresenter extends BasePresenter<PersonalDynamicContr
             LoginActivity.come(mContext);
             return;
         }
-        if (totalPage!=-1 && page > totalPage) {
+        if (totalPage!=0 && page > totalPage) {
             mView.showNoMoreData();
             return;
         }

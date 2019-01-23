@@ -17,7 +17,7 @@ import com.worldtreestd.finder.contract.userinfo.UserFollowContract;
 public class UserFollowPresenter extends BasePresenter<UserFollowContract.View>
     implements UserFollowContract.Presenter {
 
-    private int totalPage = -1;
+    private int totalPage = 0;
 
     public UserFollowPresenter(UserFollowContract.View view) {
         super(view);
@@ -25,7 +25,7 @@ public class UserFollowPresenter extends BasePresenter<UserFollowContract.View>
 
     @Override
     public void followerList(Integer userId, Integer page) {
-        if (totalPage!=-1 && page > totalPage) {
+        if (totalPage!=0 && page > totalPage) {
             mView.showNoMoreData();
             return;
         }

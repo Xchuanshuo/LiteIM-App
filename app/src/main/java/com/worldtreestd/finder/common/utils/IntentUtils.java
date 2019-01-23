@@ -15,6 +15,7 @@ import java.util.Map;
 
 import static com.worldtreestd.finder.common.utils.Constant.DYNAMIC_ITEM_WORD_PICTURE;
 import static com.worldtreestd.finder.common.utils.Constant.DYNAMIC_ITEM_WORD_VIDEO;
+import static com.worldtreestd.finder.common.utils.Constant.LOOK_DYNAMIC;
 
 /**
  * @author Legend
@@ -25,12 +26,7 @@ public class IntentUtils {
 
     public static Intent createDynamicIntent(Context context, Dynamic dynamic) {
         Intent intent = new Intent();
-        intent.putExtra(context.getString(R.string.dynamic), dynamic);
-//        intent.putExtra(context.getString(R.string.portrait), dynamic.getPortrait());
-//        intent.putExtra(context.getString(R.string.publisher_name), dynamic.getUsername());
-//        intent.putExtra(context.getString(R.string.publish_time), dynamic.getCreateTime());
-//        intent.putExtra(context.getString(R.string.dynamic_content), dynamic.getContent());
-//        intent.putExtra(context.getString(R.string.dynamic_is_collected), dynamic.isCollected());
+        intent.putExtra(LOOK_DYNAMIC, dynamic);
         Gson gson = new Gson();
         if (!TextUtils.isEmpty(dynamic.getUrls())) {
             switch (dynamic.getType()) {

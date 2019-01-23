@@ -7,17 +7,17 @@ package com.worldtreestd.finder.bean;
  */
 public class Comment {
 
-
     /**
-     * id : 4
+     * id : 5
      * userId : 6
-     * targetId : 37
-     * content : 但使东山谢安石搜索
+     * targetId : 41
+     * content : emmmmmmmmmmm
      * favorNum : 0
-     * createTime : 2019-01-22T07:55:43
      * username : legend
-     * portrait : /6/portraits/3e3455ec332f4a22af0b5f93218c1eac.jpg
-     * timeAgoStr : 11天前
+     * portrait : http://192.168.43.21:8080/6/portraits/3e3455ec332f4a22af0b5f93218c1eac.jpg
+     * background : http://192.168.43.21:8080/6/backgrounds/68838a11fe68497aa4961ad8757cd27a.png
+     * signature : string
+     * timeAgoStr : 9天前
      * favor : false
      */
 
@@ -26,9 +26,10 @@ public class Comment {
     private int targetId;
     private String content;
     private int favorNum;
-    private String createTime;
     private String username;
     private String portrait;
+    private String background;
+    private String signature;
     private String timeAgoStr;
     private boolean favor;
 
@@ -72,14 +73,6 @@ public class Comment {
         this.favorNum = favorNum;
     }
 
-    public String getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(String createTime) {
-        this.createTime = createTime;
-    }
-
     public String getUsername() {
         return username;
     }
@@ -94,6 +87,22 @@ public class Comment {
 
     public void setPortrait(String portrait) {
         this.portrait = portrait;
+    }
+
+    public String getBackground() {
+        return background;
+    }
+
+    public void setBackground(String background) {
+        this.background = background;
+    }
+
+    public String getSignature() {
+        return signature;
+    }
+
+    public void setSignature(String signature) {
+        this.signature = signature;
     }
 
     public String getTimeAgoStr() {

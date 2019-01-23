@@ -44,7 +44,6 @@
     <string name="publisher_name">publisher_name</string>
     <string name="dynamic_content">dynamic_content</string>
     <string name="dynamic_is_collected">dynamic_is_collected</string>
-    <string name="dynamic">dynamic</string>
     <string name="dynamic_video_url">dynamic_video_url</string>
     <string name="dynamic_video_image_url">dynamic_video_image_url</string>
     <string name="dynamic_picture_urlList" translatable="false">dynamic_picture</string>
