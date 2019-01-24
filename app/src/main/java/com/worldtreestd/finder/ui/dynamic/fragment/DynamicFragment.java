@@ -1,13 +1,8 @@
 package com.worldtreestd.finder.ui.dynamic.fragment;
 
-import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.PopupWindow;
 
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -15,8 +10,8 @@ import com.worldtreestd.finder.R;
 import com.worldtreestd.finder.bean.Dynamic;
 import com.worldtreestd.finder.common.base.mvp.fragment.BaseFragment;
 import com.worldtreestd.finder.common.bean.CommonMultiBean;
+import com.worldtreestd.finder.common.utils.CommonPopupWindow;
 import com.worldtreestd.finder.common.utils.DialogUtils;
-import com.worldtreestd.finder.common.utils.ScreenUtils;
 import com.worldtreestd.finder.contract.dynamic.DynamicContract;
 import com.worldtreestd.finder.presenter.dynamic.DynamicPresenter;
 import com.worldtreestd.finder.ui.dynamic.adapter.DynamicItemAdapter;
@@ -62,22 +57,18 @@ public class DynamicFragment extends BaseFragment<DynamicContract.Presenter>
     @Override
     protected void initEventAndData() {
         super.initEventAndData();
-        View view = LayoutInflater.from(getContext()).inflate(R.layout.dynamic_item_popupwindow, null);
-        PopupWindow mPopupWindow= new PopupWindow(view, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        mPopupWindow.setElevation(10.5f);
-        mPopupWindow.setOutsideTouchable(true);
-        mPopupWindow.setFocusable(true);
         ((DynamicItemAdapter)mAdapter).setSelectorListener((v, position) -> {
-            int[] windowPos = ScreenUtils.calculatePopWindowPos(v, view);
-            mPopupWindow.showAtLocation(v, Gravity.TOP|Gravity.START
-                    , windowPos[0]-30, windowPos[1]-27);
-            AppCompatTextView mReportTv = view.findViewById(R.id.tv_report);
-            mReportTv.setVisibility(View.VISIBLE);
+            CommonPopupWindow mPopupWindow = CommonPopupWindow.getInstance()
+                    .buildPopupWindow(v, -30, -27).onlyHideDelete();
             curPosition = position;
             Dynamic dynamic = beanList.get(curPosition).getData();
-            mReportTv.setOnClickListener(v1 -> {
+            mPopupWindow.setReportListener(v1 -> {
                 DialogUtils.showToast(v1.getContext(), "举报了动态"+dynamic.getId());
             });
+            mPopupWindow.setShareListener(v1 -> {
+                DialogUtils.showToast(v1.getContext(), "分享了动态"+dynamic.getId());
+            });
+            mPopupWindow.show();
         });
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override

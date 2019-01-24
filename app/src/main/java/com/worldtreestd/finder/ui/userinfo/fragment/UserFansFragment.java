@@ -7,7 +7,6 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.worldtreestd.finder.R;
 import com.worldtreestd.finder.bean.User;
 import com.worldtreestd.finder.common.base.mvp.fragment.BaseFragment;
-import com.worldtreestd.finder.common.utils.DialogUtils;
 import com.worldtreestd.finder.common.widget.ItemDecoration;
 import com.worldtreestd.finder.contract.userinfo.UserFansContract;
 import com.worldtreestd.finder.presenter.userinfo.UserFansPresenter;
@@ -67,7 +66,6 @@ public class UserFansFragment extends BaseFragment<UserFansContract.Presenter>
 
     @Override
     public void refreshData() {
-        DialogUtils.showToast(getContext(), "执行了刷新");
         this.currentPage = 1;
         userList.clear();
         mPresenter.fansList(lookUser.getId(), currentPage);

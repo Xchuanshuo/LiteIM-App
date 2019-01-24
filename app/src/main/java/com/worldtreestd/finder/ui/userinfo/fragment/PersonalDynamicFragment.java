@@ -1,12 +1,6 @@
 package com.worldtreestd.finder.ui.userinfo.fragment;
 
 import android.os.Bundle;
-import android.support.v7.widget.AppCompatTextView;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.PopupWindow;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.worldtreestd.finder.R;
@@ -14,9 +8,10 @@ import com.worldtreestd.finder.bean.Dynamic;
 import com.worldtreestd.finder.bean.User;
 import com.worldtreestd.finder.common.base.mvp.fragment.BaseFragment;
 import com.worldtreestd.finder.common.bean.CommonMultiBean;
+import com.worldtreestd.finder.common.utils.CommonPopupWindow;
 import com.worldtreestd.finder.common.utils.DialogUtils;
-import com.worldtreestd.finder.common.utils.ScreenUtils;
 import com.worldtreestd.finder.contract.userinfo.PersonalDynamicContract;
+import com.worldtreestd.finder.data.DBData;
 import com.worldtreestd.finder.presenter.userinfo.PersonalDynamicPresenter;
 import com.worldtreestd.finder.ui.dynamic.adapter.DynamicItemAdapter;
 
@@ -77,23 +72,22 @@ public class PersonalDynamicFragment extends BaseFragment<PersonalDynamicContrac
     @Override
     protected void initEventAndData() {
         super.initEventAndData();
-        View view = LayoutInflater.from(getContext()).inflate(R.layout.dynamic_item_popupwindow, null);
-        PopupWindow mPopupWindow= new PopupWindow(view, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        mPopupWindow.setElevation(10.5f);
-        mPopupWindow.setOutsideTouchable(true);
-        mPopupWindow.setFocusable(true);
         ((DynamicItemAdapter)mAdapter).setSelectorListener((v, position) -> {
-            int[] windowPos = ScreenUtils.calculatePopWindowPos(v, view);
-            mPopupWindow.showAtLocation(v, Gravity.TOP|Gravity.START
-                    , windowPos[0]-30, windowPos[1]-27);
-            AppCompatTextView mDeleteTv = view.findViewById(R.id.tv_delete);
-            mDeleteTv.setVisibility(View.VISIBLE);
+            CommonPopupWindow mPopupWindow = CommonPopupWindow.getInstance()
+                    .buildPopupWindow(v, -30, -27).onlyHideReport();
             curPosition = position;
             Dynamic dynamic = beanList.get(curPosition).getData();
-            mDeleteTv.setOnClickListener(v1 -> {
-                mPopupWindow.dismiss();
+            User operateUser = DBData.getInstance().getCurrentUser();
+            if (operateUser==null || !operateUser.getId().equals(dynamic.getUserId())) {
+                mPopupWindow.hideDelete();
+            }
+            mPopupWindow.setDeleteListener(view -> {
                 mPresenter.deleteDynamic(dynamic.getId());
             });
+            mPopupWindow.setShareListener(view -> {
+                DialogUtils.showToast(view.getContext(), "分享了动态"+dynamic.getId());
+            });
+            mPopupWindow.show();
         });
     }
 

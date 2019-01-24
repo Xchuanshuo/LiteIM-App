@@ -184,7 +184,25 @@ public interface FinderApiService {
      * @return
      */
     @DELETE("/dynamic-comment/{commentId}")
-    Observable<ResultVo<String>> deleteDynamicComent(@Header("Authorization") String jwt, @Path("commentId") Integer commentId);
+    Observable<ResultVo<String>> deleteDynamicComment(@Header("Authorization") String jwt, @Path("commentId") Integer commentId);
+
+    /**
+     * 给动态的评论点赞
+     * @param jwt
+     * @param commentId
+     * @return
+     */
+    @POST("/dynamic-comment-favor/{commentId}")
+    Observable<ResultVo<String>> praiseDynamicComment(@Header("Authorization") String jwt, @Path("commentId") Integer commentId);
+
+    /**
+     * 动态的评论取消点赞
+     * @param jwt
+     * @param commentId
+     * @return
+     */
+    @DELETE("/dynamic-comment-favor/{commentId}")
+    Observable<ResultVo<String>> unPraiseDynamicComment(@Header("Authorization") String jwt, @Path("commentId") Integer commentId);
 
     @GET("message/{id}")
     Observable<BaseResponse<List<MessageBean>>> getMessageList(@Path("id") String id);

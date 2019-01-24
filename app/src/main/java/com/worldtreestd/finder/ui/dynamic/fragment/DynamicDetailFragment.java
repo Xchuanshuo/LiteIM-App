@@ -15,8 +15,10 @@ import com.google.gson.Gson;
 import com.worldtreestd.finder.R;
 import com.worldtreestd.finder.bean.Comment;
 import com.worldtreestd.finder.bean.Dynamic;
+import com.worldtreestd.finder.bean.User;
 import com.worldtreestd.finder.common.base.mvp.MyApplication;
 import com.worldtreestd.finder.common.base.mvp.fragment.BaseFragment;
+import com.worldtreestd.finder.common.utils.CommonPopupWindow;
 import com.worldtreestd.finder.common.utils.DataUtils;
 import com.worldtreestd.finder.common.utils.DialogUtils;
 import com.worldtreestd.finder.common.utils.GlideUtil;
@@ -24,6 +26,7 @@ import com.worldtreestd.finder.common.widget.CircleImageView;
 import com.worldtreestd.finder.common.widget.multipicture.MultiPictureLayout;
 import com.worldtreestd.finder.common.widget.picturewatcher.PreviewActivity;
 import com.worldtreestd.finder.contract.dynamic.DynamicDetailContract;
+import com.worldtreestd.finder.data.DBData;
 import com.worldtreestd.finder.presenter.dynamic.DynamicDetailPresenter;
 import com.worldtreestd.finder.ui.dynamic.adapter.DynamicCommentAdapter;
 
@@ -61,6 +64,7 @@ public class DynamicDetailFragment extends BaseFragment<DynamicDetailContract.Pr
     View detailContentLayout;
     private boolean isCollected = false;
     private int currentPage = -1;
+    private int currentPosition = -1;
 
     @Override
     protected DynamicDetailContract.Presenter initPresenter() {
@@ -120,14 +124,16 @@ public class DynamicDetailFragment extends BaseFragment<DynamicDetailContract.Pr
     protected void initEventAndData() {
         super.initEventAndData();
         mAdapter.addHeaderView(detailContentLayout);
+        // 数据显示
         if (dynamic != null) {
-            mUsernameTv.setText(dynamic.getUsername()+"");
-            mPublishTimeTV.setText(dynamic.getCreateTime().replace("T"," ")+"");
-            mDynamicContent.setText(dynamic.getContent()+"");
+            mUsernameTv.setText(dynamic.getUsername());
+            mPublishTimeTV.setText(dynamic.getCreateTime().replace("T"," "));
+            mDynamicContent.setText(dynamic.getContent());
             this.isCollected = dynamic.isCollected();
             mCollectImg.setImageResource(isCollected?R.drawable.ic_collect_solid:R.drawable.ic_collect_hollow);
             GlideUtil.loadImage(MyApplication.getInstance(), dynamic.getPortrait(), mPortraitImg);
         }
+        // 图片或者视频url
         Gson gson = new Gson();
         if (dynamic.getType() == DYNAMIC_ITEM_WORD_PICTURE) {
             List<String> urlList = gson.fromJson(dynamic.getUrls(), List.class);
@@ -139,7 +145,39 @@ public class DynamicDetailFragment extends BaseFragment<DynamicDetailContract.Pr
                     DataUtils.totalMapUrl(gson.fromJson(dynamic.getUrls(), Map.class));
             videoPlayerConfig(urlMap.get("url"), urlMap.get("coverPath"));
         }
+        // 设置点赞事件监听
+        mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            currentPosition = position;
+            Comment comment = commentList.get(currentPosition);
+            switch (view.getId()) {
+                case R.id.img_praise:
+                    if (!comment.isFavor()) {
+                        mPresenter.praiseComment(comment.getId());
+                    } else {
+                        mPresenter.unPraiseComment(comment.getId());
+                    }
+                    break;
+                case R.id.img_menu:
+                    CommonPopupWindow mPopupWindow = CommonPopupWindow.getInstance()
+                            .buildPopupWindow(view, -60, -40).onlyHideShare();
+                    User operateUser = DBData.getInstance().getCurrentUser();
+                    if (operateUser==null || !operateUser.getId().equals(comment.getUserId())) {
+                        mPopupWindow.hideDelete();
+                    }
+                    mPopupWindow.setReportListener(view1 -> {
+                        DialogUtils.showToast(view1.getContext(), "举报了评论"+comment.getId());
+                    });
+                    mPopupWindow.setDeleteListener(view1 -> {
+                        mPresenter.deleteComment(comment.getId());
+                        mPopupWindow.dismiss();
+                    });
+                    mPopupWindow.show();
+                    break;
+                default: break;
+            }
+        });
     }
+
 
     @OnClick(R.id.img_collect)
     public void collectEvent() {
@@ -182,6 +220,7 @@ public class DynamicDetailFragment extends BaseFragment<DynamicDetailContract.Pr
     public void showCommentData(List<Comment> comments) {
         commentList.addAll(comments);
         if (commentList.size() == 0) {
+            mAdapter.setHeaderAndEmpty(true);
             getEmptyTextView().setText("暂无评论,赶快来抢沙发");
             return;
         }
@@ -193,6 +232,28 @@ public class DynamicDetailFragment extends BaseFragment<DynamicDetailContract.Pr
         DialogUtils.showToast(getContext(), msg);
         mCommentEdt.setText("");
         refreshData();
+    }
+
+    @Override
+    public void deleteCommentSuccess(String msg) {
+        commentList.remove(currentPosition);
+        mAdapter.notifyItemRangeRemoved(currentPosition+1, 1);
+    }
+
+    @Override
+    public void praiseCommentSuccess(String msg) {
+        Comment comment = commentList.get(currentPosition);
+        comment.setFavor(true);
+        comment.setFavorNum(comment.getFavorNum()+1);
+        mAdapter.notifyItemChanged(currentPosition+1, 0);
+    }
+
+    @Override
+    public void unPraiseCommentSuccess() {
+        Comment comment = commentList.get(currentPosition);
+        comment.setFavor(false);
+        comment.setFavorNum(comment.getFavorNum()-1);
+        mAdapter.notifyItemChanged(currentPosition+1, 0);
     }
 
     @Override

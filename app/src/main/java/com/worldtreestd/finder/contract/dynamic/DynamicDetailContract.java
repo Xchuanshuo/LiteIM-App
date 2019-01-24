@@ -27,6 +27,23 @@ public interface DynamicDetailContract {
         void showCommentSuccess(String msg);
 
         /**
+         * 删除评论成功
+         * @param msg
+         */
+        void deleteCommentSuccess(String msg);
+
+        /**
+         * 评论点赞成功
+         * @param msg
+         */
+        void praiseCommentSuccess(String msg);
+
+        /**
+         * 评论取消点赞成功
+         */
+        void unPraiseCommentSuccess();
+
+        /**
          * 显示收藏成功
          */
         void showCollectedSuccess();
@@ -69,5 +86,17 @@ public interface DynamicDetailContract {
          * @param commentId
          */
         void deleteComment(Integer commentId);
+
+        /**
+         * 评论点赞
+         * @param commentId
+         */
+        void praiseComment(Integer commentId);
+
+        /**
+         * 评论取消点赞
+         * @param commentId
+         */
+        void unPraiseComment(Integer commentId);
     }
 }

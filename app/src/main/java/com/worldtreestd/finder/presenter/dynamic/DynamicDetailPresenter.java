@@ -129,13 +129,51 @@ public class DynamicDetailPresenter extends BasePresenter<DynamicDetailContract.
             LoginActivity.come(mView.getContext());
             return;
         }
-        addDisposable(NetworkService.getInstance().deleteDynamicComent(jwt, commentId)
+        addDisposable(NetworkService.getInstance().deleteDynamicComment(jwt, commentId)
                 .compose(new NetworkService.ThreadTransformer<>())
                 .subscribeWith(new BaseObserve<ResultVo<String>>() {
                     @Override
                     public void onSuccess(ResultVo<String> data) {
                         if (data.getCode().equals(SUCCESS)) {
-                            //  todo
+                            mView.deleteCommentSuccess(data.getData());
+                        }
+                    }
+                }));
+    }
+
+    @Override
+    public void praiseComment(Integer commentId) {
+        String jwt = sharedData.getJWT();
+        if (TextUtils.isEmpty(jwt)) {
+            LoginActivity.come(mView.getContext());
+            return;
+        }
+        addDisposable(NetworkService.getInstance().praiseDynamicComment(jwt, commentId)
+                .compose(new NetworkService.ThreadTransformer<>())
+                .subscribeWith(new BaseObserve<ResultVo<String>>() {
+                    @Override
+                    public void onSuccess(ResultVo<String> data) {
+                        if (data.getCode().equals(SUCCESS)) {
+                            mView.praiseCommentSuccess(data.getData());
+                        }
+                    }
+                }));
+    }
+
+    @Override
+    public void unPraiseComment(Integer commentId) {
+        String jwt = sharedData.getJWT();
+        if (TextUtils.isEmpty(jwt)) {
+            LoginActivity.come(mView.getContext());
+            return;
+        }
+        addDisposable(NetworkService.getInstance().unPraiseDynamicComment(jwt, commentId)
+                .compose(new NetworkService.ThreadTransformer<>())
+                .subscribeWith(new BaseObserve<ResultVo<String>>() {
+                    @Override
+                    public void onSuccess(ResultVo<String> data) {
+                        if (data.getCode().equals(SUCCESS)) {
+                            mView.unPraiseCommentSuccess();
                         }
                     }
                 }));

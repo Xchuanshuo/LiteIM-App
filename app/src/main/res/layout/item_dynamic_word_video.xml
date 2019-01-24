@@ -73,12 +73,13 @@
             android:layout_marginTop="10dp"
             android:transitionName="@string/dynamic_video_url"/>
 
-        <TextView
+        <android.support.v7.widget.AppCompatTextView
             android:id="@+id/tv_watch_num"
             android:layout_marginTop="@dimen/dp_10"
             android:layout_below="@+id/video_player"
             android:text="666次围观"
-            android:drawableLeft="@drawable/ic_more_info_24dp"
+            android:gravity="center"
+            android:drawableStart="@drawable/ic_more_info_blue_24dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
@@ -88,6 +89,7 @@
             android:layout_below="@+id/video_player"
             android:layout_marginStart="@dimen/dp_16"
             android:layout_centerHorizontal="true"
+            android:gravity="center"
             android:drawableStart="@drawable/ic_message_black_24dp"
             android:text="666条评论"
             android:layout_width="wrap_content"

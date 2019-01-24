@@ -62,6 +62,7 @@
                     android:layout_gravity="center"
                     android:paddingStart="@dimen/dp_10"
                     android:layout_marginEnd="5dp"
+                    android:foreground="?android:attr/selectableItemBackground"
                     android:scaleType="center"
                     android:src="@drawable/ic_send_blue_24dp" />
 
