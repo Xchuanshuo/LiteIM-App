@@ -48,6 +48,7 @@ public class ActivityManager {
      * @return
      */
     public Activity currentActivity() {
+        if (activities.size() == 0) return null;
         return activities.lastElement();
     }
 

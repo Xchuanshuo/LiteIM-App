@@ -267,6 +267,7 @@ public abstract class BaseActivity<T extends BaseContract.Presenter>
             mPresenter.detach();
         }
         super.onDestroy();
+        ActivityManager.getInstance().removeActivity(this);
     }
 
     @Override

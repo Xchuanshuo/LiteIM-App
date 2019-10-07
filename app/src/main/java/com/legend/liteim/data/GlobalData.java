@@ -31,6 +31,16 @@ public class GlobalData {
     public static final int PORT = 8888;
     public static final String HOST = "192.168.43.21";
 
+    /**
+     * 聊天类型
+     */
+    private int chatType = -1;
+
+    /**
+     * 聊天接收方id
+     */
+    private long chatReceiverId = -1;
+
     private boolean isFirstIn = false;
 
     private GlobalData() {}
@@ -44,6 +54,22 @@ public class GlobalData {
             }
         }
         return instance;
+    }
+
+    public int getChatType() {
+        return chatType;
+    }
+
+    public void setChatType(int chatType) {
+        this.chatType = chatType;
+    }
+
+    public long getChatReceiverId() {
+        return chatReceiverId;
+    }
+
+    public void setChatReceiverId(long chatReceiverId) {
+        this.chatReceiverId = chatReceiverId;
     }
 
     public boolean isFirstIn() {
@@ -140,8 +166,13 @@ public class GlobalData {
     }
 
     public void logout() {
+        // 清空数据库与内存中的用户信息缓存
         LitePal.deleteDatabase("liteim");
         UserHelper.getInstance().onChanged();
+        // 把当前类型置为初始值
+        setChatType(-1);
+        setChatReceiverId(-1);
+        // 本地文件清空
         shared.clear();
         SharedPreferenceUtils tokenInfo = new SharedPreferenceUtils(MyApplication.getInstance(),
                 "token_info_file");
@@ -149,5 +180,4 @@ public class GlobalData {
         isFirstIn = true;
         IMClient.getInstance().destroy();
     }
-
 }

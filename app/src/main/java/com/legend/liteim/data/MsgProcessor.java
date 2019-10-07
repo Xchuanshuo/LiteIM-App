@@ -13,6 +13,7 @@ import com.legend.liteim.common.base.mvp.MyApplication;
 import com.legend.liteim.common.net.BaseObserver;
 import com.legend.liteim.common.net.NetworkService;
 import com.legend.liteim.common.net.ResultVo;
+import com.legend.liteim.common.utils.ActivityManager;
 import com.legend.liteim.common.utils.DataUtils;
 import com.legend.liteim.common.utils.DialogUtils;
 import com.legend.liteim.common.utils.LogUtils;
@@ -24,6 +25,7 @@ import com.legend.liteim.event.MsgEvent;
 import com.legend.liteim.event.RefreshEvent;
 import com.legend.liteim.event.RxBus;
 import com.legend.liteim.model.ExtraDisposableManager;
+import com.legend.liteim.ui.chat.ChatActivity;
 
 import net.qiujuer.genius.kit.handler.Run;
 
@@ -154,7 +156,6 @@ public class MsgProcessor {
                     List<Message> messages = new ArrayList<>();
                     for (Msg msg : msgList) {
                         Message message  = Message.buildMsg(msg);
-                        message.setStatus(Message.STATUS_SUCCESS);
                         message.setType(TO_USER);
                         messages.add(message);
                         // 回送消息已经签收的包
@@ -162,6 +163,14 @@ public class MsgProcessor {
                                 .fromId(msg.getMsgId()).contentType(TO_USER)
                                 .command(Command.MSG_ACK_REQUEST).build();
                         IMClient.getInstance().sendMsg(model);
+                        // 如果当前是在聊天界面,则发送消息到事件总线
+                        if (ActivityManager.getInstance().currentActivity() != null
+                                && ActivityManager.getInstance().currentActivity()
+                                .getClass() == ChatActivity.class) {
+                            MsgEvent event = new MsgEvent(message, 0);
+                            LogUtils.logD(this, "当前是在聊天界面，直接发送消息到事件总线..........");
+                            RxBus.getDefault().post(event);
+                        }
                     }
                     return messages;
                 })
@@ -173,13 +182,24 @@ public class MsgProcessor {
                             // 直接拿消息的最后一条并且携带当前总的数量去通知session进行更新
                             Message message = data.get(data.size() - 1);
                             MsgEvent event = new MsgEvent(message, data.size());
-                            LogUtils.logD(this, "发送了用户session通知:------------"+ message.getFromId());
-                            try {
-                                Thread.sleep(1000);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
+                            // 看当前是否在聊天界面
+                            boolean isNotOnChat = ActivityManager.getInstance().currentActivity() == null
+                                    || ActivityManager.getInstance().currentActivity()
+                                    .getClass() != ChatActivity.class;
+                            if (isNotOnChat
+                                    || GlobalData.getInstance().getChatType() != TO_USER
+                                    || GlobalData.getInstance().getChatReceiverId() != message.getFromId()) {
+                                // 如果消息是来自当前聊天的用户,就无需再发送session刷新通知
+                                // 因为消息界面监听事件总线后有消息自己会发起更新；这里再发送
+                                // 就会导致最后接收到两条消息
+                                LogUtils.logD(this, "发送了用户session通知:------------"+ message.getFromId());
+                                try {
+                                    Thread.sleep(1000);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                                RxBus.getDefault().postSticky(event);
                             }
-                            RxBus.getDefault().postSticky(event);
                         }
                         Blocker.count(flag);
                     }
@@ -223,9 +243,16 @@ public class MsgProcessor {
                     List<Message> messages = new ArrayList<>();
                     for (Msg msg : msgList) {
                         Message message  = Message.buildMsg(msg);
-                        message.setStatus(Message.STATUS_SUCCESS);
                         message.setType(TO_GROUP);
                         messages.add(message);
+                        // 如果当前是在聊天界面,则发送消息到事件总线
+                        if (ActivityManager.getInstance().currentActivity() != null
+                                && ActivityManager.getInstance().currentActivity()
+                                .getClass() == ChatActivity.class) {
+                            MsgEvent event = new MsgEvent(message, 0);
+                            LogUtils.logD(this, "当前是在聊天界面，直接发送消息到事件总线..........");
+                            RxBus.getDefault().post(event);
+                        }
                     }
                     // 回送消息已经签收的包
                     if (msgList.size() > 0) {
@@ -244,13 +271,23 @@ public class MsgProcessor {
                             // 直接拿消息的最后一条并且携带当前总的数量去通知session进行更新
                             Message message = data.get(data.size() - 1);
                             MsgEvent event = new MsgEvent(message, data.size());
-                            LogUtils.logD(this, "发送了群消息session通知:------------"+ message.getFromId());
-                            try {
-                                Thread.sleep(1000);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
+                            // 看当前是否在聊天界面
+                            boolean isNotOnChat = ActivityManager.getInstance().currentActivity() == null
+                                    || ActivityManager.getInstance().currentActivity()
+                                    .getClass() != ChatActivity.class;
+                            if (isNotOnChat || GlobalData.getInstance().getChatType() != TO_GROUP
+                                    || GlobalData.getInstance().getChatReceiverId() != message.getToId()) {
+                                // 如果消息是来自当前聊天的用户,就无需再发送session刷新通知
+                                // 因为消息界面监听事件总线后有消息自己会发起更新；这里再发送
+                                // 就会导致最后接收到两条消息
+                                LogUtils.logD(this, "发送了用户session通知:------------"+ message.getFromId());
+                                try {
+                                    Thread.sleep(1000);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                                RxBus.getDefault().postSticky(event);
                             }
-                            RxBus.getDefault().postSticky(event);
                         }
                         Blocker.count(flag);
                     }

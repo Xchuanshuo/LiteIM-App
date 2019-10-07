@@ -19,6 +19,7 @@ import com.legend.liteim.common.utils.DataUtils;
 import com.legend.liteim.common.utils.LogUtils;
 import com.legend.liteim.contract.chat.ChatContract;
 import com.legend.liteim.data.Blocker;
+import com.legend.liteim.data.GlobalData;
 import com.legend.liteim.data.MsgProcessor;
 import com.legend.liteim.db.MessageHelper;
 import com.legend.liteim.db.SessionHelper;
@@ -67,6 +68,9 @@ public abstract class ChatPresenter extends BasePresenter<ChatContract.View>
         super(view);
         this.mReceiverId = receiverId;
         this.mReceiverType = receiverType;
+        // 设置这两个值 在离线消息拉取的时候使用
+        GlobalData.getInstance().setChatType(mReceiverType);
+        GlobalData.getInstance().setChatReceiverId(mReceiverId);
         registerMsgEvent();
     }
 
@@ -97,11 +101,57 @@ public abstract class ChatPresenter extends BasePresenter<ChatContract.View>
                             sessionHelper.updateUnReadCountAndNotify(session, 0);
                             // 接收的群组消息toId必须是当前的群组
                             receiveGroupMessage(message);
+                        } else {
+                            // sendNotification(message);
                         }
                     }
                 }));
 
     }
+
+//    private void sendNotification(Message message) {
+//        Context mContext = getView().getContext();
+//        Intent intent = null;
+//        if (message.getType() == TO_USER) {
+//            User user = UserHelper.getInstance().getUserById(message.getFromId());
+//            intent = ChatActivity.getUserIntent(mContext, user);
+//        } else if (message.getType() == TO_GROUP){
+//            ChatGroup chatGroup = GroupHelper.getInstance().getGroupById(message.getToId());
+//            intent = ChatActivity.getGroupIntent(mContext, chatGroup);
+//        }
+//        PendingIntent pi = PendingIntent.getActivities(mContext, 0, new Intent[]{intent}, 0);
+//        final String CHANNEL_ID = "channel_id_1";
+//        final String CHANNEL_NAME = "channel_name_1";
+//        NotificationManager mNotificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
+//        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+//            //只在Android O之上需要渠道
+//            NotificationChannel notificationChannel = new NotificationChannel(CHANNEL_ID,
+//                    CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH);
+//            // 通知才能正常弹出
+//            mNotificationManager.createNotificationChannel(notificationChannel);
+//            // 配置通知渠道的属性
+//            notificationChannel.setDescription("渠道的描述");
+//            // 设置通知出现时的闪灯（如果 android 设备支持的话）
+//            notificationChannel.enableLights(true);
+//            // 设置通知出现时的震动（如果 android 设备支持的话）
+//            notificationChannel.enableVibration(true);
+//            //如上设置使手机：静止1秒，震动2秒，静止1秒，震动3秒
+//        }
+//        NotificationCompat.Builder builder= new NotificationCompat.Builder(mContext, CHANNEL_ID);
+//        builder.setContentTitle(message.getUsername())
+////                .setSound(Uri.fromFile(new File("/system/media/audio/ringtones/Childhood")))
+////                .setVibrate(new long[]{0, 1000, 1000, 1000})
+////                .setLights(Color.GREEN, 1000, 1000)
+//                .setDefaults(NotificationCompat.DEFAULT_ALL)
+//                .setContentText(message.getMsg())
+//                .setWhen(System.currentTimeMillis())
+//                .setSmallIcon(R.drawable.default_face)
+//                .setLargeIcon(BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ic_chat))
+//                .setContentIntent(pi)
+//                .setAutoCancel(true)
+//                .build();
+//        mNotificationManager.notify(1, builder.build());
+//    }
 
     @Override
     public void sendText(String content) {

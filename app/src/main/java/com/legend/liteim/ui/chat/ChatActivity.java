@@ -52,10 +52,17 @@ public class ChatActivity extends BaseActivity {
      */
     public static void show(Context context, User user) {
         if (user == null || context == null || user.getId() == null) return;
+//        Intent intent = new Intent(context, ChatActivity.class);
+//        intent.putExtra(KEY_RECEIVER, user);
+//        intent.putExtra(KEY_RECEIVER_IS_GROUP, false);
+        context.startActivity(getUserIntent(context, user));
+    }
+
+    public static Intent getUserIntent(Context context, User user) {
         Intent intent = new Intent(context, ChatActivity.class);
         intent.putExtra(KEY_RECEIVER, user);
         intent.putExtra(KEY_RECEIVER_IS_GROUP, false);
-        context.startActivity(intent);
+        return intent;
     }
 
     /**
@@ -66,10 +73,17 @@ public class ChatActivity extends BaseActivity {
      */
     public static void show(Context context, ChatGroup chatGroup) {
         if (chatGroup == null || context == null || chatGroup.getId() == null) return;
+//        Intent intent = new Intent(context, ChatActivity.class);
+//        intent.putExtra(KEY_RECEIVER, chatGroup);
+//        intent.putExtra(KEY_RECEIVER_IS_GROUP, true);
+        context.startActivity(getGroupIntent(context, chatGroup));
+    }
+
+    public static Intent getGroupIntent(Context context, ChatGroup chatGroup) {
         Intent intent = new Intent(context, ChatActivity.class);
         intent.putExtra(KEY_RECEIVER, chatGroup);
         intent.putExtra(KEY_RECEIVER_IS_GROUP, true);
-        context.startActivity(intent);
+        return intent;
     }
 
     @Override
