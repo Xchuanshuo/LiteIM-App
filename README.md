@@ -1,2 +1,2 @@
-# Finder-App
-Finder安卓端
+# LiteIM-App
+LiteIM安卓端
