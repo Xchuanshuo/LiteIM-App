@@ -48,7 +48,7 @@ import static com.legend.liteim.common.utils.Code.SUCCESS;
 /**
  * @author Legend
  * @data by on 19-9-12.
- * @description
+ * @description 聊天界面Presenter
  */
 public abstract class ChatPresenter extends BasePresenter<ChatContract.View>
         implements ChatContract.Presenter {
