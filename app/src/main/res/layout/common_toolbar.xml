@@ -5,12 +5,13 @@
     style="@style/action_bar"
     android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-    <com.worldtreestd.finder.common.widget.CircleImageView
+    <com.legend.liteim.common.widget.CircleImageView
         android:id="@+id/portrait"
         android:src="@drawable/g"
         android:foreground="@drawable/ic_touch_menu"
-        android:layout_width="@dimen/dp_40"
-        android:layout_height="@dimen/dp_40" />
+        android:layout_width="@dimen/dp_32"
+        android:layout_height="@dimen/dp_32" />
+
     <TextView
         android:id="@+id/toolbar_title_tv"
         android:layout_width="wrap_content"
@@ -39,15 +40,5 @@
         android:foreground="?android:attr/selectableItemBackground"
         android:layout_marginEnd="@dimen/dp_10"/>
 
-    <android.support.v7.widget.AppCompatSpinner
-        android:id="@+id/mSpinner"
-        android:spinnerMode="dialog"
-        android:layout_width="wrap_content"
-        android:theme="@style/common_spinner"
-        android:layout_gravity="right"
-        android:visibility="gone"
-        android:layout_height="wrap_content">
-
-    </android.support.v7.widget.AppCompatSpinner>
 
 </android.support.v7.widget.Toolbar>

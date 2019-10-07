@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <com.worldtreestd.finder.common.widget.CircleImageView
+        <com.legend.liteim.common.widget.CircleImageView
             android:id="@+id/portrait"
             android:layout_width="35dp"
             android:layout_height="35dp"
@@ -39,9 +39,9 @@
 
         <android.support.v7.widget.AppCompatImageView
             android:id="@+id/img_menu"
-            android:src="@drawable/ic_menu"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_menu" />
 
     </LinearLayout>
 

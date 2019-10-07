@@ -34,6 +34,8 @@ ext {
     versionName = '1.0.0'
 
     // 相关依赖库版本
+    airpanelVersion = "1.1.0"
+    geniusVersion = '2.0.0'
     supportLibraryVersion = '27.1.1'
     constraintVersion = '1.0.2'
     butterknifeVersion = '8.8.1'
@@ -52,5 +54,6 @@ ext {
     verticalTabLayoutVersion = '1.2.5'
     ucropVersion = '2.2.2'
     lubanVersion = '1.1.8'
+    lameVersion = "1.0.0"
     junitVersion='4.12'
 }

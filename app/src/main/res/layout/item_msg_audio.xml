@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp">
+
+    <RelativeLayout
+        android:layout_marginStart="5dp"
+        android:id="@+id/left_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.legend.liteim.common.widget.CircleImageView
+            android:id="@+id/img_left_portrait"
+            android:src="@mipmap/ic_launcher"
+            android:layout_alignParentStart="true"
+            android:layout_width="@dimen/dp_40"
+            android:layout_height="@dimen/dp_40" />
+
+        <TextView
+            android:id="@+id/tv_left_username"
+            android:text="@string/app_name"
+            android:textColor="@android:color/black"
+            android:paddingStart="6dp"
+            android:layout_toEndOf="@+id/img_left_portrait"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content" />
+
+        <LinearLayout
+            android:id="@+id/lay_left_bubble"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_left_username"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="50dp"
+            android:layout_toEndOf="@id/img_left_portrait"
+            android:background="@drawable/message_left">
+
+            <ImageView
+                android:layout_width="@dimen/len_16"
+                android:layout_height="@dimen/len_16"
+                android:layout_gravity="center_vertical|end"
+                android:contentDescription="@string/app_name"
+                android:padding="@dimen/len_2"
+                android:src="@drawable/ic_audio_wave"
+                android:tint="@color/textPrimary" />
+
+            <TextView
+                android:id="@+id/tv_left_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:paddingTop="9dp"
+                android:paddingStart="6dp"
+                android:paddingEnd="6dp"
+                android:minHeight="@dimen/len_24"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="@color/textPrimary"
+                tools:text="3″" />
+
+            <ImageView
+                android:id="@+id/im_left_audio_track"
+                android:layout_width="@dimen/len_16"
+                android:layout_height="@dimen/len_16"
+                android:layout_gravity="center_vertical|end"
+                android:contentDescription="@string/app_name"
+                android:padding="@dimen/len_2"
+                android:src="@drawable/ic_audio_track"
+                android:tint="@color/colorAccent"
+                android:visibility="invisible"
+                tools:visibility="visible" />
+
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/right_layout"
+        android:layout_marginEnd="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:id="@+id/right_frame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true">
+
+
+            <com.legend.liteim.common.widget.CircleImageView
+                android:id="@+id/img_right_portrait"
+                android:src="@mipmap/ic_launcher"
+                android:layout_width="@dimen/dp_40"
+                android:layout_height="@dimen/dp_40" />
+
+            <net.qiujuer.genius.ui.widget.Loading
+                android:id="@+id/loading"
+                android:layout_width="@dimen/dp_40"
+                android:layout_height="@dimen/dp_40"
+                android:layout_gravity="end"
+                android:visibility="invisible"
+                app:gAutoRun="false"
+                app:gBackgroundColor="@null"
+                app:gForegroundColor="@color/colorAccent"
+                app:gForegroundLineSize="2dp"
+                app:gProgressFloat="1" />
+
+        </FrameLayout>
+
+        <TextView
+            android:paddingEnd="6dp"
+            android:id="@+id/tv_right_username"
+            android:textColor="@android:color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@+id/right_frame"
+            android:text="@string/app_name" />
+
+        <LinearLayout
+            android:id="@+id/lay_right_bubble"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/tv_right_username"
+            android:layout_toStartOf="@+id/right_frame"
+            android:layout_marginStart="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/message_right">
+
+            <ImageView
+                android:id="@+id/im_right_audio_track"
+                android:layout_width="@dimen/len_16"
+                android:layout_height="@dimen/len_16"
+                android:layout_gravity="center_vertical|end"
+                android:contentDescription="@string/app_name"
+                android:padding="@dimen/len_2"
+                android:src="@drawable/ic_audio_track"
+                android:tint="@color/colorAccent"
+                android:visibility="invisible"
+                tools:visibility="visible" />
+
+            <TextView
+                android:id="@+id/tv_right_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:minHeight="@dimen/len_24"
+                android:padding="6dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="@color/textPrimary"
+                tools:text="3″" />
+
+            <ImageView
+                android:layout_width="@dimen/len_16"
+                android:layout_height="@dimen/len_16"
+                android:layout_gravity="center_vertical|end"
+                android:contentDescription="@string/app_name"
+                android:padding="@dimen/len_2"
+                android:src="@drawable/ic_audio_wave"
+                android:tint="@color/textPrimary" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>

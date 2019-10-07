@@ -7,7 +7,7 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
 
-    <com.worldtreestd.finder.common.widget.DiNestedScrollView
+    <com.legend.liteim.common.widget.DiNestedScrollView
         android:id="@+id/scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -30,9 +30,9 @@
                 android:layout_height="1dp"
                 android:background="@color/colorBg" />
         </LinearLayout>
-    </com.worldtreestd.finder.common.widget.DiNestedScrollView>
+    </com.legend.liteim.common.widget.DiNestedScrollView>
 
-    <com.worldtreestd.finder.common.widget.NoScrollViewPager
+    <com.legend.liteim.common.widget.NoScrollViewPager
         android:id="@+id/mViewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

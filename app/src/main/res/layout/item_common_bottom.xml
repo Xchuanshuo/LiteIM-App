@@ -6,12 +6,6 @@
     android:orientation="vertical"
     android:paddingBottom="@dimen/dp_4">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/color_d8d8d8"
-        />
-
     <LinearLayout
         android:layout_marginTop="@dimen/dp_4"
         android:layout_width="match_parent"

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.worldtreestd.finder.common.widget.DiNestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.legend.liteim.common.widget.DiNestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/middle_layout"
     android:layout_width="match_parent"
@@ -27,14 +27,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="37dp"
-                android:text="Lover's Day"
+                android:text="@string/app_name"
                 android:textColor="#333333"
                 android:textSize="17sp" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginTop="37dp"
                 android:orientation="horizontal">
@@ -44,7 +44,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/select_user_chat_tv"
-                    android:text="私聊"
+                    android:text="@string/chat"
                     android:foreground="@drawable/ic_touch_menu"
                     android:textColor="@color/colorBlack33" />
 
@@ -56,7 +56,7 @@
                     android:background="@drawable/select_user_chat_tv"
                     android:foreground="@drawable/ic_touch_menu"
                     android:gravity="center"
-                    android:text="关注"
+                    android:text="@string/follow"
                     android:textColor="@color/colorBlack33" />
 
             </LinearLayout>
@@ -89,4 +89,4 @@
             android:background="@color/colorBg" />
 
     </LinearLayout>
-</com.worldtreestd.finder.common.widget.DiNestedScrollView>
+</com.legend.liteim.common.widget.DiNestedScrollView>

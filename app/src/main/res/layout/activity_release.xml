@@ -24,7 +24,7 @@
             tools:text="开发环境" />
 
         <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/tv_send"
+            android:id="@+id/tv_submit"
             android:textSize="@dimen/sp_16"
             android:drawableEnd="@drawable/ic_send_black_24dp"
             android:layout_gravity="right"

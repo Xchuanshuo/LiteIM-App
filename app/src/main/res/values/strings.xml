@@ -1,19 +1,17 @@
 <resources>
 
     // behavior
-    <string name="bottom_navigation_behavior">com.worldtreestd.finder.common.widget.behavior.BottomNavigationBehavior</string>
-    <string name="float_button_behavior">com.worldtreestd.finder.common.widget.behavior.FloatButtonBehavior</string>
-    <string name="user_portrait_behavior">com.worldtreestd.finder.common.widget.behavior.UserPortraitBehavior</string>
-    <string name="user_info_appbar_behavior">com.worldtreestd.finder.common.widget.behavior.AppBarLayoutBehavior</string>
+    <string name="bottom_navigation_behavior" translatable="false">com.legend.liteim.common.widget.behavior.BottomNavigationBehavior</string>
+    <string name="float_button_behavior" translatable="false">com.legend.liteim.common.widget.behavior.FloatButtonBehavior</string>
+    <string name="user_portrait_behavior" translatable="false">com.legend.liteim.common.widget.behavior.UserPortraitBehavior</string>
+    <string name="user_info_appbar_behavior" translatable="false">com.legend.liteim.common.widget.behavior.AppBarLayoutBehavior</string>
 
-    <string name="app_name">Finder</string>
-    <string name="title_home">主页</string>
-    <string name="title_dashboard" translatable="false">更多看点</string>
-    <string name="title_notifications">动态中心</string>
-    <string name="create_circle_loading">正在创建圈子，请耐心等待~</string>
-    <string name="release_plan_loading">正在发布一条计划，请稍后~</string>
-    <string name="common_loading">正在努力..加载中~</string>
-    <string name="about_msg">此应用基于Material Design风格设计 整体采用MVP架构
+    <string name="app_name" translatable="false">LiteIM</string>
+    <string name="title_home" translatable="false">消息列表</string>
+    <string name="title_dashboard" translatable="false">联系人</string>
+    <string name="title_notifications" translatable="false">动态中心</string>
+    <string name="common_loading" translatable="false">正在努力..加载中~</string>
+    <string name="about_msg" translatable="false">此应用基于Material Design风格设计 整体采用MVP架构
         后台是Linux环境 使用的是基于Django Restframework的Restful接口
          数据库使用的基于MySQL的Mariadb 使用Nginx做代理服务器
     \n\n 作者:世界树
@@ -21,42 +19,67 @@
     \n\n GitHub主页 https://github.com/worldtreestd
     \n\n 一款计划提醒类app</string>
 
-    <string name="setting_auto_update">开启后WIFI自动下载更新应用</string>
-    <string name="auto_update">自动更新</string>
-    <string name="check_update">检查更新</string>
-    <string name="system_settings">系统设置</string>
-    <string name="my_circle">我的圈子</string>
-    <string name="backlog">待办事项</string>
-    <string name="finished_task">走过的足迹</string>
-    <string name="create_circle">创建一个圈子！</string>
-    <string name="release_plan">发布一条计划！</string>
-    <string name="plan_content">计划详情！</string>
+    <string name="setting_auto_update" translatable="false">开启后WIFI自动下载更新应用</string>
+    <string name="auto_update" translatable="false">自动更新</string>
+    <string name="check_update" translatable="false">检查更新</string>
+    <string name="system_settings" translatable="false">系统设置</string>
 
-    <string name="exit_string_notice">再按一次退出程序！</string>
+    <string name="exit_string_notice" translatable="false">再按一次退出程序！</string>
 
     // 占位布局提示
-    <string name="prompt_empty">Oh~, it empty! Click Retry</string>
-    <string name="prompt_error">Sorry, you have or more error!</string>
-    <string name="prompt_loading">Loading…</string>
-    <string name="retry">加载中...</string>
-    <string name="portrait">portrait</string>
-    <string name="publish_time">publish_time</string>
-    <string name="publisher_name">publisher_name</string>
-    <string name="dynamic_content">dynamic_content</string>
-    <string name="dynamic_is_collected">dynamic_is_collected</string>
-    <string name="dynamic_video_url">dynamic_video_url</string>
-    <string name="dynamic_video_image_url">dynamic_video_image_url</string>
+    <string name="prompt_empty" translatable="false">Oh~, it empty! Click Retry</string>
+    <string name="prompt_error" translatable="false">Sorry, you have or more error!</string>
+    <string name="prompt_loading" translatable="false">Loading…</string>
+    <string name="retry" translatable="false">加载中...</string>
+    <string name="portrait" translatable="false">portrait</string>
+    <string name="publish_time" translatable="false">publish_time</string>
+    <string name="publisher_name" translatable="false">publisher_name</string>
+    <string name="dynamic_content" translatable="false">dynamic_content</string>
+    <string name="dynamic_is_collected" translatable="false">dynamic_is_collected</string>
+    <string name="dynamic_video_url" translatable="false">dynamic_video_url</string>
+    <string name="dynamic_video_image_url" translatable="false">dynamic_video_image_url</string>
     <string name="dynamic_picture_urlList" translatable="false">dynamic_picture</string>
-    <string name="detail_write_comment">说点什么呢...</string>
-    <string name="record_feel_text">记录此刻的感受...</string>
-    <string name="class_number">时间:</string>
-    <string name="total_hours">总学时:</string>
-    <string name="course_name">课程名称:</string>
-    <string name="classroom">教室:</string>
-    <string name="course_teacher">教师:</string>
-    <string name="course_is_empty">今天一天都没有课哦～</string>
-    <string name="select_address">请选择详细的地址</string>
-    <string name="title_activity_welcome">WelcomeActivity</string>
-    <string name="login">登录</string>
-    <string name="login_request">请先进行登录再进行后续的操作!</string>
+    <string name="detail_write_comment" translatable="false">说点什么呢...</string>
+    <string name="record_feel_text" translatable="false">记录此刻的感受...</string>
+    <string name="select_address" translatable="false">请选择详细的地址</string>
+    <string name="title_activity_welcome" translatable="false">WelcomeActivity</string>
+    <string name="qq_login" translatable="false">QQ一键登录</string>
+    <string name="login_request" translatable="false">请先进行登录再进行后续的操作!</string>
+    <string name="chat_input_hint" translatable="false">说点什么把...</string>
+
+    <string name="label_group_name" translatable="false">群名称</string>
+    <string name="label_group_desc" translatable="false">群描述</string>
+    <string name="label_group_member_select" translatable="false">群成员</string>
+
+    <string name="label_group_create_invalid" translatable="false">所有项都是必须，并且至少选择一名成员!</string>
+    <string name="label_group_member_add_invalid" translatable="false">没有新增加的成员!</string>
+    <string name="label_group_create_succeed" translatable="false">创建群成功!</string>
+
+    <string name="label_chat_edit_hint" translatable="false">Type something to send…</string>
+
+    <string name="toast_audio_play_error" translatable="false">播放失败！</string>
+    <string name="toast_audio_record_time_short_error" translatable="false">录音时间太短!</string>
+
+    <string name="toast_download_error" translatable="false">下载失败!</string>
+    <string name="search_history" translatable="false">历史搜索</string>
+    <string name="search" translatable="false">search</string>
+    <string name="group_create_error" translatable="false">群组相关信息不能为空!</string>
+    <string name="permissions_error" translatable="false">请先开启相关的权限!</string>
+    <string name="title_user_add" translatable="false">添加新的群成员</string>
+    <string name="group_user_add" translatable="false">群成员添加</string>
+    <string name="error_group_ids" translatable="false">请至少选择一个用户</string>
+    <string name="empty_msg_list" translatable="false">消息列表为空~</string>
+    <string name="empty_session_list" translatable="false">最近会话为空~</string>
+    <string name="empty_dynamic_list" translatable="false">还没有任何动态~</string>
+    <string name="empty_group_list" translatable="false">群组列表为空~</string>
+    <string name="empty_user_list" translatable="false">换个关键词试试吧~</string>
+    <string name="audio_record_time" translatable="false">0:00</string>
+    <string name="label_username" translatable="false">用户名</string>
+    <string name="label_signature" translatable="false">个性签名</string>
+    <string name="chat" translatable="false">私聊</string>
+    <string name="follow" translatable="false">关注</string>
+    <string name="label_user_background" translatable="false">封面图</string>
+    <string name="empty_user_info" translatable="false">用户信息不能为空!</string>
+    <string name="app_version" translatable="false">一款即时聊天应用 v1.0</string>
+    <string name="clear_all_history">清除全部</string>
 </resources>

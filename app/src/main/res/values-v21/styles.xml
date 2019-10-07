@@ -4,7 +4,7 @@
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
-    <style name="SearchCenterTheme" parent="SwipeBackTheme">
+    <style name="StatusPrimaryColorTheme" parent="SwipeBackTheme">
         <item name="android:statusBarColor">@color/colorPrimary</item>
     </style>
 </resources>

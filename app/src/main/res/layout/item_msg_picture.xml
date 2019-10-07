@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp">
+
+    <RelativeLayout
+        android:layout_marginStart="5dp"
+        android:id="@+id/left_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.legend.liteim.common.widget.CircleImageView
+            android:id="@+id/img_left_portrait"
+            android:src="@mipmap/ic_launcher"
+            android:layout_alignParentStart="true"
+            android:layout_width="@dimen/dp_40"
+            android:layout_height="@dimen/dp_40" />
+
+        <TextView
+            android:id="@+id/tv_left_username"
+            android:text="@string/app_name"
+            android:textColor="@android:color/black"
+            android:paddingStart="6dp"
+            android:layout_toEndOf="@+id/img_left_portrait"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content" />
+
+        <FrameLayout
+            android:id="@+id/lay_left_bubble"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_left_username"
+            android:minHeight="@dimen/dp_100"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="@dimen/dp_4"
+            android:layout_toEndOf="@id/img_left_portrait">
+
+            <com.legend.liteim.common.widget.BubbleImageView
+                android:id="@+id/img_left_image"
+                android:layout_marginTop="@dimen/dp_4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:maxWidth="150dp"
+                android:maxHeight="150dp"
+                android:scaleType="centerCrop"
+                app:bubble_angle="10dp"
+                app:bubble_showArrow="false"
+                app:bubble_showShadow="false"
+                app:bubble_showText="false"/>
+
+        </FrameLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/right_layout"
+        android:layout_marginEnd="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:id="@+id/right_frame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true">
+
+
+            <com.legend.liteim.common.widget.CircleImageView
+                android:id="@+id/img_right_portrait"
+                android:src="@mipmap/ic_launcher"
+                android:layout_width="@dimen/dp_40"
+                android:layout_height="@dimen/dp_40" />
+
+            <net.qiujuer.genius.ui.widget.Loading
+                android:id="@+id/loading"
+                android:layout_width="@dimen/dp_40"
+                android:layout_height="@dimen/dp_40"
+                android:layout_gravity="end"
+                android:visibility="invisible"
+                app:gAutoRun="false"
+                app:gBackgroundColor="@null"
+                app:gForegroundColor="@color/colorAccent"
+                app:gForegroundLineSize="2dp"
+                app:gProgressFloat="1" />
+
+        </FrameLayout>
+
+        <TextView
+            android:paddingEnd="6dp"
+            android:id="@+id/tv_right_username"
+            android:textColor="@android:color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@+id/right_frame"
+            android:text="@string/app_name" />
+
+        <LinearLayout
+            android:id="@+id/lay_right_bubble"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/tv_right_username"
+            android:layout_toStartOf="@+id/right_frame"
+            android:layout_marginEnd="@dimen/dp_4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <com.legend.liteim.common.widget.BubbleImageView
+                android:id="@+id/img_right_image"
+                android:layout_marginTop="@dimen/dp_4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:maxWidth="150dp"
+                android:maxHeight="150dp"
+                android:scaleType="centerCrop"
+                app:bubble_angle="10dp"
+                app:bubble_showArrow="false"
+                app:bubble_showShadow="false"
+                app:bubble_showText="false"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>

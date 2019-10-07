@@ -1,7 +1,8 @@
 <resources xmlns:android="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar" android:windowDrawsSystemBackgrounds="false">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar"
+        android:windowDrawsSystemBackgrounds="false">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -19,6 +20,10 @@
         <item name="android:fadeScrollbars">true</item>
         <item name="android:scrollbars">vertical</item>
         <item name="android:scrollbarFadeDuration">1</item>
+    </style>
+
+    <style name="AppTheme.SettingsTheme" parent="AppTheme">
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
     </style>
 
     <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView">
@@ -82,6 +87,18 @@
     <style name="common_spinner" parent="Widget.AppCompat.DropDownItem.Spinner">
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="TextAppearance.Title" parent="@style/TextAppearance.AppCompat.Title">
+        <item name="android:textSize">?attr/toolbarTitleSize</item>
+        <item name="android:textColor">?attr/toolbarTitleColor</item>
+    </style>
+    <style name="text_function_item">
+        <item name="android:layout_width">0px</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/gray</item>
+        <item name="android:textSize">@dimen/sp_14</item>
     </style>
 
 </resources>

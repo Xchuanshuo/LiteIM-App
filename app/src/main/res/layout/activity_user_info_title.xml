@@ -15,7 +15,7 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <com.worldtreestd.finder.common.widget.CircleImageView
+        <com.legend.liteim.common.widget.CircleImageView
             android:id="@+id/portrait_title"
             android:layout_width="@dimen/dp_40"
             android:layout_height="@dimen/dp_40"
@@ -41,6 +41,7 @@
         android:layout_height="match_parent"
         android:layout_centerVertical="true"
         android:layout_alignParentEnd="true"
+        android:foreground="?selectableItemBackground"
         android:paddingEnd="@dimen/dp_15"
         android:src="@drawable/ic_settings_black_24dp" />
 

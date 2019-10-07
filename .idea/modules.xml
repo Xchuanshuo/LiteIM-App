@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Finder-App.iml" filepath="$PROJECT_DIR$/Finder-App.iml" />
+      <module fileurl="file://$PROJECT_DIR$/LiteIM-App.iml" filepath="$PROJECT_DIR$/LiteIM-App.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/face-res/face-res.iml" filepath="$PROJECT_DIR$/face-res/face-res.iml" />
+      <module fileurl="file://$PROJECT_DIR$/im-lib/im-lib.iml" filepath="$PROJECT_DIR$/im-lib/im-lib.iml" />
       <module fileurl="file://$PROJECT_DIR$/matisse/matisse.iml" filepath="$PROJECT_DIR$/matisse/matisse.iml" />
       <module fileurl="file://$PROJECT_DIR$/wheel/wheel.iml" filepath="$PROJECT_DIR$/wheel/wheel.iml" />
     </modules>

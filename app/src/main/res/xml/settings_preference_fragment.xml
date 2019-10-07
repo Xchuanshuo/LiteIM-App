@@ -21,14 +21,22 @@
             android:key="settingAutoUpdate"
             android:summary="@string/setting_auto_update"
             android:title="自动更新"/>
+
         <android.support.v7.preference.Preference
             android:key="checkUpdate"
             android:title="检查更新"/>
+
         <android.support.v7.preference.Preference
             android:key="clearCache"
             android:title="清除图片缓存"/>
+
         <android.support.v7.preference.Preference
             android:key="about"
             android:title="关于..."/>
+
+        <android.support.v7.preference.Preference
+            android:key="logout"
+            android:title="退出登录"/>
+
     </android.support.v7.preference.PreferenceCategory>
 </android.support.v7.preference.PreferenceScreen>

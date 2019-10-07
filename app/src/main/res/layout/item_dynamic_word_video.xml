@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="14dip">
 
-        <com.worldtreestd.finder.common.widget.CircleImageView
+        <com.legend.liteim.common.widget.CircleImageView
             android:id="@+id/publisher_portrait"
             android:src="@drawable/g"
             android:layout_width="36dp"

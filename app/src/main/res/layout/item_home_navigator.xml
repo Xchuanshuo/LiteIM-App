@@ -14,7 +14,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <com.worldtreestd.finder.common.widget.CircleImageView
+        <com.legend.liteim.common.widget.CircleImageView
             android:layout_width="@dimen/dp_48"
             android:layout_height="@dimen/dp_48"
             android:src="@drawable/g"/>
@@ -33,7 +33,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <com.worldtreestd.finder.common.widget.CircleImageView
+        <com.legend.liteim.common.widget.CircleImageView
             android:layout_width="@dimen/dp_48"
             android:layout_height="@dimen/dp_48"
             android:src="@drawable/g"/>
@@ -52,7 +52,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <com.worldtreestd.finder.common.widget.CircleImageView
+        <com.legend.liteim.common.widget.CircleImageView
             android:layout_width="@dimen/dp_48"
             android:layout_height="@dimen/dp_48"
             android:src="@drawable/g"/>
@@ -72,7 +72,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <com.worldtreestd.finder.common.widget.CircleImageView
+        <com.legend.liteim.common.widget.CircleImageView
             android:layout_width="@dimen/dp_48"
             android:layout_height="@dimen/dp_48"
             android:src="@drawable/g"/>

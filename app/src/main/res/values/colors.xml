@@ -2,8 +2,11 @@
 <resources>
     <color name="colorPrimary">#03A9F4</color>
     <color name="colorPrimaryDark">#0288D1</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#1572fc</color>
+    <color name="colorPink">#FF4081</color>
     <color name="unselected">#ffffff</color>
+    <color name="alertImportant">#f98d2c</color>
+
 
     <color name="blue_1">#eae9fe</color>
     <color name="white">#eae9fe</color>
@@ -19,6 +22,7 @@
     <color name="textAccent">@color/colorAccent</color>
     <color name="textLight">#ffffff</color>
     <color name="textDark">#202020</color>
+    <color name="text_primary_dark">#de000000</color>
 
     <color name="transparency">#8000</color>
     <color name="black">#000000</color>

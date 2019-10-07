@@ -57,7 +57,7 @@
         android:src="@drawable/ic_keyboard_backspace_black_24dp" />
 
 
-    <com.worldtreestd.finder.common.widget.CircleImageView
+    <com.legend.liteim.common.widget.CircleImageView
         android:id="@+id/portrait"
         android:layout_width="70dp"
         android:layout_height="70dp"
@@ -67,5 +67,18 @@
         app:layout_anchor="@+id/middle_layout"
         app:layout_anchorGravity="top"
         app:layout_behavior="@string/user_portrait_behavior" />
+
+    <net.qiujuer.genius.ui.widget.FloatActionButton
+        android:id="@+id/btn_friend"
+        android:layout_width="@dimen/len_52"
+        android:layout_height="@dimen/len_52"
+        android:layout_marginBottom="@dimen/dp_50"
+        android:layout_marginEnd="@dimen/dp_40"
+        android:padding="@dimen/len_20"
+        android:src="@drawable/ic_add"
+        android:tint="@color/white"
+        app:gBackgroundColor="@color/colorPrimary"
+        app:layout_anchor="@+id/mViewPager"
+        app:layout_anchorGravity="bottom|end" />
 
 </android.support.design.widget.CoordinatorLayout>

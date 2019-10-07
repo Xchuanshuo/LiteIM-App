@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <litepal>
-    <dbname value="finder"/>
+    <dbname value="liteim"/>
     <version value="1"/>
     <list>
-        <mapping class="com.worldtreestd.finder.bean.User" />
-        <mapping class="com.worldtreestd.finder.bean.Dynamic" />
+        <mapping class="com.legend.liteim.bean.User"  />
+        <mapping class="com.legend.liteim.bean.Dynamic"/>
+        <mapping class="com.legend.liteim.bean.Session" />
+        <mapping class="com.legend.liteim.bean.SearchKeyword" />
+        <mapping class="com.legend.liteim.bean.Message" />
+        <mapping class="com.legend.liteim.bean.ChatGroup" />
     </list>
 </litepal>

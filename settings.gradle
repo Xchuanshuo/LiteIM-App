@@ -1,1 +1,1 @@
-include ':app', ':wheel', ':matisse'
+include ':app', ':wheel', ':matisse', ':face-res', ':im-lib'

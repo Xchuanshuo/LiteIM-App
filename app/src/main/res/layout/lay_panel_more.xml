@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/lay_panel_more"
+    android:paddingTop="@dimen/dp_32"
+    android:paddingStart="@dimen/dp_15"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0px"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_send_picture"
+            style="@style/text_function_item"
+            android:drawablePadding="5dp"
+            android:drawableTop="@mipmap/icon_album"
+            android:gravity="center"
+            android:foreground="@drawable/ic_touch_bg"
+            android:text="相册"
+            tools:targetApi="m" />
+
+        <TextView
+            android:id="@+id/tv_send_video"
+            style="@style/text_function_item"
+            android:drawablePadding="5dp"
+            android:drawableTop="@mipmap/icon_capture"
+            android:foreground="@drawable/ic_touch_fg"
+            android:gravity="center"
+            android:text="视频" />
+
+        <TextView
+            android:id="@+id/tv_send_file"
+            style="@style/text_function_item"
+            android:drawablePadding="5dp"
+            android:drawableTop="@mipmap/icon_im_file"
+            android:foreground="@drawable/ic_touch_fg"
+            android:gravity="center"
+            android:text="文件" />
+
+
+        <TextView
+            android:id="@+id/tv_send_location"
+            style="@style/text_function_item"
+            android:drawablePadding="5dp"
+            android:drawableTop="@mipmap/icon_im_location"
+            android:foreground="@drawable/ic_touch_fg"
+            android:gravity="center"
+            android:text="位置" />
+    </LinearLayout>
+
+</LinearLayout>
