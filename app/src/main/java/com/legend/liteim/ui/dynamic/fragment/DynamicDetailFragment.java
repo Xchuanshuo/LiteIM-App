@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.Gson;
 import com.legend.liteim.R;
 import com.legend.liteim.bean.Comment;
@@ -48,7 +47,7 @@ import static com.legend.liteim.ui.release.ReleaseActivity.DYNAMIC_ITEM_WORD_PIC
  * @data by on 18-8-21.
  * @description
  */
-public class DynamicDetailFragment extends BaseFragment<DynamicDetailContract.Presenter>
+public class DynamicDetailFragment extends BaseFragment<DynamicDetailContract.Presenter, DynamicCommentAdapter>
         implements DynamicDetailContract.View {
 
     MultiPictureLayout mMultiPictureLayout;
@@ -72,7 +71,7 @@ public class DynamicDetailFragment extends BaseFragment<DynamicDetailContract.Pr
     }
 
     @Override
-    protected BaseQuickAdapter getAdapter() {
+    protected DynamicCommentAdapter getAdapter() {
         return new DynamicCommentAdapter(R.layout.item_comment, commentList);
     }
 

@@ -161,6 +161,11 @@ public class IMClient implements IClient {
 
         @Override
         public void run() {
+            if (isClosed()) {
+                // 没被销毁 但是被关闭 尝试重连
+                reconnect();
+                return;
+            }
             if (!SessionUtil.isOnline(channel)) {
                 if (model.getCommand() == Command.LOGIN_REQUEST) {
                     commandManager.exec(model, channel);
@@ -224,10 +229,6 @@ public class IMClient implements IClient {
         // 提交一条消息到工作线程池
         if (!isDestroyed()) {
             workerService.execute(new MsgActionHandler(model));
-            if (isClosed()) {
-                // 没被销毁 但是被关闭 尝试重连
-                reconnect();
-            }
         } else {
             // 异常状态下直接改变消息状态
             if (msgListener != null) {

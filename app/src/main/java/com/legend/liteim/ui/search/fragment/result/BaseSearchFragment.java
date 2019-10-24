@@ -1,5 +1,6 @@
 package com.legend.liteim.ui.search.fragment.result;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.legend.liteim.R;
 import com.legend.liteim.common.base.mvp.fragment.BaseFragment;
 import com.legend.liteim.contract.search.SearchResultContract;
@@ -12,7 +13,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * @data by on 18-7-18.
  * @description 搜索结果详情页Fragment
  */
-public abstract class BaseSearchFragment<T> extends BaseFragment<SearchResultContract.Presenter>
+public abstract class BaseSearchFragment<T> extends BaseFragment<SearchResultContract.Presenter, BaseQuickAdapter>
         implements SearchResultContract.View<T>  {
 
     protected AtomicBoolean isLoaded = new AtomicBoolean(false);

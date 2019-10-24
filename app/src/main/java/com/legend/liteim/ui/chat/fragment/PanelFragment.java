@@ -17,7 +17,7 @@ import android.widget.TextView;
 
 import com.legend.liteim.R;
 import com.legend.liteim.common.base.mvp.MyApplication;
-import com.legend.liteim.common.base.mvp.fragment.BaseFragment;
+import com.legend.liteim.common.base.mvp.fragment.BaseNoAdapterFragment;
 import com.legend.liteim.common.utils.DialogUtils;
 import com.legend.liteim.common.utils.ScreenUtils;
 import com.legend.liteim.common.utils.StreamUtil;
@@ -51,7 +51,7 @@ import static com.zhihu.matisse.internal.ui.BasePreviewActivity.CROP_SUCCESS;
  * @data by on 19-9-26.
  * @description 面板fragment
  */
-public class PanelFragment extends BaseFragment {
+public class PanelFragment extends BaseNoAdapterFragment {
 
     View mFacePanel, mAudioPanel, mMorePanel;
     private PanelCallback mCallback;

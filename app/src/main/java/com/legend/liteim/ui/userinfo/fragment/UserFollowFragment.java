@@ -3,7 +3,6 @@ package com.legend.liteim.ui.userinfo.fragment;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.legend.liteim.R;
 import com.legend.liteim.bean.User;
 import com.legend.liteim.common.base.mvp.fragment.BaseFragment;
@@ -22,7 +21,7 @@ import static com.legend.liteim.ui.userinfo.UserInfoActivity.LOOK_USER;
  * @data by on 19-1-22.
  * @description
  */
-public class UserFollowFragment extends BaseFragment<UserFollowContract.Presenter>
+public class UserFollowFragment extends BaseFragment<UserFollowContract.Presenter, UserAdapter>
     implements UserFollowContract.View {
 
     private int currentPage = -1;
@@ -43,7 +42,7 @@ public class UserFollowFragment extends BaseFragment<UserFollowContract.Presente
     }
 
     @Override
-    protected BaseQuickAdapter getAdapter() {
+    protected UserAdapter getAdapter() {
         return new UserAdapter(R.layout.item_user_follow, userList);
     }
 

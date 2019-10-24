@@ -12,9 +12,8 @@ import android.view.View;
 
 import com.bumptech.glide.Glide;
 import com.example.legend.wheel.widget.PlaceSelectorDialog;
-import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.legend.liteim.R;
-import com.legend.liteim.common.base.mvp.fragment.BaseFragment;
+import com.legend.liteim.common.base.mvp.fragment.BaseNoAdapterFragment;
 import com.legend.liteim.common.net.FormHelper;
 import com.legend.liteim.common.utils.DialogUtils;
 import com.legend.liteim.common.widget.Glide4Engine;
@@ -23,6 +22,7 @@ import com.legend.liteim.event.RefreshEvent;
 import com.legend.liteim.event.RxBus;
 import com.legend.liteim.presenter.release.ReleasePresenter;
 import com.legend.liteim.ui.release.ReleaseActivity;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 
@@ -41,7 +41,7 @@ import static com.legend.liteim.ui.release.fragment.PictureTextFragment.REQUEST_
  * @data by on 18-8-23.
  * @description
  */
-public class VideoTextFragment extends BaseFragment<ReleaseContract.Presenter>
+public class VideoTextFragment extends BaseNoAdapterFragment<ReleaseContract.Presenter>
     implements ReleaseContract.View {
 
     @BindView(R.id.tv_select_address)

@@ -1,11 +1,10 @@
 package com.legend.liteim.event;
 
 import com.legend.im.bean.MsgModel;
-import com.legend.im.client.IMClient;
 import com.legend.im.common.listener.ClientStateListener;
 import com.legend.im.protoctol.command.Command;
-import com.legend.liteim.data.MsgProcessor;
 import com.legend.liteim.data.GlobalData;
+import com.legend.liteim.data.MsgProcessor;
 
 /**
  * @author Legend
@@ -30,7 +29,7 @@ public class ClientStateListenerImpl implements ClientStateListener {
                 .fromId(Long.valueOf(GlobalData.getInstance().getCurrentUserId()))
                 .command(Command.LOGIN_REQUEST)
                 .build();
-        IMClient.getInstance().sendMsg(msgModel);
+        MsgProcessor.getInstance().sendMsg(msgModel);
     }
 
     @Override

@@ -8,7 +8,7 @@ import android.text.TextUtils;
 import android.view.Gravity;
 import android.widget.TextView;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.BaseItemDraggableAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.legend.liteim.R;
 import com.legend.liteim.bean.ChatGroup;
@@ -42,7 +42,7 @@ import static com.legend.im.common.MsgType.TO_USER;
  * @data by on 19-9-22.
  * @description
  */
-public class SessionItemAdapter extends BaseQuickAdapter<Session, BaseViewHolder> {
+public class SessionItemAdapter extends BaseItemDraggableAdapter<Session, BaseViewHolder> {
 
     private Long userId = Long.valueOf(GlobalData.getInstance().getCurrentUserId());
 

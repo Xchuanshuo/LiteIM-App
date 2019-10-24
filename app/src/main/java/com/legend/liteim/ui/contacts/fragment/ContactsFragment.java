@@ -1,6 +1,5 @@
 package com.legend.liteim.ui.contacts.fragment;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.legend.liteim.R;
 import com.legend.liteim.bean.ChatGroup;
@@ -13,6 +12,7 @@ import com.legend.liteim.ui.contacts.adapter.ParentItem;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static com.legend.liteim.common.base.mvp.StatusType.REFRESH_SUCCESS;
 
@@ -21,10 +21,12 @@ import static com.legend.liteim.common.base.mvp.StatusType.REFRESH_SUCCESS;
  * @data by on 19-9-7.
  * @description
  */
-public class ContactsFragment extends BaseFragment<ContactsContract.Presenter>
+public class ContactsFragment extends BaseFragment<ContactsContract.Presenter, ContactsAdapter>
         implements ContactsContract.View {
 
     private List<MultiItemEntity> entityList = new ArrayList<>();
+    private AtomicBoolean userIsRefreshing = new AtomicBoolean(false);
+    private AtomicBoolean groupIsRefreshing = new AtomicBoolean(false);
 
     @Override
     protected ContactsContract.Presenter initPresenter() {
@@ -37,7 +39,7 @@ public class ContactsFragment extends BaseFragment<ContactsContract.Presenter>
     }
 
     @Override
-    protected BaseQuickAdapter getAdapter() {
+    protected ContactsAdapter getAdapter() {
         return new ContactsAdapter(entityList);
     }
 
@@ -49,9 +51,16 @@ public class ContactsFragment extends BaseFragment<ContactsContract.Presenter>
 
     @Override
     public void refreshData() {
-        entityList.clear();
-        mPresenter.friendList();
-        mPresenter.groupList();
+        if (!userIsRefreshing.getAndSet(true)
+                && !groupIsRefreshing.getAndSet(true)) {
+            entityList.clear();
+            mPresenter.friendList();
+            mPresenter.groupList();
+        } else {
+            if (mSwipeRefreshLayout != null) {
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+        }
     }
 
     @Override
@@ -62,6 +71,7 @@ public class ContactsFragment extends BaseFragment<ContactsContract.Presenter>
         entityList.add(parentItem);
         setLoadDataResult(entityList, REFRESH_SUCCESS);
         mAdapter.collapse(0);
+        userIsRefreshing.set(false);
     }
 
     @Override
@@ -72,5 +82,6 @@ public class ContactsFragment extends BaseFragment<ContactsContract.Presenter>
         entityList.add(parentItem);
         setLoadDataResult(entityList, REFRESH_SUCCESS);
         mAdapter.collapse(1);
+        groupIsRefreshing.set(false);
     }
 }

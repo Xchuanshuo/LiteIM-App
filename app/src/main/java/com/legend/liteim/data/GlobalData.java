@@ -97,8 +97,14 @@ public class GlobalData {
         // 登录时间超过4天 小于7天时 去请求更新jwt的值
         long diff = System.currentTimeMillis() - lastLoginTime;
         if (diff > DateUtils.timeToMs(4) && diff<DateUtils.timeToMs(7)) {
-            User user = new User(getOpenId(), MD5Util.encryptAddSalt(getOpenId()));
-            new LoginPresenter(null).login(null, user);
+            String openId = getOpenId();
+            if (openId == null) {
+                openId = UserHelper.getInstance().getCurrentUser().getOpenId();
+            }
+            if (openId != null) {
+                User user = new User(openId, MD5Util.encryptAddSalt(openId));
+                new LoginPresenter(null).login(null, user);
+            }
         }
         String jwtExpireStr = shared.get(Constant.JWT_EXPIRE);
         if (TextUtils.isEmpty(jwtExpireStr)) {

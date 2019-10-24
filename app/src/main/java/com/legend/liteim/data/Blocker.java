@@ -20,6 +20,7 @@ public class Blocker {
     }
 
     public static void count(String flag) {
+        if (flag == null) return;
         if (map.containsKey(flag)) {
             Objects.requireNonNull(map.get(flag)).countDown();
             map.remove(flag);
@@ -27,6 +28,7 @@ public class Blocker {
     }
 
     public static void await(String flag) {
+        if (flag == null) return;
         if (map.containsKey(flag)) {
             try {
                 Objects.requireNonNull(map.get(flag)).await();

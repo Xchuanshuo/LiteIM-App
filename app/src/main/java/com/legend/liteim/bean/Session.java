@@ -1,5 +1,7 @@
 package com.legend.liteim.bean;
 
+import com.legend.liteim.db.MessageHelper;
+
 import org.litepal.crud.LitePalSupport;
 
 /**
@@ -105,7 +107,7 @@ public class Session extends LitePalSupport {
     }
 
     public Message getMessage() {
-        return message;
+        return MessageHelper.getInstance().getLastMsgBySessionId(id);
     }
 
     public void setMessage(Message message) {

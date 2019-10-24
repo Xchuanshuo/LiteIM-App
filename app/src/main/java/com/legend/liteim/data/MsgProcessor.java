@@ -77,7 +77,7 @@ public class MsgProcessor {
      * 异常状态下直接改变消息状态
      */
     private void filter(MsgModel model) {
-        if (client.isDestroyed() && client.getMsgListener() != null) {
+        if (client.isDestroyed() || client.isClosed() && client.getMsgListener() != null) {
             if (model.getCommand() == Command.USER_MSG_REQUEST) {
                 client.getMsgListener().sendUserMsgFailure(model.buildMsg());
             } else if (model.getCommand() == Command.GROUP_MSG_REQUEST) {

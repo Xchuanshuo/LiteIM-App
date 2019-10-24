@@ -10,13 +10,12 @@ import android.view.View;
 import android.widget.GridView;
 
 import com.example.legend.wheel.widget.PlaceSelectorDialog;
-import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.legend.liteim.R;
-import com.legend.liteim.common.base.mvp.fragment.BaseFragment;
+import com.legend.liteim.common.base.mvp.fragment.BaseNoAdapterFragment;
 import com.legend.liteim.common.net.BaseObserver;
+import com.legend.liteim.common.net.FormHelper;
 import com.legend.liteim.common.net.NetworkService;
 import com.legend.liteim.common.net.ProgressTransformer;
-import com.legend.liteim.common.net.FormHelper;
 import com.legend.liteim.common.utils.DialogUtils;
 import com.legend.liteim.common.utils.LogUtils;
 import com.legend.liteim.common.widget.Glide4Engine;
@@ -26,6 +25,7 @@ import com.legend.liteim.event.RxBus;
 import com.legend.liteim.presenter.release.ReleasePresenter;
 import com.legend.liteim.ui.release.ReleaseActivity;
 import com.legend.liteim.ui.release.adapter.GridViewAdapter;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
@@ -47,7 +47,7 @@ import static com.zhihu.matisse.internal.ui.BasePreviewActivity.CROP_SUCCESS;
  * @data by on 18-8-23.
  * @description
  */
-public class PictureTextFragment extends BaseFragment<ReleaseContract.Presenter>
+public class PictureTextFragment extends BaseNoAdapterFragment<ReleaseContract.Presenter>
     implements ReleaseContract.View, GridViewAdapter.AddClickListener {
 
     @BindView(R.id.tv_select_address)

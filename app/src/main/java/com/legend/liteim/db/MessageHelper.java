@@ -35,6 +35,18 @@ public class MessageHelper {
         return flagToPosMap;
     }
 
+    /**
+     * 查询指定session的最新一条消息
+     * @param sessionId
+     * @return
+     */
+    public Message getLastMsgBySessionId(long sessionId) {
+        List<Message> messages = LitePal.where("session_id = ?", sessionId+"")
+                .order("createTime desc").limit(1).find(Message.class);
+        if (messages.size() == 0) return null;
+        return messages.get(0);
+    }
+
     public void saveOrUpdate(Message message) {
         Run.onBackground(() -> message.saveOrUpdate("msgId = ? and type = ?",
                 message.getMsgId(), message.getType()+""));

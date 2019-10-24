@@ -40,12 +40,16 @@ public class SessionHelper {
     }
 
     public List<Session> getSessionList() {
-        return LitePal.order("updateDate desc").find(Session.class, true);
+        return LitePal.order("updateDate desc").find(Session.class);
     }
 
     public boolean isExistSession(Long fromId, Integer type) {
         return LitePal.where("fromId = ? and msgType = ?",
                 String.valueOf(fromId), String.valueOf(type)).findFirst(Session.class) != null;
+    }
+
+    public void removeById(long id) {
+        LitePal.delete(Session.class, id);
     }
 
     public Session getSession(Long fromId, Integer type) {

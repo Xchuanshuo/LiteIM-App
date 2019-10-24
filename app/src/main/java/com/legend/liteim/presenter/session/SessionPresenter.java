@@ -45,7 +45,8 @@ public class SessionPresenter extends BasePresenter<SessionContract.View>
                 .observeOn(Schedulers.io())
                 .subscribe(event -> {
                     Message message = event.getMessage();
-                    LogUtils.logD(this, "接收了session通知:------------"+ message.getFromId());
+                    LogUtils.logD(this, "接收了session通知:------------"+ message.getFromId()
+                                    +" content: " + message.getMsg());
                     boolean isSelf = message.getFromId().equals(this.curUser.getId());
                     // 新到达消息的状态更新与存储
                     Session session = null;

@@ -31,13 +31,13 @@ import static com.legend.liteim.common.base.mvp.StatusType.REFRESH_SUCCESS;
  * @data by on 18-5-18.
  * @description
  */
-public abstract class BaseFragment<T extends BaseContract.Presenter> extends SuperFragment
-        implements BaseContract.View<T> {
+public abstract class BaseFragment<T extends BaseContract.Presenter, A extends BaseQuickAdapter>
+        extends SuperFragment implements BaseContract.View<T> {
 
     protected T mPresenter;
     protected RecyclerView mRecyclerView;
     private View mEmptyView;
-    protected BaseQuickAdapter mAdapter;
+    protected A mAdapter;
     private boolean isRefreshing = false;
     private boolean isEnableLodeMore = true;
     @Nullable
@@ -167,7 +167,7 @@ public abstract class BaseFragment<T extends BaseContract.Presenter> extends Sup
      *  获取适配器
      * @return
      */
-    protected BaseQuickAdapter getAdapter() { return null; }
+    protected A getAdapter() { return null; }
 
 
     /**

@@ -83,7 +83,17 @@ public abstract class ChatPresenter extends BasePresenter<ChatContract.View>
                         // 更新发送成功或者失败的状态
                         ArrayMap<String, Integer> map = messageHelper.getFlagToPosMap();
                         if (map.containsKey(message.getMsgId())) {
-                            Run.onUiAsync(() -> mView.updateSendState(message, map.get(message.getMsgId())));
+                            List<CommonMultiBean<Message>> dataList = mView.getData();
+                            for (int i = dataList.size() - 1;i >= 0;i--) {
+                                Message msg = dataList.get(i).getData();
+                                if (msg.getMsgId().equals(message.getMsgId())) {
+                                    // 根据id找到需要修改状态的消息
+                                    int position = i;
+                                    Run.onUiAsync(() -> mView.updateSendState(message, position));
+                                    break;
+                                }
+                            }
+//                            Run.onUiAsync(() -> mView.updateSendState(message, map.get(message.getMsgId())));
                         }
                     } else {
                         LogUtils.logD(this, "receiveId: " + mReceiverId);

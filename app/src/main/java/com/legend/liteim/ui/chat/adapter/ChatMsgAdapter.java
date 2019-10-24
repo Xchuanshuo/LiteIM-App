@@ -248,11 +248,13 @@ public class ChatMsgAdapter extends BaseMultiItemQuickAdapter<CommonMultiBean<Me
             if (isSelf) {
                 params.addRule(RelativeLayout.START_OF, R.id.right_frame);
                 params.setMarginStart((int) Ui.dipToPx(context.getResources(), 50.0f));
+                params.setMarginEnd((int) Ui.dipToPx(context.getResources(), 3.0f));
                 helper.getView(R.id.tv_right_username).setVisibility(View.GONE);
                 helper.getView(R.id.lay_right_bubble).setLayoutParams(params);
             } else {
                 params.addRule(RelativeLayout.END_OF, R.id.img_left_portrait);
                 params.setMarginEnd((int) Ui.dipToPx(context.getResources(), 50.0f));
+                params.setMarginStart((int) Ui.dipToPx(context.getResources(), 3.0f));
                 helper.getView(R.id.tv_left_username).setVisibility(View.GONE);
                 helper.getView(R.id.lay_left_bubble).setLayoutParams(params);
             }

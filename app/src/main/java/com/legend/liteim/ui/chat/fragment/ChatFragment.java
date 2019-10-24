@@ -10,7 +10,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.legend.liteim.R;
 import com.legend.liteim.bean.Message;
 import com.legend.liteim.common.adapter.TextWatcherAdapter;
@@ -38,7 +37,7 @@ import static com.legend.liteim.ui.chat.ChatActivity.KEY_RECEIVER_ID;
  * @data by on 19-9-13.
  * @description 聊天Fragment公共类
  */
-public abstract class ChatFragment extends BaseFragment<ChatContract.Presenter>
+public abstract class ChatFragment extends BaseFragment<ChatContract.Presenter, ChatMsgAdapter>
     implements ChatContract.View, PanelFragment.PanelCallback {
 
     @BindView(R.id.lay_panel)
@@ -58,7 +57,7 @@ public abstract class ChatFragment extends BaseFragment<ChatContract.Presenter>
     private int page = 1;
 
     @Override
-    protected BaseQuickAdapter getAdapter() {
+    protected ChatMsgAdapter getAdapter() {
         return new ChatMsgAdapter(msgList);
     }
 
@@ -108,7 +107,7 @@ public abstract class ChatFragment extends BaseFragment<ChatContract.Presenter>
         });
 //        mContentEdt.getViewTreeObserver().addOnGlobalLayoutListener(() ->
 //                mRecyclerView.smoothScrollToPosition(mAdapter.getItemCount() - 1));
-        ((ChatMsgAdapter)mAdapter).setClickListener((message, position) -> {
+        mAdapter.setClickListener((message, position) -> {
             if (message.getStatus() == Message.STATUS_FAILURE) {
                 message.setStatus(Message.STATUS_CREATED);
                 mAdapter.notifyItemChanged(position, message);
@@ -202,20 +201,25 @@ public abstract class ChatFragment extends BaseFragment<ChatContract.Presenter>
 
     @Override
     public void updateSendState(Message msg, int position) {
-        CommonMultiBean<Message> bean = (CommonMultiBean<Message>) mAdapter.getItem(position);
+        CommonMultiBean<Message> bean = mAdapter.getItem(position);
         if (bean != null) {
             Message data = bean.getData();
             // 更新状态和内容
             data.setStatus(msg.getStatus());
 //            data.setMsg(msg.getMsg());
-            mAdapter.notifyItemChanged(position , bean);
-//            if (data.getStatus() == Message.STATUS_FAILURE) {
-//                // 发送失败原位置不动
-//            } else if (data.getStatus() == Message.STATUS_SUCCESS){
-//                // 发送成功添加到消息列表末尾
-//                mAdapter.remove(position);
-//                mAdapter.addData(bean);
-//            }
+//            mAdapter.notifyItemChanged(position , bean);
+            if (data.getStatus() == Message.STATUS_FAILURE) {
+                // 发送失败原位置不动
+                mAdapter.notifyItemChanged(position, bean);
+            } else if (data.getStatus() == Message.STATUS_SUCCESS){
+                // 发送成功添加到消息列表末尾
+                if (position == mAdapter.getItemCount() - 1) {
+                    mAdapter.notifyItemChanged(position, bean);
+                } else {
+                    mAdapter.remove(position);
+                    mAdapter.addData(bean);
+                }
+            }
         }
     }
 
@@ -228,9 +232,15 @@ public abstract class ChatFragment extends BaseFragment<ChatContract.Presenter>
     @Override
     public void onDestroy() {
         super.onDestroy();
-        ChatMsgAdapter adapter = (ChatMsgAdapter) getAdapter();
+        ChatMsgAdapter adapter = getAdapter();
         if (adapter != null && adapter.getPlayHelper() != null) {
             adapter.getPlayHelper().destroy();
         }
+    }
+
+    @Override
+    public List<CommonMultiBean<Message>> getData() {
+        if (mAdapter == null) return new ArrayList<>();
+        return mAdapter.getData();
     }
 }

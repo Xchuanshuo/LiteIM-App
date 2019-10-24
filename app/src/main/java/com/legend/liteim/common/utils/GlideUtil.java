@@ -70,10 +70,12 @@ public class GlideUtil {
                         //计算图片等比例放大后的高
                         int imageViewHeight = (int) (height * sy);
                         ViewGroup.LayoutParams params = imageView.getLayoutParams();
-                        params.width = (int) (width * sy);
+                        params.width = imageViewWidth;
                         params.height = imageViewHeight;
 
                         imageView.setLayoutParams(params);
+
+                        imageView.setImageBitmap(resource);
 
 //                        options.override(imageViewWidth, imageViewHeight);
                         Glide.with(context)

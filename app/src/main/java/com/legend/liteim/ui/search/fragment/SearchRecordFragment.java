@@ -7,7 +7,7 @@ import com.google.android.flexbox.FlexboxLayout;
 import com.legend.liteim.R;
 import com.legend.liteim.bean.SearchKeyword;
 import com.legend.liteim.common.adapter.FlowLayoutAdapter;
-import com.legend.liteim.common.base.mvp.fragment.BaseFragment;
+import com.legend.liteim.common.base.mvp.fragment.BaseNoAdapterFragment;
 import com.legend.liteim.db.SearchHelper;
 import com.legend.liteim.ui.search.SearchActivity;
 
@@ -21,7 +21,7 @@ import butterknife.BindView;
  * @data by on 18-7-18.
  * @description 搜索记录Fragment 包括热搜和搜索历史
  */
-public class SearchRecordFragment extends BaseFragment {
+public class SearchRecordFragment extends BaseNoAdapterFragment {
 
     private List<SearchKeyword> searchHistoryBeanList = new ArrayList<>();
     @BindView(R.id.flex_layout)

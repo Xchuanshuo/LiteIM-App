@@ -99,11 +99,12 @@ public class WelcomeActivity extends BaseActivity {
 
     private void emulator() {
         GlobalData data = GlobalData.getInstance();
-        String jwt = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzIiwiZXhwIjoxNTcwNTQ5MTk4fQ.qUCTRK3UWes9qsJlNU7N7Cy5F2-8qnuxa-LoXKrXpy8";
+        String jwt = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzIiwiZXhwIjoxNTcxMzYzNDYxfQ.epVyqZTo3buaukOq4s34OHtS_-ViLwQh9mDIPy5js5E";
         data.saveJWT(jwt);
         User user = new User();
         user.setId(3L);
         user.setUsername("测试人员2号");
+        user.setOpenId("111111");
         user.setPortrait("https://uploadfile.bizhizu.cn/up/13/89/f3/1389f30dc821201347b10b3058c50f6d.jpg.source.jpg");
         user.setBackground("http://qzapp.qlogo.cn/qzapp/1106570475/1BB7E661E7042D1C41F0F033C83FFB45/100");
         user.setSignature("我是测试人员2号");

@@ -41,6 +41,8 @@ public interface ChatContract {
 
     interface View extends BaseContract.View<Presenter> {
 
+        List<CommonMultiBean<Message>> getData();
+
         /**
          * 显示新到来的消息
          * @param bean

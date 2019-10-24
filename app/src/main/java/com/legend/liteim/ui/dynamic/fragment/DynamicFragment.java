@@ -4,13 +4,13 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.legend.liteim.R;
 import com.legend.liteim.bean.Dynamic;
 import com.legend.liteim.common.base.mvp.fragment.BaseFragment;
 import com.legend.liteim.common.bean.CommonMultiBean;
 import com.legend.liteim.common.widget.CommonPopupWindow;
 import com.legend.liteim.common.utils.DialogUtils;
+import com.legend.liteim.common.widget.FixLinearLayoutManager;
 import com.legend.liteim.contract.dynamic.DynamicContract;
 import com.legend.liteim.presenter.dynamic.DynamicPresenter;
 import com.legend.liteim.ui.dynamic.adapter.DynamicItemAdapter;
@@ -30,7 +30,7 @@ import static com.legend.liteim.common.base.mvp.StatusType.REFRESH_SUCCESS;
  * @data by on 18-5-30.
  * @description
  */
-public class DynamicFragment extends BaseFragment<DynamicContract.Presenter>
+public class DynamicFragment extends BaseFragment<DynamicContract.Presenter, DynamicItemAdapter>
     implements DynamicContract.View {
 
     private int curPosition = -1;
@@ -43,8 +43,13 @@ public class DynamicFragment extends BaseFragment<DynamicContract.Presenter>
     }
 
     @Override
-    protected BaseQuickAdapter getAdapter() {
+    protected DynamicItemAdapter getAdapter() {
         return new DynamicItemAdapter(beanList, _mActivity);
+    }
+
+    @Override
+    protected RecyclerView.LayoutManager getLayoutManager() {
+        return new FixLinearLayoutManager(mView.getContext());
     }
 
     @Override
@@ -61,7 +66,7 @@ public class DynamicFragment extends BaseFragment<DynamicContract.Presenter>
     @Override
     protected void initEventAndData() {
         super.initEventAndData();
-        ((DynamicItemAdapter)mAdapter).setSelectorListener((v, position) -> {
+        mAdapter.setSelectorListener((v, position) -> {
             CommonPopupWindow mPopupWindow = CommonPopupWindow.getInstance()
                     .buildPopupWindow(v, -30, -27).onlyHideDelete();
             curPosition = position;

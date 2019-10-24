@@ -5,7 +5,6 @@ import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.legend.im.bean.MsgModel;
-import com.legend.im.client.IMClient;
 import com.legend.im.protoctol.command.Command;
 import com.legend.liteim.bean.LoginReturn;
 import com.legend.liteim.bean.User;
@@ -17,6 +16,7 @@ import com.legend.liteim.common.utils.Code;
 import com.legend.liteim.common.utils.LogUtils;
 import com.legend.liteim.common.utils.MD5Util;
 import com.legend.liteim.contract.userinfo.LoginContract;
+import com.legend.liteim.data.MsgProcessor;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -56,7 +56,7 @@ public class LoginPresenter extends BasePresenter<LoginContract.View>
                             MsgModel model = MsgModel.builder()
                                     .content(jwt).fromId(u.getId())
                                     .command(Command.LOGIN_REQUEST).build();
-                            IMClient.getInstance().sendMsg(model);
+                            MsgProcessor.getInstance().sendMsg(model);
                             if (mView != null) {
                                 mView.loginAfter();
                             }

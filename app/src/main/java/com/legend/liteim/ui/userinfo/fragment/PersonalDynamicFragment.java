@@ -2,7 +2,6 @@ package com.legend.liteim.ui.userinfo.fragment;
 
 import android.os.Bundle;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.legend.liteim.R;
 import com.legend.liteim.bean.Dynamic;
 import com.legend.liteim.bean.User;
@@ -25,7 +24,7 @@ import static com.legend.liteim.ui.userinfo.UserInfoActivity.LOOK_USER;
  * @data by on 18-7-22.
  * @description 用户相关的信息
  */
-public class PersonalDynamicFragment extends BaseFragment<PersonalDynamicContract.Presenter>
+public class PersonalDynamicFragment extends BaseFragment<PersonalDynamicContract.Presenter, DynamicItemAdapter>
     implements PersonalDynamicContract.View {
 
     private int curPosition = -1;
@@ -44,7 +43,7 @@ public class PersonalDynamicFragment extends BaseFragment<PersonalDynamicContrac
     }
 
     @Override
-    protected BaseQuickAdapter getAdapter() {
+    protected DynamicItemAdapter getAdapter() {
         return new DynamicItemAdapter(beanList, getContext());
     }
 
@@ -72,7 +71,7 @@ public class PersonalDynamicFragment extends BaseFragment<PersonalDynamicContrac
     @Override
     protected void initEventAndData() {
         super.initEventAndData();
-        ((DynamicItemAdapter)mAdapter).setSelectorListener((v, position) -> {
+        mAdapter.setSelectorListener((v, position) -> {
             CommonPopupWindow mPopupWindow = CommonPopupWindow.getInstance()
                     .buildPopupWindow(v, -30, -27).onlyHideReport();
             curPosition = position;
