@@ -10,11 +10,11 @@ LiteIM是一个即时聊天应用, 实现了包括 普通文本、表情、图�
 
 Android端整体使用了MVP架构，主要使用了RxJava + RxAndroid + RxBus + Retrofit
 
-项目部分截图如下
+### 部分截图如下
 
 |  |  |
 | --- | --- |
 |![chat1](https://github.com/Xchuanshuo/LiteIM-App/blob/master/images/chat_1.png)| ![chat1](https://github.com/Xchuanshuo/LiteIM-App/blob/master/images/chat_2.png) |
 
-|![dynamic](https://github.com/Xchuanshuo/LiteIM-App/blob/master/images/dyanmic.png) | ![message](https://github.com/Xchuanshuo/LiteIM-App/blob/master/images/message.png) |
+|![dynamic](https://github.com/Xchuanshuo/LiteIM-App/blob/master/images/dyanmic.png)| ![message](https://github.com/Xchuanshuo/LiteIM-App/blob/master/images/message.png) |
 
