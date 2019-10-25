@@ -16,5 +16,7 @@ Android端整体使用了MVP架构，主要使用了RxJava + RxAndroid + RxBus +
 | --- | --- |
 |![chat1](https://github.com/Xchuanshuo/LiteIM-App/blob/master/images/chat_1.png)| ![chat1](https://github.com/Xchuanshuo/LiteIM-App/blob/master/images/chat_2.png) |
 
+|![chat1](https://github.com/Xchuanshuo/LiteIM-App/blob/master/images/chat_1.png)| ![chat1](https://github.com/Xchuanshuo/LiteIM-App/blob/master/images/chat_2.png) |
+
 |![dynamic](https://github.com/Xchuanshuo/LiteIM-App/blob/master/images/dynamic.png)| ![message](https://github.com/Xchuanshuo/LiteIM-App/blob/master/images/message.png) |
 
